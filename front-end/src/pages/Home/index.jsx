@@ -1,4 +1,4 @@
-import { Header } from '../../layout';
+import { Header } from 'src/components';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from '../../store/slices/counterSlice';
