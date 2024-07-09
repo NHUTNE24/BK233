@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage, CodeVerification, LoginForm, PasswordRecovery, SetNewPassword, UserList } from "./pages/User";
 import { TrainingProgramDetail, TrainingProgramView, TrainingProgramList } from './pages';
 import "./App.css";
-
+import {ViewSyllabus} from './pages';
 import TrainingProgram from '../src/assets/data/TrainingProgram';
 
 const App = () => {
@@ -16,8 +16,9 @@ const App = () => {
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/home-page" element={<HomePage />} />
         <Route path="/user-list" element={<UserList />} />
+        <Route path="/view-syllabus" element={<ViewSyllabus />} />
         {/* <Route path="/view-program" element={<TrainingProgramDetail TrainingProgram={TrainingProgram} Syllabus={TrainingProgram.syllabi[5]} />} /> */}
-        <Route path="/view-program" element={<TrainingProgramList TrainingProgram={TrainingProgram} Syllabus={TrainingProgram?.syllabi[0]} />} />
+        {/* <Route path="/view-program" element={<TrainingProgramList TrainingProgram={TrainingProgram} Syllabus={TrainingProgram?.syllabi[0]} />} /> */}
       </Routes>
     </Router>
   );

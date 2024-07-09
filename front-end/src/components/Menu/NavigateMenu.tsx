@@ -26,7 +26,7 @@ const items: MenuItem[] = [
     label: 'Syllabus',
     icon: <IoBookOutline />,
     children: [
-      { key: '2', label: <Link to="/view-sylabus">View syllabus</Link>, className: styles['menu-item'] },
+      { key: '2', label: <Link to="/view-syllabus">View syllabus</Link>, className: styles['menu-item'] },
       { key: '3', label: <Link to="/create-syllabus">Create syllabus</Link>, className: styles['menu-item'] },
 
     ],

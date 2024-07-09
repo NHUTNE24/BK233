@@ -6,3 +6,4 @@ export { default as Error } from './Error';
 
 export { TrainingProgramDetail, TrainingProgramView } from './ProgramDetail';
 export { default as TrainingProgramList } from './ProgramList'
+export {default as ViewSyllabus } from './ViewSyllabus'
