@@ -11,14 +11,14 @@ export const SyllabusDay = [
     },
     {
         id: 3,
-        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+        units: SyllabusUnit,
     },
     {
         id: 4,
-        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+        units: SyllabusUnit,
     },
     {
         id: 5,
-        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+        units: SyllabusUnit,
     },
 ];

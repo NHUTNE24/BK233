@@ -15,14 +15,7 @@ const TrainingProgram = {
         'Learn how to break the silos between Development and Operations',
         'Experiential learning with case studies, real-world success stories, engaging activities, more',
     ],
-    syllabi: [
-        Syllabus.Syllabus1,
-        Syllabus.Syllabus2,
-        Syllabus.Syllabus3,
-        Syllabus.Syllabus4,
-        Syllabus.Syllabus5,
-        Syllabus.Syllabus6,
-    ],
+    syllabi: Syllabus,
 };
 
 export default TrainingProgram;
