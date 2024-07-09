@@ -1,12 +1,12 @@
 
-import { Layout, Menu, Dropdown, Avatar } from 'antd';
+import { Layout, Avatar } from 'antd';
 // import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import Logo from 'src/assets/images/logo.png';
 import Uni from 'src/assets/images/unigate.png';
 import NavigateMenu from '../../../components/Menu/NavigateMenu';
 import './Home.css';
 import Cat from "src/assets/images/cat.png"
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const HomePage = () => {
     // const menu = (
