@@ -7,12 +7,7 @@ export const UnitChapter = [{
     duration: 10,
     status: 'Online',
     delivery_type_id: 2,
-    training_materials: [
-        TrainingMaterial.TrainingMaterial1,
-        TrainingMaterial.TrainingMaterial2,
-        TrainingMaterial.TrainingMaterial3,
-        TrainingMaterial.TrainingMaterial4,
-    ],
+    training_materials: TrainingMaterial
 },
 {
     id: 2,
@@ -21,12 +16,7 @@ export const UnitChapter = [{
     duration: 10,
     status: 'Offline',
     delivery_type_id: 2,
-    training_materials: [
-        TrainingMaterial.TrainingMaterial1,
-        TrainingMaterial.TrainingMaterial2,
-        TrainingMaterial.TrainingMaterial3,
-        TrainingMaterial.TrainingMaterial4,
-    ],
+    training_materials: TrainingMaterial
 },
 {
     id: 3,
@@ -35,12 +25,7 @@ export const UnitChapter = [{
     duration: 30,
     status: 'Offline',
     delivery_type_id: 3,
-    training_materials: [
-        TrainingMaterial.TrainingMaterial1,
-        TrainingMaterial.TrainingMaterial2,
-        TrainingMaterial.TrainingMaterial3,
-        TrainingMaterial.TrainingMaterial4,
-    ],
+    training_materials: TrainingMaterial
 },
 {
     id: 4,
@@ -49,12 +34,7 @@ export const UnitChapter = [{
     duration: 30,
     status: 'Offline',
     delivery_type_id: 6,
-    training_materials: [
-        TrainingMaterial.TrainingMaterial1,
-        TrainingMaterial.TrainingMaterial2,
-        TrainingMaterial.TrainingMaterial3,
-        TrainingMaterial.TrainingMaterial4,
-    ],
+    training_materials: TrainingMaterial
 }
 ]
 
