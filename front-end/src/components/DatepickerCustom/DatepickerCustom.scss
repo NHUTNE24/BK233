@@ -1,0 +1,30 @@
+.ant-picker-dropdown {
+  box-shadow: 0px 1px 3px 0px #0000004D;
+
+  .ant-picker-date-panel {
+    padding: 10px 10px 20px 10px;
+    width: 378px;
+  }
+
+  .ant-picker-header {
+    border-bottom: none;
+
+    &-view {
+      border-bottom: 0.8px solid #E4E5E7;
+    }
+
+    &-view>button {
+      color: var(--primary-color);
+    }
+
+  }
+
+  .ant-picker-content th {
+    color: #7E818C;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+}

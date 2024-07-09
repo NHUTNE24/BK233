@@ -1,0 +1,72 @@
+/* styles.css */
+.container {
+    display: flex;
+    height: 34px;
+    border-radius: 10px;
+    background: #DFDEDE;
+    color:black;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+  
+.left-column {
+    flex: 1;
+    font-weight: 500;
+    align-self: center;
+    font-size: 14px;
+}
+  
+.right-column {
+    display: flex;
+    width: 385px;
+    justify-content: space-between;
+}
+  
+.right-column > div {
+    align-self: center;
+    text-align: center;
+}
+
+.standard-info {
+    display: flex;
+    height: 27px;
+    border-radius: 50px;
+    background: #2D3748;
+    justify-content: center;
+    line-height: 27px;
+}
+
+.standard-info > span {
+    color: white;
+    font-size: 12px;
+    width: 72px;
+}
+
+.duration-info {
+    font-size: 14px;
+    justify-content: center;
+}
+
+.status-info {
+    display: flex;
+    justify-content: center;
+}
+
+.status-info > span {
+    font-size: 10px;
+    display: flex;
+    width: 60px;
+    height: 28px;
+    border-radius: 50px;
+    justify-content: center;
+    line-height: 28px;
+    border: #D45B13 1px solid;
+    color:#D45B13;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+  

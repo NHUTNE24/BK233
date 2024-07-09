@@ -1,0 +1,100 @@
+.syllabus-general-container {
+    display: flex;
+    width: 1134px;
+    gap: 42px;
+}
+
+.syllabus-general-left-column {
+    flex: 1;
+    width: 407px;
+    height: 132px;
+    border-radius: 10px;
+    border: rgba(109, 109, 109, 0.2) 1px solid;
+    box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
+    padding: 20px;
+}
+  
+.syllabus-general-right-column {
+    width: 605px;
+    border-radius: 10px;
+    border: rgba(109, 109, 109, 0.2) 1px solid;
+    box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
+    padding: 20px;
+}
+
+.level-container {
+    display: flex;
+}
+
+.level-left-column {
+    font-weight: 600;
+    width: 152px;
+}
+
+.level-right-column {
+    flex: 1;
+    font-weight: 500;
+}
+
+.attendee-number-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.attendee-number-left-column {
+    font-weight: 600;
+    width: 152px;
+}
+
+.attendee-number-right-column {
+    flex: 1;
+    font-weight: 500;
+}
+
+.output-standard-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.output-standard-left-column {
+    font-weight: 600;
+    width: 152px;
+}
+
+.output-standard-right-column {
+    display: flex;
+}
+
+.technical-requirement-content {
+    font-weight: 500;
+}
+
+.course-objectives-container {
+    margin-top: 40px;
+    width: 1134px;
+}
+
+.course-objectives-title, .technical-requirement-title {
+    font-weight: 600;
+}
+
+.course-objectives-content {
+    font-weight: 500;
+}
+
+.output-standard-info {
+    display: flex;
+    width: 72px;
+    height: 27px;
+    border-radius: 50px;
+    background: #2D3748;
+    justify-content: center;
+    line-height: 27px;
+    margin-right: 5px;
+}
+
+.output-standard-info > span {
+    color: white;
+    font-size: 12px;
+}
+

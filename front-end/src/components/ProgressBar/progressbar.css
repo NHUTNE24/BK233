@@ -1,0 +1,36 @@
+.progress-bar {
+    position: relative;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-15%, -50%);
+    width: 8px; /* Adjust the size of the circle */
+    height: 8px; /* Adjust the size of the circle */
+    background-color: white;
+    border-radius: 50%;
+  }
+  
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .progress-labels span {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  
+  .progress-labels span:first-child {
+    text-align: left;
+  }
+  
+  .progress-labels span:last-child {
+    text-align: right;
+  }
+

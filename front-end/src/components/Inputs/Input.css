@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input::placeholder {
+    font-style: italic;
+    font-weight: 500;
+    color: black !important;
+}
+
+input[type='password']::placeholder {
+    font-style: normal;
+}
+
+input[type='password']:focus {
+    outline: none;
+}
+
+input:required::after {
+    display: none;
+}

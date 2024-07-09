@@ -1,0 +1,16 @@
+.date-month-picker-custom {
+  .ant-radio-button-wrapper {
+    border: none;
+    border-radius: 8px;
+
+  }
+
+  .ant-radio-button-wrapper-checked {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    content: none;
+  }
+}

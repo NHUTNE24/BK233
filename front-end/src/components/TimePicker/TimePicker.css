@@ -1,0 +1,38 @@
+.custom-time-picker-popup .ant-picker-time-panel-column:last-child {
+  border-inline-start: none;
+}
+  
+/* Remove picker footer */
+.custom-time-picker-popup .ant-picker-footer {
+  display: none;
+}
+
+.custom-time-picker {
+  justify-content: center;
+  text-align: center;
+}
+
+.ant-picker-time-panel {
+  position: relative;
+}
+
+.ant-picker-time-panel-column {
+  display: inline-block;
+  width: calc(50% - 10px);
+  text-align: center;
+}
+
+.ant-picker-time-panel-column:first-child {
+  margin-right: 20px;
+}
+
+.ant-picker-time-panel::after {
+  content: ':';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.85);
+}
+

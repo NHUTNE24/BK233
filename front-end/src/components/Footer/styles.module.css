@@ -1,0 +1,16 @@
+.footer {
+    height: 79px;
+    display: flex;
+    background-color: #2d3748;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px 10px 40px;
+}
+
+.copy-right {
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+}
