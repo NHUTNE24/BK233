@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Input } from 'antd';
-import { SearchIcon } from '../../../assets';
+import { SearchIcon } from '../../assets/index';
 
-import Chip1 from '../../Chips/Chip1';
+import Chip1 from '../../components/Chips/Chip1';
 
 const InputNormal = ({
     width,

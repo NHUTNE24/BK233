@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import "./SyllabusTab.css";
-import { SyllabusGeneral } from '../../../components';
+import { SyllabusGeneral } from '../../components';
 
 const onChange = (key) => {
     console.log(key);

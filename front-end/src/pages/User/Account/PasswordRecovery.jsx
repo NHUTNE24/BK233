@@ -1,24 +1,20 @@
-import React from "react";
-import { Layout, Form, Input, Button, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
-import Uni from "../../assets/unigate.png";
+
+import { Layout, Form, Input, Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import Logo from 'src/assets/images/logo.png';
+import Uni from 'src/assets/images/unigate.png';
 import "../../../App.css";
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-const CodeVerification: React.FC = () => {
+const PasswordRecovery = () => {
   const navigate = useNavigate();
-
-  const handleFinish = (values: any) => {
-    console.log("Success:", values);
-    // Handle code verification logic here
-    navigate("/set-new-password"); // Redirect to set new password step
-  };
-
-  const handleResendCode = () => {
-    // Handle resend code logic here
+ 
+  const handleFinish = (values) => {
+    console.log('Success:', values);
+    // Handle password recovery logic here
+    navigate('/code-verification'); // Redirect to code verification step
   };
 
   return (
@@ -30,27 +26,22 @@ const CodeVerification: React.FC = () => {
       <Content className="login-content">
         <div className="login-form-container">
           <Title level={2}>Password Recovery</Title>
-          <Text>Enter the code sent to your email.</Text>
+          <Text>Enter your email to reset your password.</Text>
           <Form
-            name="code_verification_form"
+            name="password_recovery_form"
             className="login-form"
             onFinish={handleFinish}
           >
             <Form.Item
-              name="verificationCode"
+              name="email"
               rules={[
-                {
-                  required: true,
-                  message: "Please input the verification code!",
-                },
+                { required: true, message: 'Please input your Email!' },
+                { type: 'email', message: 'The input is not valid Email!' },
               ]}
             >
-              <Input placeholder="Enter your code" />
+              <Input placeholder="Email" />
             </Form.Item>
             <Form.Item>
-              <Button type="link" onClick={handleResendCode}>
-                Resend Code
-              </Button>
               <Button
                 type="primary"
                 htmlType="submit"
@@ -63,7 +54,7 @@ const CodeVerification: React.FC = () => {
             <Form.Item>
               <Button
                 type="link"
-                onClick={() => navigate("/")}
+                onClick={() => navigate('/')}
                 className="login-form-return"
               >
                 Return to Login
@@ -73,7 +64,7 @@ const CodeVerification: React.FC = () => {
         </div>
       </Content>
       <Footer className="login-footer">
-        <text style={{ color: "white" }}>
+        <text style={{ color: 'white' }}>
           Copyright &copy; 2024 FAMS. All rights reserved
         </text>
       </Footer>
@@ -81,4 +72,4 @@ const CodeVerification: React.FC = () => {
   );
 };
 
-export default CodeVerification;
+export default PasswordRecovery;

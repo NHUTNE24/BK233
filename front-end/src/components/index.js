@@ -1,8 +1,8 @@
 
 export { default as Button } from './Button';
-export { default as Inputs } from './common/Inputs';
+export { default as Inputs } from './Inputs';
 export { default as CustomTimePicker } from './TimePicker';
-export { default as SyllabusTab } from './common/SyllabusTab';
+export { default as SyllabusTab } from './SyllabusTab';
 export { default as SyllabusDetail } from './SyllabusDetail';
 export { default as SyllabusCard } from './SyllabusCard';
 export { default as SyllabusGeneral } from './SyllabusGeneral';

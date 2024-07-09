@@ -1,17 +1,16 @@
-import React from "react";
 import { Layout, Form, Input, Button, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
-import Uni from "../../assets/unigate.png";
+import Logo from 'src/assets/images/logo.png';
+import Uni from 'src/assets/images/unigate.png';
 import "../../../App.css";
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-const SetNewPassword: React.FC = () => {
+const SetNewPassword  = () => {
   const navigate = useNavigate();
 
-  const handleFinish = (values: any) => {
+  const handleFinish = (values) => {
     console.log("Success:", values);
     // Handle setting new password logic here
     navigate("/"); // Redirect to login page after setting new password

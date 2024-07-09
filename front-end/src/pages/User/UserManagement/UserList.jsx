@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Layout, Table, Menu } from 'antd';
-import Logo from "../../assets/Logo.png";
-import Uni from "../../assets/unigate.png";
+import { useEffect, useState } from 'react';
+import { Layout, Table } from 'antd';
+import Logo from 'src/assets/images/logo.png';
+import Uni from 'src/assets/images/unigate.png';
 import NavigateMenu from '../../../components/Menu/NavigateMenu';
 import axios from 'axios';
 import styles from './UserList.module.css'; // Import the CSS module
 
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    dateofbirth: any;
-    gender: any;
-}
+
 const { Header, Content, Footer } = Layout;
 
-const UserList: React.FC = () => {
-    const [users, setUsers] = useState<User[]>([]);
+const UserList = () => {
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const columns = [

@@ -1,23 +1,22 @@
-import React from 'react';
+
 import { Layout, Menu, Dropdown, Avatar } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import Logo from "../../assets/Logo.png";
-import Uni from "../../assets/unigate.png";
+// import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import Logo from 'src/assets/images/logo.png';
+import Uni from 'src/assets/images/unigate.png';
 import NavigateMenu from '../../../components/Menu/NavigateMenu';
 import './Home.css';
-import Cat from "../../assets/cat.png"
-
+import Cat from "src/assets/images/cat.png"
 const { Header, Sider, Content, Footer } = Layout;
 
-const HomePage: React.FC = () => {
-    const menu = (
-        <Menu>
-            <Menu.Item key="1">
-                <LogoutOutlined />
-                Log out
-            </Menu.Item>
-        </Menu>
-    );
+const HomePage = () => {
+    // const menu = (
+    //     <Menu>
+    //         <Menu.Item key="1">
+    //             <LogoutOutlined />
+    //             Log out
+    //         </Menu.Item>
+    //     </Menu>
+    // );
     const handleLogout = () => {
         window.location.href = '/LoginForm';
     };

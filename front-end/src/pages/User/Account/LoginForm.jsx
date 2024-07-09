@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Layout, Form, Input, Button, Typography, Spin, notification } from "antd";
-import type { FormProps } from 'antd';
+
+import { Layout, Form, Input, Button, Typography } from "antd";
+
 import "antd/dist/reset.css"; // Import Ant Design styles
 import "../../../App.css";
-import Logo from "../../assets/Logo.png";
-import Uni from "../../assets/unigate.png";
-import BG from "../../assets/bg.png";
+import Logo from 'src/assets/images/logo.png';
+import Uni from 'src/assets/images/unigate.png';
+
 
 
 
@@ -15,13 +15,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const App: React.FC = () => {
+const App = () => {
   const navigate = useNavigate();
 
   const handleForgotPasswordClick = () => {
     navigate('/password-recovery');
   };
-  const onFinish = (values: any) => {
+  const onFinish = (values) => {
 
     if (values.username === 'admin' && values.password === 'admin') {
       navigate("/home-page");
