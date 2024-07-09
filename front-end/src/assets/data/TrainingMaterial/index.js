@@ -1,11 +1,36 @@
-import TrainingMaterial1 from './TrainingMaterial1';
-import TrainingMaterial2 from './TrainingMaterial2';
-import TrainingMaterial3 from './TrainingMaterial3';
-import TrainingMaterial4 from './TrainingMaterial4';
+import moment from 'moment';
 
-export {
-    TrainingMaterial1,
-    TrainingMaterial2,
-    TrainingMaterial3,
-    TrainingMaterial4,
-};
+export const TrainingMaterial = [
+    {
+        id: 1,
+        name: '.NET Introduction',
+        file_name: '.NET Introduction overview.pdf',
+        is_file: true,
+        modified_by: 'Joseph',
+        modified_on: moment('2012-03-12').format('DD/MM/YYYY'),
+    },
+    {
+        id: 2,
+        name: '.NET Introduction',
+        file_name: '.NET Introduction pattern in lorem.pdf',
+        is_file: true,
+        modified_by: 'Joseph',
+        modified_on: moment('2012-03-12').format('DD/MM/YYYY'),
+    },
+    {
+        id: 3,
+        name: '.NET Introduction',
+        file_name: 'What is future.youtube',
+        is_file: false,
+        modified_by: 'Warrior Tran',
+        modified_on: moment('2022-08-02').format('DD/MM/YYYY'),
+    },
+    {
+        id: 4,
+        name: '.NET Introduction',
+        file_name: '.NET history.ppt',
+        is_file: true,
+        modified_by: 'Warrior Tran',
+        modified_on: moment('2022-08-02').format('DD/MM/YYYY'),
+    },
+];

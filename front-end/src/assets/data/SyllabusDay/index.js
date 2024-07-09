@@ -1,7 +1,24 @@
-import SyllabusDay1 from './SyllbusDay1';
-import SyllabusDay2 from './SyllbusDay2';
-import SyllabusDay3 from './SyllbusDay3';
-import SyllabusDay4 from './SyllbusDay4';
-import SyllabusDay5 from './SyllbusDay5';
+import * as SyllabusUnit from '../SyllabusUnit';
 
-export { SyllabusDay1, SyllabusDay2, SyllabusDay3, SyllabusDay4, SyllabusDay5 };
+export const SyllabusDay = [
+    {
+        id: 1,
+        units: [],
+    },
+    {
+        id: 2,
+        units: [],
+    },
+    {
+        id: 3,
+        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+    },
+    {
+        id: 4,
+        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+    },
+    {
+        id: 5,
+        units: [SyllabusUnit.SyllabusUnit1, SyllabusUnit.SyllabusUnit2],
+    },
+];
