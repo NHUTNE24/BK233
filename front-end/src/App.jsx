@@ -5,7 +5,7 @@ import { TrainingProgramDetail, TrainingProgramView, TrainingProgramList } from 
 import "./App.css";
 import {ViewSyllabus} from './pages';
 import TrainingProgram from '../src/assets/data/TrainingProgram';
-
+import ClassList from "./pages/ClassList";
 const App = () => {
   return (
     <Router>
@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/home-page" element={<HomePage />} />
         <Route path="/user-list" element={<UserList />} />
         <Route path="/view-syllabus" element={<ViewSyllabus />} />
+        <Route path="/view-class" element={<ClassList />} />
         {/* <Route path="/view-program" element={<TrainingProgramDetail TrainingProgram={TrainingProgram} Syllabus={TrainingProgram.syllabi[5]} />} /> */}
         {/* <Route path="/view-program" element={<TrainingProgramList TrainingProgram={TrainingProgram} Syllabus={TrainingProgram?.syllabi[0]} />} /> */}
       </Routes>

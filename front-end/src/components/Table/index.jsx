@@ -7,7 +7,7 @@ function Table({ dataSource, columns }) {
             <table className="w-full text-sm text-left rtl:text-right">
                 <thead className="text-[14px] font-semibold rounded-t-[10px] bg-[#2D3748] text-white">
                     <tr>
-                        {columns.map((item, index) => {
+                        {columns?.map((item, index) => {
                             return (
                                 <th
                                     key={item.key}
@@ -24,7 +24,7 @@ function Table({ dataSource, columns }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataSource.map((item, index) => (
+                    {dataSource?.map((item, index) => (
                         <tr
                             className="bg-white border-b border-black text-[14px] font-semibold"
                             key={index}
