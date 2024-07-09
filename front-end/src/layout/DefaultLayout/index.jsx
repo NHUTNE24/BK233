@@ -5,7 +5,6 @@ import Footer from '../../components/Footer';
 import { useState } from 'react';
 function DefaultLayout({ children }) {
     const [collapsed, setCollapsed] = useState(false);
-
     return (
         <>
             <Header />
