@@ -1,0 +1,47 @@
+server:
+  port: 8058
+common:
+  uri: http://localhost:8080
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: users-route
+          uri: ${common.uri}
+          predicates:
+            - Path=/users/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, API Gateway Service
+        - id: classes-route
+          uri: ${common.uri}
+          predicates:
+            - Path=/classes/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, API Gateway Service
+        - id: syllabus-route
+          uri: ${common.uri}
+          predicates:
+            - Path=/syllabus/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, API Gateway Service
+        - id: training-progarams-route
+          uri: ${common.uri}
+          predicates:
+            - Path=/training-progarams/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, API Gateway Service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
