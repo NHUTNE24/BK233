@@ -1,9 +1,0 @@
-::-webkit-scrollbar {
-    display: none;
-}
-
-#program-detail-page > *, #program-view-page > * {
-    padding-left: 30px;
-    padding-right: 25px;
-    letter-spacing: 0.1rem;
-}

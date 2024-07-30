@@ -1,6 +1,5 @@
 package com.fams.api.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class TrainingMaterialService {
     private final TrainingMaterialRepository trainingMaterialRepository;
     private final UnitChapterRepository unitChapterRepository; 
 
-    @Autowired
+    
     public TrainingMaterialService(TrainingMaterialRepository trainingMaterialRepository, UnitChapterRepository unitChapterRepository) { // Modify this constructor
         this.trainingMaterialRepository = trainingMaterialRepository;
         this.unitChapterRepository = unitChapterRepository; // Initialize the unitChapterRepository

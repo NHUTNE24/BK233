@@ -3,7 +3,6 @@ package com.fams.api.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fams.api.entity.UnitChapter;
@@ -16,7 +15,6 @@ public class UnitChapterService {
     private final OutputStandardRepository outputStandardRepository;
     //Còn syllabusUnit
 
-    @Autowired
     public UnitChapterService(UnitChapterRepository unitChapterRepository, OutputStandardRepository outputStandardRepository) {
         this.unitChapterRepository = unitChapterRepository;
         this.outputStandardRepository = outputStandardRepository;

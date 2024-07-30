@@ -3,11 +3,11 @@ import * as SyllabusUnit from '../SyllabusUnit';
 export const SyllabusDay = [
     {
         id: 1,
-        units: [],
+        units: SyllabusUnit,
     },
     {
         id: 2,
-        units: [],
+        units: SyllabusUnit,
     },
     {
         id: 3,

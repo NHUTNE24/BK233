@@ -1,32 +1,36 @@
+import Proptype from 'prop-types';
+
 import { Tabs } from 'antd';
 import "./SyllabusTab.css";
-import { SyllabusGeneral } from '../../components';
 
-const onChange = (key) => {
-    console.log(key);
+export default function SyllabusTab({
+	tabContent,
+	onChange,
+	tabName,
+}) {
+	const tabs = tabName.reduce((acc, tabName, index) => {
+		acc[tabName] = tabContent[index].content;
+		return acc;
+	}, {});
+	const labelList = tabName;
+	return (
+		<Tabs
+			className="custom-tab"
+			onChange={onChange}
+			type="card"
+			items={labelList.map((name, i) => {
+				return {
+					label: `${name}`,
+					key: i,
+					children: tabs[name],
+				};
+			})}
+		/>
+	)
 };
-const SyllabusTab = (generalInfo) => {
-    console.log(generalInfo);
-    const tabs = {
-        'General': <SyllabusGeneral infoData={generalInfo.generalInfo} />,
-        'Outline': 'Outline here',
-        'Others': 'Others here'
-    }
-    const labelList = ['General', 'Outline', 'Others'];
-    return (
-        <Tabs
-            style={{padding: '0px 20px 0 20px'}}
-            className="custom-tab"
-            onChange={onChange}
-            type="card"
-            items={labelList.map((name, i) => {
-                return {
-                    label: `${name}`,
-                    key: i,
-                    children: tabs[name],
-                };
-            })}
-        />
-    )
-};
-export default SyllabusTab;
+
+SyllabusTab.propTypes = {
+	tabContent: Proptype.arrayOf(Proptype.object),
+	onChange: Proptype.func,
+	tabName: Proptype.arrayOf(Proptype.string),
+}

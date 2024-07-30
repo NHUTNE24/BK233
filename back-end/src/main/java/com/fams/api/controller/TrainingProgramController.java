@@ -2,7 +2,6 @@ package com.fams.api.controller;
 
 import com.fams.api.entity.TrainingProgram;
 import com.fams.api.services.TrainingProgramService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class TrainingProgramController {
 
     private final TrainingProgramService trainingProgramService;
 
-    @Autowired
     public TrainingProgramController(TrainingProgramService trainingProgramService) {
         this.trainingProgramService = trainingProgramService;
     }

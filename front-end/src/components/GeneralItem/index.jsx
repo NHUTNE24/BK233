@@ -18,7 +18,7 @@ function GeneralItem({ Icon, data, label, url }) {
                     : data?.map((item, index) => (
                           <Link
                               key={index}
-                              className={`font-normal text-[14px] underline text-[#285D9A] flex gap-[3px]`}
+                              className={`font-normal text-[14px] underline text-menuIconColor flex gap-[3px]`}
                               to={url[index]}
                           >
                               {item}

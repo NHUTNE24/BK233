@@ -1,6 +1,7 @@
-
 export { default as Button } from './Button';
 export { default as Inputs } from './Inputs';
+export { default as DropdownBox } from './DropdownBox';
+export { default as ModalCustom } from './ModalCustom';
 export { default as CustomTimePicker } from './TimePicker';
 export { default as SyllabusTab } from './SyllabusTab';
 export { default as SyllabusDetail } from './SyllabusDetail';

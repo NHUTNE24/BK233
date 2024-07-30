@@ -1,6 +1,5 @@
 package com.fams.api.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class TrainingProgramService {
     private final TrainingProgramRepository trainingProgramRepository;
 
 
-    @Autowired
     public TrainingProgramService(TrainingProgramRepository trainingProgramRepository) {
         this.trainingProgramRepository = trainingProgramRepository;
 

@@ -58,4 +58,12 @@ public class RoleService implements BaseServices<Role> {
     public void deleteAll() {
         roleRepository.deleteAll();
     }
+    public Role findRoleByName(String name) {
+        Optional<Role> role = roleRepository.findByName(name);
+        if (role.isPresent()) {
+            return role.get();
+        } else {
+            throw new IllegalStateException("No role with id" + name + " found");
+        }
+    }
 }

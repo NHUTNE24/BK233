@@ -1,0 +1,3 @@
+.custom-input-placeholder .ant-input::placeholder {
+    color: "#2D3748"; /* Set your desired placeholder color here */
+  }

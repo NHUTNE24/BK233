@@ -1,71 +1,61 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/store';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage, CodeVerification, LoginForm, PasswordRecovery, SetNewPassword, UserList } from "./pages/User";
-import { TrainingProgramDetail, TrainingProgramView, TrainingProgramList } from './pages';
-import "./App.css";
-import {ViewSyllabus} from './pages';
-import TrainingProgram from '../src/assets/data/TrainingProgram';
-import ClassList from "./pages/ClassList";
+import HomeLayout from "./layout/HomeLayout/HomeLayout";
+import ClassLayout from "./layout/ClassLayout/ClassLayout";
+import CreateClassLayout from "./layout/ClassLayout/CreateClassLayout";
+import ClassList from "./pages/Class/ClassList";
+import ClassDetail from "./pages/Class/ClassDetail";
+import CreateClassStep1 from "./pages/Class/ClassCreate/CreateClassStep1";
+import CreateClassStep2 from "./pages/Class/ClassCreate/CreateClassStep2";
+import CreateClassStep3 from "./pages/Class/ClassCreate/CreateClassStep3";
+import ClassUpdateLayout from "./layout/ClassLayout/ClassUpdateLayout";
+import ClassUpdate from "./pages/Class/ClassUpdate/page1";
+import TestingComponents from "./pages/TestingComponents";
+import Login from "./pages/Login";
+import LoginSuccess from "./pages/Login/LoginSuccess";
+
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/password-recovery" element={<PasswordRecovery />} />
-        <Route path="/code-verification" element={<CodeVerification />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
-        <Route path="/home-page" element={<HomePage />} />
-        <Route path="/user-list" element={<UserList />} />
-        <Route path="/view-syllabus" element={<ViewSyllabus />} />
-        <Route path="/view-class" element={<ClassList />} />
-        {/* <Route path="/view-program" element={<TrainingProgramDetail TrainingProgram={TrainingProgram} Syllabus={TrainingProgram.syllabi[5]} />} /> */}
-        {/* <Route path="/view-program" element={<TrainingProgramList TrainingProgram={TrainingProgram} Syllabus={TrainingProgram?.syllabi[0]} />} /> */}
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/login-success" element={<LoginSuccess />} />
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <HomeLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="class" element={<ClassLayout />}>
+                <Route path="list" element={<ClassList />} />
+                <Route path=":id" element={<ClassDetail />} />
+                <Route path="create" element={<CreateClassLayout />}>
+                  <Route path="step1" element={<CreateClassStep1 />} />
+                  <Route path=":className/step2" element={<CreateClassStep2 />} />
+                  <Route path=":className/step3" element={<CreateClassStep3 />} />
+                </Route>
+                <Route path="update" element={<ClassUpdateLayout />}>
+                  <Route path=":id" element={<ClassUpdate />} />
+                  {/* <Route path=":classId/step2" element={<ClassUpdatePage2 />} /> */}
+                </Route>
+                <Route path="edit" />
+              </Route>
+              <Route path="testing" element={<TestingComponents />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   );
-}
-
-// import Routers from './Routers/Routers';
-// import { Button, ConfigProvider } from 'antd';
-// import './App.css';
-// import DateModalExample from './components/DateModalExample';
-
-// const App = () => {
-//     return (
-//         <>
-//             <Routers />
-
-//             <div>
-//                 <DateModalExample />
-//             </div>
-//         </>
-// =======
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { publicRoutes } from './Routers';
-// import DefaultLayout from './layout/DefaultLayout';
-
-// const App = () => {
-//     return (
-//         <Router>
-//             <div className="App">
-//                 <Routes>
-//                     {publicRoutes.map((route, index) => {
-//                         const Page = route.component;
-//                         return (
-//                             <Route
-//                                 key={index}
-//                                 path={route.path}
-//                                 element={
-//                                     <DefaultLayout>
-//                                         <Page />
-//                                     </DefaultLayout>
-//                                 }
-//                             ></Route>
-//                         );
-//                     })}
-//                 </Routes>
-//             </div>
-//         </Router>
-
+};
 
 export default App;

@@ -1,3 +1,21 @@
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropdownCircleOutlined';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+
+export { 
+    EastOutlinedIcon,
+    ArrowDropDownCircleOutlinedIcon,
+    ModeEditOutlinedIcon,
+    ContentCopyOutlinedIcon,
+    VisibilityOffOutlinedIcon,
+    VisibilityOutlinedIcon,
+    DeleteForeverOutlinedIcon,
+};
+
 export const SortIcon = () => (
     <svg
         width="18"

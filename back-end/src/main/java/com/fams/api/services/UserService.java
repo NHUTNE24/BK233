@@ -41,7 +41,6 @@ public class UserService implements BaseServices<UserModel> {
             user.setFullname(changedUser.getFullname());
             user.setEmail(changedUser.getEmail());
             user.setUsername(changedUser.getUsername());
-            user.setPassword(changedUser.getPassword());
             user.setPhone(changedUser.getPhone());
             user.setDob(changedUser.getDob());
             user.setGender(changedUser.isGender());
@@ -61,5 +60,16 @@ public class UserService implements BaseServices<UserModel> {
 
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    @Autowired
+    private UserRepository repo;
+    
+    public Optional<UserModel> findByEmail(String email){
+        return repo.findByEmail(email);
+    }
+
+    public void save(UserModel user){
+        repo.save(user);
     }
 }

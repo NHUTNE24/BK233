@@ -1,14 +1,111 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-:root {
-    font-size: 62.5%;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.6rem;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+	font-size: 16px;
+	line-height: 1;
+
+	/* color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424; */
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+	@apply font-bold text-6xl;
+}
+
+h2 {
+	@apply font-bold text-5xl;
+}
+
+h3 {
+	@apply font-bold text-4xl;
+}
+
+h4 {
+	@apply font-bold text-3xl;
+}
+
+h5 {
+	@apply font-bold text-2xl;
+}
+
+h6 {
+	@apply font-bold text-xl;
+}
+
+.subtitle1 {
+	@apply font-semibold text-base;
+}
+
+.subtitle2 {
+	@apply font-semibold text-sm;
+
+}
+
+.body1 {
+	@apply font-medium text-base;
+}
+
+.body2 {
+	@apply font-medium text-sm;
+}
+
+.caption1 {
+	@apply font-medium text-xs;
+}
+
+.caption2 {
+	@apply font-medium text-xs italic;
+}
+
+.footnote {
+	@apply font-normal text-xxs;
+}
+
+.overline {
+	@apply font-normal text-xs uppercase;
+}
+
+.elevation1 {
+	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.15);
+}
+
+.elevation2 {
+	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.15);
+}
+
+.elevation3 {
+	box-shadow: 0px 1px 3px 0px #0000004D;
+}
+
+.elevation4 {
+	box-shadow: 0px 4px 8px 3px #00000026;
+}
+
+.btn-text-lg {
+	@apply font-bold text-base;
+}
+
+.btn-text-md {
+	@apply font-bold text-sm;
+}
+
+.btn-text-sm {
+	@apply font-bold text-xs;
+}
+
+/* button {
+	@apply !px-6 !h-[40px] !text-base !rounded-full;
+} */
