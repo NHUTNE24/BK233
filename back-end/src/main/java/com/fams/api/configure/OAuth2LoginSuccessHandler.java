@@ -1,6 +1,5 @@
 package com.fams.api.configure;
 
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -57,9 +56,17 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                 user = optionalUser.get();
                 username = user.getFullname();
             } else {
-                String redirectUrl = frontendUrl + "/login?error=UserNotFound";
-                response.sendRedirect(redirectUrl);
-                return;
+                // String redirectUrl = frontendUrl + "/login?error=UserNotFound";
+                // response.sendRedirect(redirectUrl);
+                // return;
+                UserModel newUserModel = new UserModel();
+                newUserModel.setRole(RoleService.findRoleByName('Super admin'));
+                newUserModel.setEmail(email);
+                newUserModel.setFullname(name);
+                newUserModel.setSource("google".equals(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId()) ? RegistrationSource.GITHUB : RegistrationSource.GOOGLE);
+                userService.save(newUserModel);
+                jwtToken = jwtService.generateToken(newUserModel);
+                username = newUserModel.getFullname();
             }
         }
         if("facebook".equals(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId())) {
