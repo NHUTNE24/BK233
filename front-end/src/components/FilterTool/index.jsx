@@ -1,298 +1,133 @@
-import {
-	Checkbox,
-	Col,
-	DatePicker,
-	Form,
-	Select,
-	Row,
-	Space,
-} from 'antd';
-import styles from './style.module.css';
-import ButtonComponent from '../Button/Button';
-const { Option } = Select;
-const onFinish = (values) => {
+import React from 'react';
+import './styles.css'
+import { Select, Space } from 'antd';
+
+const onFinish = (e) => {
+	e.preventDefault();
+	const formData = new FormData(e.target);
+	const values = Object.fromEntries(formData.entries());
 	console.log('Received values of form: ', values);
 };
 
+const options = [
+	{
+		label: 'Ho Chi Minh',
+		value: 'ho-chi-minh',
+	},
+	{
+		label: 'Da Nang',
+		value: 'da-nang',
+	},
+];
+
 const FilterTool = () => (
-	<Form
-		name="filter"
-		onFinish={onFinish}
-		requiredMark={false}
-		className={styles['filter-form']}
-	>
-		<Row gutter={43}>
-			<Col span={12}>
-				<label className={styles['location-title']}>
-					Class location
-				</label>
-				<Form.Item
-					name="select-location"
-					colon={false}
-					rules={[
-						{
-							required: true,
-							message: 'Please select class location!',
-							type: 'array',
-						},
-					]}
-				>
-					<Select
-						mode="multiple"
-						placeholder="Please select class location"
-					>
-						<Option value="HoChiMinh">Ho Chi Minh</Option>
-						<Option value="DaNang">Da Nang</Option>
-						<Option value="HaNoi">Ha Noi</Option>
-					</Select>
-				</Form.Item>
-			</Col>
-			<Col span={12}>
-				<p className={styles['location-title']}>Class time frame</p>
-				<Row gutter={16}>
-					<Col span={12}>
-						<Form.Item
-							name="date-from"
-							label={
-								<label className={styles['from-time']}>
-									from
-								</label>
-							}
-							colon={false}
-							rules={[
-								{
-									required: true,
-									message: 'Please select start day!',
-								},
-							]}
-						>
-							<DatePicker placeholder="--/--/----" />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item
-							name="date-to"
-							label={
-								<label className={styles['to-time']}>to</label>
-							}
-							colon={false}
-							rules={[
-								{
-									required: true,
-									message: 'Please select end day!',
-								},
-							]}
-						>
-							<DatePicker placeholder="--/--/----" />
-						</Form.Item>
-					</Col>
-				</Row>
-			</Col>
-		</Row>
-		<Row>
-			<Col span={8}>
-				<Form.Item rules={[{ required: true }]} name="classTime">
-					<Row>
-						<Col span={10}>
-							<p className={styles['class-time']}>Class time</p>
-						</Col>
-						<Col span={4}>
-							<Checkbox.Group>
-								<Col span={24}>
-									<Checkbox
-										value="morning"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Morning
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="noon"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Noon
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="night"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Night
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="online"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Online
-									</Checkbox>
-								</Col>
-							</Checkbox.Group>
-						</Col>
-					</Row>
-				</Form.Item>
-			</Col>
-			<Col span={8}>
-				<Form.Item name="classStatus">
-					<Row>
-						<Col span={6}>
-							<p className={styles['class-status']}>Status</p>
-						</Col>
-						<Col span={4}>
-							<Checkbox.Group>
-								<Col span={24}>
-									<Checkbox
-										value="planning"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Planning
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="openning"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Openning
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="closed"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Closed
-									</Checkbox>
-								</Col>
-							</Checkbox.Group>
-						</Col>
-					</Row>
-				</Form.Item>
-			</Col>
-			<Col span={8}>
-				<Form.Item name="classAttendee">
-					<Row>
-						<Col span={8}>
-							<p className={styles['class-attendee']}>Attendee</p>
-						</Col>
-						<Col span={16}>
-							<Checkbox.Group>
-								<Col span={24}>
-									<Checkbox
-										value="intern"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Intern
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="fresher"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Fresher
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="onlineFeeFresher"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Online fee-fresher
-									</Checkbox>
-								</Col>
-								<Col span={24}>
-									<Checkbox
-										value="offlineFeeFresher"
-										style={{
-											lineHeight: '32px',
-										}}
-									>
-										Offline fee-fresher
-									</Checkbox>
-								</Col>
-							</Checkbox.Group>
-						</Col>
-					</Row>
-				</Form.Item>
-			</Col>
-		</Row>
-		<Row gutter={16}>
-			<Col span={10}>
-				<Form.Item
-					name="select-FSU"
-					colon={false}
-					label={<p className={styles['location-title']}>FSU</p>}
-					rules={[
-						{
-							required: true,
-							message: 'Please select FSU!',
-						},
-					]}
-				>
-					<Select placeholder="Select">
-						<Option value="FSOFTHoChiMinh">
-							FSOFT Ho Chi Minh
-						</Option>
-						<Option value="FSOFTDaNang">FSOFT Da Nang</Option>
-						<Option value="FSOFTHaNoi">FSOFT Ha Noi</Option>
-					</Select>
-				</Form.Item>
-			</Col>
-			<Col span={10}>
-				<Form.Item
-					name="select-trainer"
-					colon={false}
-					label={<p className={styles['location-title']}>Trainer</p>}
-					rules={[
-						{
-							required: true,
-							message: 'Please select your trainer!',
-						},
-					]}
-				>
-					<Select placeholder="Select">
-						<Option value="VinhVuiVe">Dr. Vinh Vui Ve</Option>
-					</Select>
-				</Form.Item>
-			</Col>
-		</Row>
-		<Row>
-			<Form.Item
-				wrapperCol={{
-					span: 12,
-					offset: 6,
-				}}
-			>
-				<Space>
-					<ButtonComponent text="Clear" htmlType="reset" />
-					<ButtonComponent text="Apply" htmlType="submit" />
-				</Space>
-			</Form.Item>
-		</Row>
-	</Form>
+	<div>
+		<form name="filter" onSubmit={onFinish} className="flex flex-col gap-8">
+			<div className="flex flex-row justify-between gap-10">
+				<div className="flex flex-col grow">
+					<label className="location-title">Class location</label>
+					<div className="multi-select">
+						<Select
+							mode="multiple"
+							size="middle"
+							placeholder="Please select"
+							style={{ width: '100%' }}
+							options={options}
+						/>
+					</div>
+				</div>
+				<div className="flex flex-col">
+					<p className="location-title">Class time frame</p>
+					<div className="flex flex-row gap-2">
+						<div className="flex flex-row gap-2 items-center">
+							<label className="from-time">from</label>
+							<input type="date" name="date-from" required />
+						</div>
+						<div className="flex flex-row gap-2 items-center">
+							<label className="to-time">to</label>
+							<input type="date" name="date-to" required />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-row justify-between">
+				<div className="flex flex-row gap-3">
+					<p className="font-bold">Class time</p>
+					<div className="flex flex-col gap-2">
+						<label>
+							<input type="checkbox" name="classTime" value="morning" /> Morning
+						</label>
+						<label>
+							<input type="checkbox" name="classTime" value="noon" /> Noon
+						</label>
+						<label>
+							<input type="checkbox" name="classTime" value="night" /> Night
+						</label>
+						<label>
+							<input type="checkbox" name="classTime" value="online" /> Online
+						</label>
+					</div>
+				</div>
+				<div className="flex flex-row gap-3">
+					<p className="font-bold">Status</p>
+					<div className="flex flex-col gap-2">
+						<label>
+							<input type="checkbox" name="status" value="planning" /> Planning
+						</label>
+						<label>
+							<input type="checkbox" name="status" value="opening" /> Opening
+						</label>
+						<label>
+							<input type="checkbox" name="status" value="closed" /> Closed
+						</label>
+					</div>
+				</div>
+				<div className="flex flex-row gap-3">
+					<p className="font-bold">Attendee</p>
+					<div className="flex flex-col gap-2">
+						<label>
+							<input type="checkbox" name="attendee" value="intern" /> Intern
+						</label>
+						<label>
+							<input type="checkbox" name="attendee" value="fresher" /> Fresher
+						</label>
+						<label>
+							<input type="checkbox" name="attendee" value="online-fee-fresher" /> Online fee-fresher
+						</label>
+						<label>
+							<input type="checkbox" name="attendee" value="offline-fee-fresher" /> Offline fee-fresher
+						</label>
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-row gap-12">
+				<div className="flex flex-row items-center gap-3">
+					<label className="location-title">FSU</label>
+					<select name="fsu" className='shadow-xl elevation2 rounded-md h-8' required>
+						<option value="">Select</option>
+						<option value="FSOFTHoChiMinh">FSOFT Ho Chi Minh</option>
+						<option value="FSOFTDaNang">FSOFT Da Nang</option>
+						<option value="FSOFTHaNoi">FSOFT Ha Noi</option>
+					</select>
+				</div>
+				<div className="flex flex-row items-center gap-3">
+					<label className="location-title">Trainer</label>
+					<select name="fsu" className='shadow-xl elevation2 rounded-md h-8' required>
+						<option value="">Select</option>
+						<option value="FSOFTHoChiMinh">Dr.Vinh Vui Ve </option>
+						<option value="FSOFTDaNang">Dr.Ngo Huy</option>
+						<option value="FSOFTHaNoi">Dr.The Thanh</option>
+					</select>
+				</div>
+			</div>
+			<div className="flex flex-col items-end">
+				<div className="flex flex-row gap-2">
+					<button type="reset" className="clear-btn">Clear</button>
+					<button type="submit" className="search-btn">Search</button>
+				</div>
+			</div>
+		</form>
+	</div>
 );
+
 export default FilterTool;

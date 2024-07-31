@@ -1,10 +1,10 @@
 package com.fams.api.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.sql.Date;
 
 @Document(collection = "syllabus_unit")
 @Data
@@ -13,12 +13,13 @@ import java.sql.Date;
 public class SyllabusUnit {
     @Id
     private String id;
-    private String created_by;
-    private Date created_date;
-    private Boolean is_deleted;
-    private String modified_by;
-    private Date modified_date;
-    private Integer duration;
+    private String createdBy;
+    private String createdDate;
+    private Boolean isDeleted;
+    private String modifiedBy;
+    private String modifiedDate;
+    private Float duration;
     private String name;
-    private Integer unit_no;
+    private Integer unitNo;
+    private String syllabusDayId;
 }

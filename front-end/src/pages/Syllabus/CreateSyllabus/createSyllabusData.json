@@ -1,0 +1,125 @@
+{
+  "userName": "John Doe",
+  "syllabusDay": [
+    {
+      "syllabusUnits": [
+        {
+          "unitName": "Introduction to Programming",
+          "unitChapters": [
+            {
+              "duration": 60,
+              "isOnline": true,
+              "name": "Getting Started",
+              "deliveryTypeId": "6698d910aabdd109ad04abd6",
+              "outputStandardId": "6698d8e8aabdd109ad04abd1"
+            },
+            {
+              "duration": 90,
+              "isOnline": true,
+              "name": "Basic Syntax",
+              "deliveryTypeId": "6698d914aabdd109ad04abd7",
+              "outputStandardId": "6698d8ebaabdd109ad04abd2"
+            }
+          ]
+        },
+        {
+          "unitName": "Data Structures",
+          "unitChapters": [
+            {
+              "duration": 120,
+              "isOnline": true,
+              "name": "Arrays and Lists",
+              "deliveryTypeId": "6698d918aabdd109ad04abd8",
+              "outputStandardId": "6698d8efaabdd109ad04abd3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "syllabusUnits": [
+        {
+          "unitName": "Algorithms",
+          "unitChapters": [
+            {
+              "duration": 180,
+              "isOnline": true,
+              "name": "Sorting Algorithms",
+              "deliveryTypeId": "6698d94baabdd109ad04abdb",
+              "outputStandardId": "6698d8f3aabdd109ad04abd4"
+            },
+            {
+              "duration": 150,
+              "isOnline": true,
+              "name": "Searching Algorithms",
+              "deliveryTypeId": "6698d951aabdd109ad04abdc",
+              "outputStandardId": "6698d8f6aabdd109ad04abd5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "syllabusUnits": [
+        {
+          "unitName": "Advanced Topics",
+          "unitChapters": [
+            {
+              "duration": 60,
+              "isOnline": true,
+              "name": "Concurrency",
+              "deliveryTypeId": "6698d958aabdd109ad04abdd",
+              "outputStandardId": "6698d8e8aabdd109ad04abd1"
+            },
+            {
+              "duration": 90,
+              "isOnline": true,
+              "name": "Distributed Systems",
+              "deliveryTypeId": "6698d910aabdd109ad04abd6",
+              "outputStandardId": "6698d8ebaabdd109ad04abd2"
+            },
+            {
+              "duration": 120,
+              "isOnline": true,
+              "name": "Machine Learning Basics",
+              "deliveryTypeId": "6698d914aabdd109ad04abd7",
+              "outputStandardId": "6698d8efaabdd109ad04abd3"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assignmentSchema": {
+    "assignment": 25,
+    "finalPractice": 35,
+    "finalAssessment": 20,
+    "finalTheory": 20,
+    "gpa": 4,
+    "quiz": 15
+  },
+  "basicInfo": {
+    "syllabusName": "Advanced Computer Science",
+    "code": "CS201",
+    "version": "1.0"
+  },
+  "general": {
+    "level": "Intermediate",
+    "attendeeNumer": 20,
+    "technicalContent": "Advanced programming, data structures, algorithms, and topics in computer science",
+    "courseContent": "Advanced programming concepts, detailed data structures, complex algorithms, and modern topics like concurrency and machine learning"
+  },
+  "trainingPrinciple": {
+    "training": "Interactive coding sessions",
+    "pretest": "Intermediate programming knowledge test",
+    "marking": "Combination of automated and manual grading",
+    "waiverCriteria": "Prior completion of beginner course",
+    "others": "Access to advanced learning materials and forums"
+  },
+  "isSyllabusDaysValid": true,
+  "isAssessmentSchemaValid": true,
+  "isBasicInfoValid": true,
+  "isGeneralValid": true,
+  "isTrainingPrincipleValid": true,
+  "status": "Active"
+}

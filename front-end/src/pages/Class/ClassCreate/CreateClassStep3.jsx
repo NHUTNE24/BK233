@@ -4,7 +4,7 @@ import {
 	DropdownIcon,
 	MoreIcon,
 	AlarmIcon,
-} from '../../../assets/Icons';
+} from '../../../assets/icons';
 import { TimePicker } from 'antd';
 
 function CreateClassStep3() {

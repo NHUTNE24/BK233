@@ -63,8 +63,12 @@ function ModalCustom({
 }
 
 ModalCustom.propTypes = {
+    width: PropTypes.number,
     isModalOpen: PropTypes.bool,
     handleCancel: PropTypes.func,
+    modalTitle: PropTypes.node,
+    bodyContent: PropTypes.node,
+    footer: PropTypes.node,
 };
 
 export default ModalCustom;

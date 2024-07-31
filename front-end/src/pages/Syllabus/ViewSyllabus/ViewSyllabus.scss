@@ -1,0 +1,138 @@
+.view-syllabus {
+  padding: 20px 0;
+
+  &__header {
+    // padding-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  // Tools: search, calendar, import, add
+  &__tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 38px;
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    width: 605px;
+    height: 36px;
+    gap: 5px;
+
+    .input__placeholder--black input::placeholder {
+      color: black;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+
+    .input-wrapper {
+      border: 1px solid #8B8B8B;
+      border-radius: 8px;
+      transition: all 0.1s;
+    }
+
+    .input-wrapper:focus-within {
+      border: 2px solid black;
+      font-weight: 500;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    width: 239px;
+    height: 32px;
+    gap: 5px;
+
+  }
+
+  .table-custom .ant-table-wrapper .ant-table-row .ant-table-cell:first-child {
+    padding: 0px;
+    padding-left: 10px;
+
+  }
+
+  .table__syllabus-name {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 15px 5px;
+
+  }
+
+  // Pagination
+  .ant-pagination {
+    margin: 32px 0;
+  }
+
+  .ant-pagination li.ant-pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #E2E8F0;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+  }
+
+  .ant-pagination-item-active a {
+    color: white;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100%;
+  }
+
+
+  li.ant-pagination-item:hover {
+    color: white;
+    background-color: var(--primary-color);
+  }
+
+  .ant-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover {
+    transition: all 0.2s;
+    background-color: var(--primary-color);
+
+    a {
+      color: white;
+    }
+  }
+
+  .ant-pagination-item-active a {
+    color: white;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100%;
+  }
+
+  .ant-pagination .ant-pagination-prev {
+    margin-left: auto;
+  }
+
+  .ant-pagination .ant-pagination-options {
+    margin-left: auto;
+
+    // float: right;
+    .ant-select-arrow {
+      color: var(--primary-color);
+    }
+  }
+
+  .ant-pagination-options::before {
+    content: "Rows per page ";
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  // End Pagination
+  // // End Pagination
+}

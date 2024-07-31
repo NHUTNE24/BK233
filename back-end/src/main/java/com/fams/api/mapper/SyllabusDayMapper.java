@@ -1,9 +1,8 @@
 package com.fams.api.mapper;
 
-import org.mapstruct.Mapper;
-
 import com.fams.api.dto.SyllabusDayDTO;
 import com.fams.api.entity.SyllabusDay;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface SyllabusDayMapper {

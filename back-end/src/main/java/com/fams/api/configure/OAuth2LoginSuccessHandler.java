@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.fams.api.entity.RegistrationSource;
 import com.fams.api.entity.UserModel;
 import com.fams.api.services.CustomOAuth2User;
 import com.fams.api.services.JwtService;
@@ -56,17 +55,9 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                 user = optionalUser.get();
                 username = user.getFullname();
             } else {
-                // String redirectUrl = frontendUrl + "/login?error=UserNotFound";
-                // response.sendRedirect(redirectUrl);
-                // return;
-                UserModel newUserModel = new UserModel();
-                newUserModel.setRole(RoleService.findRoleByName('Super admin'));
-                newUserModel.setEmail(email);
-                newUserModel.setFullname(name);
-                newUserModel.setSource("google".equals(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId()) ? RegistrationSource.GITHUB : RegistrationSource.GOOGLE);
-                userService.save(newUserModel);
-                jwtToken = jwtService.generateToken(newUserModel);
-                username = newUserModel.getFullname();
+                String redirectUrl = frontendUrl + "/login?error=UserNotFound";
+                response.sendRedirect(redirectUrl);
+                return;
             }
         }
         if("facebook".equals(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId())) {

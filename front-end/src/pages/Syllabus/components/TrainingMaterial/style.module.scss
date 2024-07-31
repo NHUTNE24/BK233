@@ -1,0 +1,138 @@
+.container {
+   min-width: 742px;
+   background-color: #fff;
+   border-radius: 20px;
+   margin-left: -24px;
+   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2D3748;
+    color: #fff;
+    padding: 2px 16px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.body {
+    padding: 12px 16px;
+    
+}
+
+.title {
+    display: flex;
+    align-items: center;
+
+    font-size: 16px !important;
+    line-height: 24px;
+    font-weight: 600;
+    color: #000;
+
+}
+
+.content {
+    background-color: #DFDEDE;
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin: 16px 0;
+}
+
+.action {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.history {
+
+    font-family: 'Inter-Tight';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    font-style: italic;
+
+}
+
+
+.day-number {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+
+}
+
+.close-btn {
+    font-size: 24px;
+    margin-top: 4px;
+
+}
+
+.close-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.unit-number {
+
+}
+
+.unit-name {
+    margin-left: 50px;
+}
+
+.chapter-name {
+    color: #000;
+
+}
+
+.material-list {
+
+}
+
+.material-item {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0;
+    min-width: 645px;
+
+}
+
+.material-name {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    color: #0C4DA2;
+    text-decoration: underline;
+}
+
+.edit-btn {
+    margin-left: 16px;
+    font-size: 22px;
+}
+
+.edit-btn:hover {
+    cursor: pointer;
+}
+
+.delete-btn {
+    margin-left: 16px;
+    font-size: 22px;
+}
+
+.delete-btn:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.upload-btn {
+    margin-bottom: 8px;
+
+}
+

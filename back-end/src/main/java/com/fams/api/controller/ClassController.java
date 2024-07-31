@@ -4,7 +4,6 @@ import com.fams.api.dto.ClassDTO;
 import com.fams.api.services.ClassService;
 
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/classes")
 public class ClassController {
     private final ClassService classService;
+
 
     @GetMapping
     public List<ClassDTO> getAllClasses() {

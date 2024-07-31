@@ -1,6 +1,9 @@
 package com.fams.api.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -12,20 +15,19 @@ import java.util.List;
 @Setter
 public class SyllabusDTO {
   private String id;
-  private String topic_code;
-  private String topic_name;
+  private String topicCode;
+  private String topicName;
   private String version;
-  private String created_by;
-  private String created_date;
-  private String modified_by;
-  private String modified_date;
-  private Integer attendee_number;
-  private List<String> level;
-  private String technical_requirement;
-  private String couse_objective;
-  private Integer delivery_principle;
+  private String createdBy;
+  private String createdDate;
+  private String modifiedBy;
+  private String modifiedDate;
+  private Integer attendeeNumber;
+  private String level;
+  private String technicalRequirement;
+  private String courseObjective;
   private Integer days;
-  private float hours;
-
-  private List<String> trainingProgramCode;
+  private Float hours;
+  private String status;
+  private List<String> outputStandards;
 }

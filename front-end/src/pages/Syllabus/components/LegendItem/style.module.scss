@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin: 0;  
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.title, .percent {
+    font-family: 'Inter',sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #000;
+}
+
+.title {
+    margin-left: 12px;
+    margin-top: 0;
+    min-width: 108px;
+    margin-bottom: 0;
+    padding: 6px 0;
+    text-align: start;
+}
+
+.percent {
+    margin-left: 18px;
+}

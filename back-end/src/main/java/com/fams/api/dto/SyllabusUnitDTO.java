@@ -1,9 +1,10 @@
 package com.fams.api.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.sql.Date;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -12,12 +13,13 @@ import java.sql.Date;
 @Setter
 public class SyllabusUnitDTO {
     private String id;
-    private String created_by;
-    private Date created_date;
-    private Boolean is_deleted;
-    private String modified_by;
-    private Date modified_date;
-    private Integer duration;
+    private String createdBy;
+    private String createdDate;
+    private Boolean isDeleted;
+    private String modifiedBy;
+    private String modifiedDate;
+    private Float duration;
     private String name;
-    private Integer unit_no;
+    private Integer unitNo;
+    private String syllabusDayId;
 }

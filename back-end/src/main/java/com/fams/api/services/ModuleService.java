@@ -1,16 +1,14 @@
 package com.fams.api.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.fams.api.dto.ModuleDTO;
 import com.fams.api.entity.Module;
 import com.fams.api.mapper.ModuleMapper;
 import com.fams.api.repository.ModuleRepository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service

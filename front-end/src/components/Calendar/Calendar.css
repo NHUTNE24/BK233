@@ -1,0 +1,31 @@
+
+.ant-picker-cell-inner {
+    height: 200px; 
+    width: 100px;  
+  }
+  
+  .ant-picker-cell {
+    padding: 10px;  
+  }
+  
+  .full-calendar-container {
+    margin: 0 auto;
+  }
+  
+  .events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px; 
+   
+  }
+  
+  .events li {
+    margin-bottom: 10px;
+  }
+  
+  .notes-month {
+    text-align: center;
+    font-size: 28px;
+  }
+  

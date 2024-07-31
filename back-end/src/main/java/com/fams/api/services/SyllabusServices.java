@@ -1,29 +1,49 @@
 package com.fams.api.services;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.fams.api.dto.SyllabusDTO;
+import com.fams.api.entity.AssignmentSchema;
+import com.fams.api.entity.Syllabus;
+import com.fams.api.entity.SyllabusDay;
+import com.fams.api.entity.TrainingDeliveryPrinciple;
+import com.fams.api.mapper.SyllabusMapper;
+import com.fams.api.repository.SyllabusDayRepo;
+import com.fams.api.repository.SyllabusRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.fams.api.dto.SyllabusDTO;
-import com.fams.api.entity.Syllabus;
-import com.fams.api.mapper.SyllabusMapper;
-import com.fams.api.repository.SyllabusRepository;
-
-import lombok.AllArgsConstructor;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
 public class SyllabusServices implements BaseServices<SyllabusDTO> {
   private SyllabusRepository syllabusRepository;
+  private final SyllabusDayRepo syllabusDayRepo;
   private final SyllabusMapper syllabusMapper;
+  private final TrainingDeliveryPrincipleService trainingDeliveryPrincipleService;
+  private final AssignmentSchemaService assignmentSchemaService;
+  private SyllabusDayServices syllabusDayServices;
 
   @Override
   public SyllabusDTO create(SyllabusDTO syllabusDTO) {
     Syllabus syllabus = syllabusMapper.toEntity(syllabusDTO);
+    if (syllabusDTO.getDays() == null) syllabus.setDays(0);
+    if (syllabusDTO.getHours() == null) syllabus.setHours(0);
+    if (syllabusDTO.getAttendeeNumber() == null) syllabus.setAttendeeNumber(0);
+    syllabus.setOutputStandards(new ArrayList<>());
+
     Syllabus savedSyllabus = syllabusRepository.insert(syllabus);
-    SyllabusDTO savedSyllabusDTO = syllabusMapper.toDTO(savedSyllabus);
-    return savedSyllabusDTO;
+
+    AssignmentSchema assignmentSchema = new AssignmentSchema();
+    assignmentSchema.setSyllabusId(savedSyllabus.getId());
+    assignmentSchemaService.create(assignmentSchema);
+
+    TrainingDeliveryPrinciple trainingDeliveryPrinciple = new TrainingDeliveryPrinciple();
+    trainingDeliveryPrinciple.setSyllabusId(savedSyllabus.getId());
+    trainingDeliveryPrincipleService.create(trainingDeliveryPrinciple);
+
+    return syllabusMapper.toDTO(savedSyllabus);
   }
 
   @Override
@@ -35,8 +55,9 @@ public class SyllabusServices implements BaseServices<SyllabusDTO> {
   @Override
   public SyllabusDTO findByID(String id) {
     Optional<Syllabus> syllabusToFind = syllabusRepository.findById(id);
-    Syllabus syllabus = syllabusToFind.get();
-    return syllabusMapper.toDTO(syllabus);
+    if (syllabusToFind.isPresent())
+    return syllabusMapper.toDTO(syllabusToFind.get());
+    else throw new RuntimeException("Syllabus not found with id " + id);
   }
 
   @Override
@@ -46,47 +67,50 @@ public class SyllabusServices implements BaseServices<SyllabusDTO> {
     if (syllabusDTO.getId() != null) {
       syllabusToUpdate.setId(syllabusDTO.getId());
     }
-    if (syllabusDTO.getTopic_code() != null) {
-      syllabusToUpdate.setTopic_code(syllabusDTO.getTopic_code());
+    if (syllabusDTO.getTopicCode() != null) {
+      syllabusToUpdate.setTopicCode(syllabusDTO.getTopicCode());
     }
-    if (syllabusDTO.getTopic_name() != null) {
-      syllabusToUpdate.setTopic_name(syllabusDTO.getTopic_name());
+    if (syllabusDTO.getTopicName() != null) {
+      syllabusToUpdate.setTopicName(syllabusDTO.getTopicName());
     }
     if (syllabusDTO.getVersion() != null) {
       syllabusToUpdate.setVersion(syllabusDTO.getVersion());
     }
-    if (syllabusDTO.getCreated_by() != null) {
-      syllabusToUpdate.setCreated_by(syllabusDTO.getCreated_by());
+    if (syllabusDTO.getCreatedBy() != null) {
+      syllabusToUpdate.setCreatedBy(syllabusDTO.getCreatedBy());
     }
-    if (syllabusDTO.getCreated_date() != null) {
-      syllabusToUpdate.setCreated_date(syllabusDTO.getCreated_date());
+    if (syllabusDTO.getCreatedDate() != null) {
+      syllabusToUpdate.setCreatedDate(syllabusDTO.getCreatedDate());
     }
-    if (syllabusDTO.getModified_by() != null) {
-      syllabusToUpdate.setModified_by(syllabusDTO.getModified_by());
+    if (syllabusDTO.getModifiedBy() != null) {
+      syllabusToUpdate.setModifiedBy(syllabusDTO.getModifiedBy());
     }
-    if (syllabusDTO.getModified_date() != null) {
-      syllabusToUpdate.setModified_date(syllabusDTO.getModified_date());
+    if (syllabusDTO.getModifiedDate() != null) {
+      syllabusToUpdate.setModifiedDate(syllabusDTO.getModifiedDate());
     }
-    if (syllabusDTO.getAttendee_number() != null) {
-      syllabusToUpdate.setAttendee_number(syllabusDTO.getAttendee_number());
+    if (syllabusDTO.getAttendeeNumber() != null) {
+      syllabusToUpdate.setAttendeeNumber(syllabusDTO.getAttendeeNumber());
     }
     if (syllabusDTO.getLevel() != null) {
       syllabusToUpdate.setLevel(syllabusDTO.getLevel());
     }
-    if (syllabusDTO.getTechnical_requirement() != null) {
-      syllabusToUpdate.setTechnical_requirement(syllabusDTO.getTechnical_requirement());
+    if (syllabusDTO.getTechnicalRequirement() != null) {
+      syllabusToUpdate.setTechnicalRequirement(syllabusDTO.getTechnicalRequirement());
     }
-    if (syllabusDTO.getCouse_objective() != null) {
-      syllabusToUpdate.setCouse_objective(syllabusDTO.getCouse_objective());
-    }
-    if (syllabusDTO.getDelivery_principle() != null) {
-      syllabusToUpdate.setDelivery_principle(syllabusDTO.getDelivery_principle());
+    if (syllabusDTO.getCourseObjective() != null) {
+      syllabusToUpdate.setCourseObjective(syllabusDTO.getCourseObjective());
     }
     if (syllabusDTO.getDays() != null) {
       syllabusToUpdate.setDays(syllabusDTO.getDays());
     }
     if (syllabusDTO.getHours() != 0) {
       syllabusToUpdate.setHours(syllabusDTO.getHours());
+    }
+    if (syllabusDTO.getStatus() != null) {
+      syllabusToUpdate.setStatus(syllabusDTO.getStatus());
+    }
+    if (syllabusDTO.getOutputStandards() != null) {
+      syllabusToUpdate.setOutputStandards(syllabusDTO.getOutputStandards());
     }
 
     Syllabus updatedSyllabus = syllabusRepository.save(syllabusToUpdate);
@@ -101,5 +125,42 @@ public class SyllabusServices implements BaseServices<SyllabusDTO> {
   @Override
   public void deleteAll() {
     syllabusRepository.deleteAll();
+  }
+
+  // Get all training materials
+  public String getAllTrainingMaterials(String syllabusId) {
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    try {
+      return syllabusRepository.findById(syllabusId).map(syllabus -> {
+        List<Object> trainingMaterialList = new ArrayList<>();
+
+        Optional<List<SyllabusDay>> syllabusDay = syllabusDayRepo.findBySyllabusId(syllabusId);
+        List<SyllabusDay> dayList = syllabusDay.get();
+
+        for (SyllabusDay day : dayList) {
+          try {
+            String syllabusDayId = day.getId();
+            trainingMaterialList.add(objectMapper.readValue(syllabusDayServices.getAllTrainingMaterials(syllabusDayId), Object.class));
+          } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+          }
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("name", syllabus.getTopicName());
+        result.put("trainingMaterialHierarchy", trainingMaterialList);
+
+        try {
+          return objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+          System.out.println(e.getMessage());
+          return "";
+        }
+      }).orElseThrow(() -> new RuntimeException("Id not found" + syllabusId));
+    } catch (RuntimeException e) {
+      System.out.println(e.getMessage());
+      return "";
+    }
   }
 }

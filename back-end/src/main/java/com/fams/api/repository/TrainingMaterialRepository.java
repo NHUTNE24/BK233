@@ -1,8 +1,10 @@
 package com.fams.api.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
 import com.fams.api.entity.TrainingMaterial;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface  TrainingMaterialRepository extends MongoRepository<TrainingMaterial, String> {
-    
+import java.util.List;
+
+public interface TrainingMaterialRepository extends MongoRepository<TrainingMaterial, String> {
+  List<TrainingMaterial> findByUnitChapterId(String chapterId);
 }

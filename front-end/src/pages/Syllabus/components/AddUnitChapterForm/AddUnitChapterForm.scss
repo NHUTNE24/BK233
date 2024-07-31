@@ -1,0 +1,10 @@
+/* Tùy chỉnh cho các trạng thái checked và unchecked */
+.switch-custom.ant-switch-checked {
+    color: white;
+    background-color: #D45B13; /* Màu chữ khi đã chọn */
+
+}
+
+.switch-custom.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background: #D45B13;
+}

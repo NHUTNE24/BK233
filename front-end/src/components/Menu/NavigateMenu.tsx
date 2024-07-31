@@ -26,8 +26,8 @@ const items: MenuItem[] = [
     label: 'Syllabus',
     icon: <IoBookOutline />,
     children: [
-      { key: '2', label: <Link to="/view-syllabus">View syllabus</Link>, className: styles['menu-item'] },
-      { key: '3', label: <Link to="/create-syllabus">Create syllabus</Link>, className: styles['menu-item'] },
+      { key: '/syllabus', label: <Link to="/syllabus">View syllabus</Link>, className: styles['menu-item'] },
+      { key: '/create-syllabus', label: <Link to="/create-syllabus">Create syllabus</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -37,8 +37,8 @@ const items: MenuItem[] = [
     label: 'Training Program',
     icon: <MdOutlineBiotech />,
     children: [
-      { key: '4', label: <Link to="/view-program">View program</Link>, className: styles['menu-item'] },
-      { key: '5', label: <Link to="/create-program">Create program</Link>, className: styles['menu-item'] },
+      { key: '4', label: <Link to="/program/view-program">View program</Link>, className: styles['menu-item'] },
+      { key: '5', label: <Link to="/program/create-program">Create program</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -48,8 +48,8 @@ const items: MenuItem[] = [
     label: 'Class',
     icon: <RiGraduationCapLine />,
     children: [
-      { key: '6', label: <Link to="/view-class">View class</Link>, className: styles['menu-item'] },
-      { key: '7', label: <Link to="/create-class">Create class</Link>, className: styles['menu-item'] },
+      { key: '6', label: <Link to="/class/list">View class</Link>, className: styles['menu-item'] },
+      { key: '7', label: <Link to="/class/create/step1">Create class</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -61,8 +61,8 @@ const items: MenuItem[] = [
     label: 'User management',
     icon: <FaUserGroup />,
     children: [
-      { key: '9', label: <Link to="/user-list">User List</Link>, className: styles['menu-item'] },
-      { key: '10', label: <Link to="/user-permission">User permission</Link>, className: styles['menu-item'] },
+      { key: '9', label: <Link to="/user/list">User List</Link>, className: styles['menu-item'] },
+      { key: '10', label: <Link to="/user/role">User permission</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -75,7 +75,7 @@ const items: MenuItem[] = [
     label: 'Setting',
     icon: <AppstoreOutlined />,
     children: [
-      { key: '12', label: <Link to="/calendar">Calendar</Link>, className: styles['menu-item'] },
+      { key: '12', label: <Link to="/setting/calendar">Calendar</Link>, className: styles['menu-item'] },
     ],
     className: styles['menu-item'],
   },
@@ -91,7 +91,7 @@ const NavigateMenu: React.FC = () => {
     switch (location.pathname) {
       case '/home-page':
         return '1';
-      case '/view-sylabus':
+      case '/syllabus':
         return '2';
       case '/create-syllabus':
         return '3';
@@ -119,8 +119,8 @@ const NavigateMenu: React.FC = () => {
   };
   const getDefaultOpenKeys = () => {
     switch (location.pathname) {
-      case '/view-sylabus':
-      case '/create-syllabus':
+      case '/syllabus':
+      case '/syllabus':
         return ['sub1'];
       case '/view-program':
       case '/create-program':

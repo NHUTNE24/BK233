@@ -1,0 +1,81 @@
+.add-user-modal .ant-modal-header {
+  background-color: #2c3e50;
+  color: #fff;
+  text-align: center;
+  padding: 20px 24px;
+}
+
+.custom-modal-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.custom-close-icon {
+  font-size: 16px;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 24px;
+}
+
+.add-user-modal .ant-modal-footer .ant-btn-primary {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+
+.add-user-modal .ant-modal-footer {
+  display: none;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.cancel-button {
+  color: red;
+  margin-right: 8px;
+  text-decoration: underline;
+  border-color: transparent;
+}
+
+.save-button {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+
+.add-user-modal .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.add-user-modal .ant-select {
+  width: 100%;
+}
+
+.status {
+  color: #2c3e50
+}
+
+.add-user-modal .ant-input,
+.add-user-modal .ant-picker,
+.add-user-modal .ant-radio-group {
+  width: 100%;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* .ant-modal-content{
+  padding:0  !important;
+}
+.ant-modal-body{
+  padding: 20px !important;
+} */

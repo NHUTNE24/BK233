@@ -1,0 +1,94 @@
+.chapter-wrapper {
+    display: flex;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #DFDEDE;
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin: 4px 0;
+    flex: 1
+}
+
+.body-wrapper,
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.body-wrapper {
+    list-style-type: none;
+}
+
+.chapter-name {
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+
+}
+
+.chapter-body {
+    width: 385px;
+
+}
+
+
+.output-standard {
+    background-color: #2D3748;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #fff;
+    padding: 5px 20px;
+}
+
+.chapter-duration {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+}
+
+
+.chapter-method {
+    font-size: 10px;
+    line-height: 18px;
+    font-weight: 400;
+    padding: 4px 15px;
+    border-radius: 50px;
+}
+
+.chapter-method--online {
+    border: 1px solid #D45B13;
+    color: #D45B13;
+}
+
+.chapter-method--offline {
+    background-color: #2D3748;
+    color: #fff;
+}
+
+.delivery-type {
+    font-size: 24px;
+}
+
+.material-training {
+    font-size: 24px;
+}
+
+.material-training:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+
+.delete-chapter-btn {
+    font-size: 24px;
+    color: #E74A3B;
+    margin-left: 12px;
+    margin-top: 8px;
+}

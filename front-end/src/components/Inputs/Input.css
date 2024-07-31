@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -11,11 +11,33 @@ input::placeholder {
 input[type='password']::placeholder {
     font-style: normal;
 }
-
+    
 input[type='password']:focus {
     outline: none;
 }
 
 input:required::after {
+    display: none;
+} */
+
+.ant-input {
+    font-family: Inter, sans-serif;
+}
+
+.ant-input::placeholder {
+    font-style: italic;
+    font-weight: 500;
+    color: black !important;
+}
+
+.ant-input[type='password']::placeholder {
+    font-style: normal;
+}
+
+.ant-input[type='password']:focus {
+    outline: none;
+}
+
+.ant-input:required::after {
     display: none;
 }

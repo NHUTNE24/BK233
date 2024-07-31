@@ -1,12 +1,15 @@
 package com.fams.api.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Document(collection = "class")
 @Data
@@ -15,6 +18,8 @@ import java.time.LocalTime;
 public class Class {
     @Id
     private String id;
+    // private String location ;
+    // private String attendee;
     private String createdBy;
     private LocalDateTime createdDate;
     private String updatedBy;
@@ -38,6 +43,7 @@ public class Class {
     
     private String fsuId;
     private String locationId;
-    private String attendeeLevelId;
-    private String trainingProgramCode;
+    private String attendeeTypeId;
+    private List<String> trainingProgramCode;
+    private String adminId;
 }

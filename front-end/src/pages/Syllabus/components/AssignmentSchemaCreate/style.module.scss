@@ -1,0 +1,127 @@
+.container {
+    // width: 700px;  
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+
+}
+
+.title {
+    background-color: #2D3748;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.body {
+    padding: 24px;
+
+}
+
+.assessment-percent,
+.passing-criteria {
+    width: 470px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #8B8B8B;
+    margin: auto;
+}
+
+.passing-criteria {
+    margin-top: 10px;
+}
+
+.other-percent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+
+.final-percent,
+.gpa-percent {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 22px;
+
+
+}
+
+.percent-value {
+    font-style: italic;
+    font-size: 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 16.94px;
+    margin-left: 14px;
+    color: #000;
+}
+
+.final-percent {
+    margin: 0;
+    padding: 8px 0;
+
+}
+
+.passing-criteria {
+    padding: 20px;
+
+}
+
+.criteria-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    line-height: 24px;
+
+
+}
+
+.gpa-percent {
+    margin-top: 20px;
+
+}
+
+.separate {
+    border-top: 1px solid #474747;
+    border-bottom: 1px solid #474747;
+    padding-top: 24px;
+    margin: 4px 0;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.assessment-item {
+    display: flex;
+    align-items: start;
+
+    label {
+        margin-right: 8px;
+        text-align: left;
+        min-width: 110px;
+    }
+
+    margin: 9px 0;
+    padding: 0 24px;
+}
+
+.input-error {
+    outline: 1px solid red;
+    border-radius: 6px;
+}
+
+.input-normal {
+    outline: none;
+}

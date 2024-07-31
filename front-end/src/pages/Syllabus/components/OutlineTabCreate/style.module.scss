@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    align-items: start;
+    // justify-content: space-between;
+    gap: 30px;
+}
+
+.day-list {
+    flex: 1;
+    margin-right: 36px;
+}
+
+.day-list-wrapper {
+    list-style-type: none;
+}
+
+.day-item {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.add-day-btn {
+    display: flex;
+    justify-content: start;
+    margin-top: 16px;
+    border-radius: 10px;
+    padding: 4px 0;
+}
+
+.day-header {
+    display: flex;
+    background-color: #2D3748;
+    color: #fff;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 16px;
+}
+
+.unit-container {
+    margin-top: 16px;
+    padding: 24px;
+}
+
+.unit-header {
+    display: flex;
+    display: flex;
+    background-color: #0b53cf;
+    color: #fff;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 16px;
+}
+
+.unit-body {
+    margin-top: 32px;
+    padding: 16px;
+}
+
+.delete-day-btn,
+.delete-unit-btn {
+    color: #E74A3B;
+    margin-top: 6px;
+    font-size: 20px;
+    margin-left: 8px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.add-unit-btn {
+    margin-left: 24px;
+    padding-bottom: 4px;
+}
+
+.add-chapter-btn {
+    background-color: #ccc;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 8px 4px;
+    border-radius: 12px;
+    margin-left: 84px;
+}
+
+.add-chapter-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+
+}
+
+.day-container {
+    margin-top: 16px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.unit-container {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin: 12px;
+}
+
+
+.body {
+    // flex: 1;
+    width: 80%;
+}
+
+.time-wrapper {
+    padding-top: 16px;
+    width: 15%;
+}

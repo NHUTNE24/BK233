@@ -1,0 +1,130 @@
+.form-custom {
+
+  // form-group
+  .ant-form-item-label {
+    text-align: left;
+  }
+
+  .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    content: none;
+  }
+
+  .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+    content: none;
+  }
+
+  .ant-form-item .ant-form-item-label>label::after {
+    content: none;
+  }
+
+  .ant-form-item input {
+    border: 1px solid #8B8B8B;
+  }
+
+  /* Custom icon for select */
+  .custom-search-icon .ant-select-selector {
+    border: 1px solid #8B8B8B;
+  }
+
+  .custom-search-icon {
+    .ant-select-selection-search {
+      display: flex;
+      align-items: center;
+    }
+
+    .ant-select-arrow {
+      left: 8px;
+      /* Move the arrow to the left */
+      right: auto;
+      /* Reset the right position */
+      color: var(--primary-color);
+      font-size: 18px;
+
+    }
+
+    .ant-select-selector {
+      padding-left: 35px;
+      /* Tạo khoảng trống cho icon */
+    }
+
+    .ant-select:hover .ant-select-arrow:not(:last-child) {
+      opacity: 1;
+    }
+  }
+
+  /*End  Custom icon for select */
+
+  // Switch method custom
+  .ant-switch.switch-custom {
+    background-color: var(--highlight-one);
+  }
+
+  .switch-custom.ant-switch .ant-switch-handle::before {
+    background-color: var(--primary-color);
+  }
+
+  .switch-custom.ant-switch.ant-switch-checked {
+    background-color: var(--primary-color);
+
+  }
+
+  .switch-custom.ant-switch.ant-switch-checked .ant-switch-handle::before {
+    background-color: var(--highlight-one);
+  }
+
+
+  // Custom select one option
+  .custom-select-one {
+    .ant-select-selector {
+      border: none;
+      box-shadow: 0px 1px 3px 0px #0000004D;
+    }
+
+    .ant-select-selector:focus {
+      box-shadow: 0px 4px 8px 3px #00000026;
+    }
+
+    .ant-select-arrow {
+      color: #000;
+    }
+  }
+
+  // End  Custom select one option
+  .ant-input.ant-input-outlined {
+    background-color: green;
+
+    #file-upload-button {
+      background-color: red !important;
+    }
+  }
+
+}
+
+// input#file-upload-button {
+//   background-color: red !important;
+// }
+
+.form-group-title {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.94px;
+  text-align: left;
+}
+
+.form-group {
+  //styleName: paragraph;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+
+}
+
+.custom-required-mark {
+  position: absolute;
+  top: 6px;
+  left: -60%;
+  color: #ff4d4f;
+}

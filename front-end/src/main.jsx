@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
+	// <React.StrictMode>
 		<Provider store={store}>
 			<ConfigProvider
 				theme={{
@@ -19,5 +19,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 				<App />
 			</ConfigProvider>
 		</Provider>
-	</React.StrictMode>
+	// </React.StrictMode>
 );

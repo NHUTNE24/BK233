@@ -1,9 +1,9 @@
 package com.fams.api.mapper;
 
+import com.fams.api.dto.ClassDTO;
+import com.fams.api.entity.Class;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import com.fams.api.entity.Class;
-import com.fams.api.dto.ClassDTO;
 
 @Mapper
 public interface ClassMapper {

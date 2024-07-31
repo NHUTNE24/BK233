@@ -1,0 +1,74 @@
+.container {
+    padding: 16px;
+
+
+}
+
+.unit-header {
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: -8px;
+
+}
+
+.unit-title {
+    display: flex;
+    align-items: start;
+
+}
+
+.unit-id,
+.unit-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+
+}
+
+.unit-id {
+    padding-top: 8px;
+}
+
+.name-wrapper {
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+}
+
+
+.unit-info {
+    margin-left: 24px;
+}
+
+.edit-unit-btn {
+    font-size: 24px;
+    margin-left: 8px;
+}
+
+.unit-duration {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-style: italic;
+}
+
+.unit-action {
+    font-size: 24px;
+}
+
+.chapter-list {
+    width: 818px;
+    margin-top: 16px;
+}
+
+.add-chapter-btn {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+.chapter-list-wrapper {
+    list-style-type: none;
+}

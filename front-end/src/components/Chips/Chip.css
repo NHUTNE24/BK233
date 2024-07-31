@@ -1,3 +1,29 @@
 .ant-tag-close-icon {
     @apply !text-primary;
 }
+
+.chip-rounded > span[role='img'] {
+    position: absolute;
+    right: 5px;
+    bottom: 50%;
+    transform: translate(0, 50%) scale(1.4);
+    margin-left: 8px !important;
+    width: 14px;
+}
+
+.chip-square > span[role='img'] {
+    position: absolute;
+    bottom: 50%;
+    transform: translate(0, 50%) scale(1.4);
+    margin-left: 8px !important;
+    right: 10px;
+    width: 8px;
+}
+
+span.chip-rounded:has(span) {
+    padding-right: calc(5px + 14px + 5px);
+}
+
+span.chip-square:has(span) {
+    padding-right: calc(10px + 8px + 10px);
+}

@@ -1,0 +1,26 @@
+/* SliderCustom.css */
+.progress-bar {
+  pointer-events: none;
+}
+
+.ant-slider-dot {
+  display: none;
+}
+
+.ant-slider {
+  margin: unset;
+}
+
+.ant-slider-horizontal .ant-slider-rail {
+  border-radius: 22px;
+
+}
+
+.ant-slider .ant-slider-track {
+
+  border-radius: 22px;
+}
+
+.ant-slider.ant-slider-disabled .ant-slider-track {
+  background-color: unset
+}

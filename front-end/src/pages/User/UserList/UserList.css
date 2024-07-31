@@ -1,0 +1,56 @@
+/* UserList.module.css */
+
+.filterActions {
+  display: flex;
+  justify-content: right;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.bold{
+  font-weight: bold;
+  font-size: 24px;
+}
+.button{
+  box-shadow: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button:hover{
+  opacity: 0.7;
+}
+.customSort {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.title{
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  border-color: #2c3e50;
+}
+
+.content{
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+    gap: 2rem;
+}
+.ant-table-wrapper .ant-table-column-sorter {
+  display: none !important;
+}
+.ant-checkbox+span {
+  font-size: 1.25rem; 
+  line-height: 1.75rem; 
+}

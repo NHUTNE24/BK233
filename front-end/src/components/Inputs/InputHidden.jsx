@@ -7,6 +7,7 @@ const InputHidden = ({
     height = 64,
     placeholder = 'Search by...',
     toggle = false,
+    handleEnter,
 }) => {
     return (
         <div>
@@ -16,6 +17,9 @@ const InputHidden = ({
                 placeholder={placeholder}
                 variant="filled borderless"
                 visibilityToggle={toggle}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleEnter(e);
+                }}
             />
         </div>
     );
@@ -24,8 +28,9 @@ const InputHidden = ({
 InputHidden.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
-    placeholder: PropTypes.string,
+    placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     toggle: PropTypes.bool,
+    handleEnter: PropTypes.func,
 };
 
 export default InputHidden;

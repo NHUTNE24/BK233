@@ -1,0 +1,54 @@
+.editable-content {
+  width: 100%;
+}
+
+.editable-div {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.view-mode {
+  padding: 15px;
+  cursor: pointer;
+  overflow-y: auto;
+  
+
+  ul {
+    padding: 0 16px;
+  }
+
+  .ql-indent-1 {
+    margin-left: 15px;
+  }
+}
+
+.editor-mode {
+ 
+  .quill {
+    height: 100%;
+  }
+
+  .ql-toolbar.ql-snow {
+    border: unset;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 8px;
+    height: 44px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .ql-container.ql-snow {
+    border: unset;
+    // border: 1px solid #ccc
+    height: calc(100% - 44px);
+    // height: 156px;
+    border-radius: 0 0 10px 10px;
+
+    .ql-editor {
+      height: 100%;
+      overflow-y: auto;
+    }
+  }
+}

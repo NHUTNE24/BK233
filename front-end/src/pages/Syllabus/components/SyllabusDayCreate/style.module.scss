@@ -1,0 +1,45 @@
+.day-container {
+    margin-top: 16px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.add-unit-btn {
+    margin-left: 24px;
+    padding-bottom: 4px;
+}
+
+.delete-day-btn {
+    color: #E74A3B;
+    margin-top: 6px;
+    font-size: 20px;
+    margin-left: 8px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.day-header {
+    display: flex;
+    background-color: #2D3748;
+    color: #fff;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 16px;
+}
+
+.day-list {
+    flex: 1;
+    margin-right: 36px;
+}
+
+.day-list-wrapper {
+    list-style-type: none;
+}
+
+.separate {
+    border-top: 1px solid #ccc;
+}

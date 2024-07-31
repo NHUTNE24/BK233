@@ -9,6 +9,7 @@ export default {
       subinfo: '#474747',
       main: '#2D3748',
       alert: '#E74A3B',
+      red: '#E74A3B',
       unmodified: '#8B8B8B',
       orange: '#D45B13',
       female: '#FF7568',
@@ -17,6 +18,15 @@ export default {
       box: '#DFDEDE',
       background: '#ECF8FF',
       white: '#FFFFFF',
+      secondary: '#4F6181',
+      grey: '#F1F1F1',
+      black: '#000000',
+      menuTextColor: '#2C5282',
+      menuIconColor: '#285D9A',
+      warningColor: '#E74A3B',
+      borderColor: '#8B8B8B',
+      inputHiddenColor: '#DFDEDE',
+      chipInactiveColor: '#B9B9B9'
     },
     // fontFamily: {
     //   primary: ['Inter Tight'] 

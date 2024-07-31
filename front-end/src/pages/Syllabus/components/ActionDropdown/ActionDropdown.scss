@@ -1,0 +1,28 @@
+.dropdown {
+
+  // Dropdown menu
+  // &__dropdown
+  .ant-dropdown-menu {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .action-dropdown {
+    &__item {
+      display: flex;
+      margin-top: 5px;
+      font-size: 16px;
+      line-height: 19.36px;
+      color: #2C5282;
+      gap: 10px;
+      align-items: center;
+
+      &-icon {
+        font-size: 24px;
+      }
+    }
+  }
+
+
+  // End dropdown menu
+}

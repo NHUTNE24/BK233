@@ -51,6 +51,10 @@ public class UserModel {
     @DBRef
     private Role role;
 
+    public String getRoleName() {
+        return role != null ? role.getName() : "";
+    }
+
     @Column(name = "source")
     @Enumerated(EnumType.STRING)
     private RegistrationSource source;

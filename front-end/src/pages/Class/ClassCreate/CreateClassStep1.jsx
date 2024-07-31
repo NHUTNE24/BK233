@@ -13,7 +13,7 @@ function CreateClassStep1() {
 
 	return (
 		<div>
-			<div className="bg-[#2D3748] px-[30px] py-[20px]">
+			<div className="bg-[#2D3748] px-[20px] py-[20px]">
 				<p className="text-primary font-medium text-[24px] tracking-[0.2em]">
 					Class
 				</p>

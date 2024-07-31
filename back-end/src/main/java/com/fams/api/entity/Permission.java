@@ -1,9 +1,8 @@
 package com.fams.api.entity;
 
+import com.mongodb.lang.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.mongodb.lang.NonNull;
 
 @Document(collection = "permissions")
 public class Permission {

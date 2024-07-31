@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { CloseOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 interface ChipProp {
   title: string;
@@ -21,12 +22,12 @@ const SingleChip: FC<ChipProp> = ({
     >
       <p className="text-xs italic leading-[18px] text-primary">{title}</p>
       {isChip && (
-        <button
+        <Button
           className="flex items-center justify-center"
           onClick={handleDeleteClick}
         >
           <CloseOutlined style={{ color: "#FFFFFF", width: 8, height: 8 }} />
-        </button>
+        </Button>
       )}
     </div>
   );

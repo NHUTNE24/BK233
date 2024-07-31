@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -38,6 +39,13 @@ public class ClassDTO {
     
     private String fsuId;
     private String locationId;
-    private String attendeeLevelId;
-    private String trainingProgramCode;
+    private String attendeeTypeId;
+    private String adminId;
+    // private String trainingProgramCode;
+    private List<String> trainingProgramCode;
+    private String locationName; // Thêm trường locationName
+    private String fsuName;
+    private String attendeeTypeName;
+    private String adminName;
+    private String adminMail;
 }

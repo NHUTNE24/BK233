@@ -1,10 +1,12 @@
 export { default as Button } from './Button';
 export { default as Inputs } from './Inputs';
 export { default as DropdownBox } from './DropdownBox';
+export { default as DropdownBox2 } from './DropdownBox2';
 export { default as ModalCustom } from './ModalCustom';
 export { default as CustomTimePicker } from './TimePicker';
 export { default as SyllabusTab } from './SyllabusTab';
 export { default as SyllabusDetail } from './SyllabusDetail';
+export { default as SyllabusDetail2 } from './SyllabusDetail2';
 export { default as SyllabusCard } from './SyllabusCard';
 export { default as SyllabusGeneral } from './SyllabusGeneral';
 export { default as SyllabusDetailInformation } from './SyllabusDetailInformation';
@@ -14,3 +16,4 @@ export { default as Header } from './Header';
 export { default as Footer } from './Footer';
 export { default as NavigateMenu } from './Menu/NavigateMenu';
 export { default as Table } from './Table';
+export { default as TooltipCustom } from './TooltipCustom';

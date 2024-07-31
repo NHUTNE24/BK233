@@ -13,3 +13,8 @@
 .ant-btn-text {
   @apply !px-6 !h-9 !text-sm !font-bold !text-alert;
 }
+
+.ant-btn:disabled {
+  color: white;
+  background-color: #474747 !important;
+}

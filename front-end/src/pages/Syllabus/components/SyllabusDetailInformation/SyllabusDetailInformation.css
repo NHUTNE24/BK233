@@ -1,0 +1,129 @@
+.syllabus-detail-information-container {
+    color: black;
+}
+
+.syllabus-detail-information-first-container,
+.syllabus-detail-information-second-container {
+    padding: 20px;
+    gap: 10px;
+}
+
+.syllabus-detail-information-second-container {
+    font-weight: 500;
+}
+
+.syllabus-detail-information-first-container {
+    gap: 15px;
+    color: #2D3748;
+}
+
+.syllabus-title-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.syllabus-title-status-info {
+    display: flex;
+    height: 27px;
+    width: 72px;
+    border-radius: 50px;
+    background: #2D3748;
+    justify-content: center;
+    line-height: 27px;
+}
+
+.syllabus-title-status-info>span {
+    color: white;
+    font-size: 12px;
+
+}
+
+.syllabus-detail-information-first-container>p,
+.syllabus-title-left-column>span {
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.syllabus-detail-information-first-container>p {
+    font-size: 24px;
+}
+
+.syllabus-title-left-column {
+    display: flex;
+    align-items: center;
+    height: 44px;
+}
+
+.syllabus-title-left-column>span {
+    font-size: 32px;
+}
+
+.syllabus-version-info {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.dropdown-manage-modal {
+    margin-left: auto;
+    color: #2D3748;
+}
+
+.icon-container .fa-ellipsis {
+    font-size: 48px;
+}
+
+.manage-modal {
+    gap: 10px;
+}
+
+.syllabus-code-info {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.edit-label,
+.duplicate-label,
+.active-label,
+.delete-label {
+    padding-left: 8px;
+}
+
+.delete,
+.de-activate,
+.edit,
+.duplicate {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown__actions {
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    border-radius: 5px;
+    min-width: 250px;
+
+}
+
+
+.dropdown__actions .dropdown__header .dropdown__title {
+    padding: 10px;
+    font-size: 22px;
+}
+
+.dropdown__actions .dropdown__body .ant-dropdown-menu {
+    box-shadow: none;
+}
+
+.dropdown__actions .dropdown__body .ant-dropdown-menu .ant-dropdown-menu-item {
+
+    padding: 8px 12px;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1.5714285714285714;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}

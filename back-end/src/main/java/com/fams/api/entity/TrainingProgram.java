@@ -1,10 +1,11 @@
 package com.fams.api.entity;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.*;
-import java.util.*;
-import java.sql.Time;
+
+import java.util.Date;
+import java.util.List;
 
 @Document(collection = "training_program")
 @Data
@@ -21,7 +22,7 @@ public class TrainingProgram {
     private Date modifiedDate;
     private Integer days;
     private Integer hours;
-    private Time startTime;
+    private Date startTime;
     private String name;
     private String status;
 

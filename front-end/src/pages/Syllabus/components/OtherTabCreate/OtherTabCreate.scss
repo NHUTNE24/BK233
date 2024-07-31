@@ -1,0 +1,27 @@
+.other-tab-create-editor {
+  &__title-header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 0px 5px 16px;
+  }
+
+  &_contenteditable {
+
+    .editable-div {
+
+      border-radius: unset;
+
+    }
+  }
+}
+
+.validation-rules {
+  opacity: 0;
+  
+  &.active {
+    opacity: 1; 
+    
+  }
+}

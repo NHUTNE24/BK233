@@ -1,0 +1,140 @@
+.syllabus-general-container {
+    display: flex;
+    /* width: 1134px; */
+    width: 100%;
+    gap: 42px;
+}
+
+.syllabus-general-left-column {
+    flex: 1;
+    width: 407px;
+    border-radius: 10px;
+    border: rgba(109, 109, 109, 0.2) 1px solid;
+    box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
+    padding: 20px;
+}
+
+.syllabus-general-right-column {
+    width: 605px;
+    border-radius: 10px;
+    border: rgba(109, 109, 109, 0.2) 1px solid;
+    box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
+    padding: 12px 24px;
+}
+
+.level-container {
+    display: flex;
+    align-items: center;
+}
+
+.level-left-column {
+    font-weight: 600;
+    min-width: 180px;
+    align-items: center;
+    display: flex;
+}
+
+.level-right-column {
+    flex: 1;
+    font-weight: 500;
+}
+
+.attendee-number-container {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.attendee-number-left-column {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    min-width: 180px;
+
+
+}
+
+.attendee-number-right-column {
+    flex: 1;
+    font-weight: 500;
+}
+
+.output-standard-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.output-standard-left-column {
+    font-weight: 600;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+}
+
+.output-standard-right-column {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.technical-list {
+    margin-left: 24px;
+}
+
+.technical-item {
+    padding: 4px 0;
+}
+
+.technical-requirement-content {
+    font-weight: 500;
+    padding: 12px;
+}
+
+.course-objectives-container {
+    margin-top: 40px;
+    width: 1134px;
+}
+
+.course-objectives-title,
+.technical-requirement-title {
+    font-weight: 600;
+}
+
+.course-objectives-title {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.technical-requirement-title {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.course-objectives-content {
+    font-weight: 500;
+}
+
+.output-standard-info {
+    display: flex;
+    width: 72px;
+    height: 27px;
+    border-radius: 50px;
+    background: #2D3748;
+    justify-content: center;
+    line-height: 27px;
+    margin-right: 5px;
+}
+
+.output-standard-info>span {
+    color: white;
+    font-size: 12px;
+}
+
+.objective-list {
+    list-style-type: none;
+}

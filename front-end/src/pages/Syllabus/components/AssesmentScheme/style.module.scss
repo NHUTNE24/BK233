@@ -1,0 +1,93 @@
+.container {
+    // width: 556px;
+    height: 310px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    flex: 1;
+}
+
+.title {
+    background-color: #2D3748;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.body {
+    padding: 10px 10px 20px 10px;
+
+}
+
+.assessment-percent,
+.passing-criteria {
+    width: 470px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #8B8B8B;
+    margin: auto;
+}
+
+.passing-criteria {
+    margin-top: 10px;
+}
+
+.other-percent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.final-percent,
+.gpa-percent {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 22px;
+
+
+}
+
+.percent-value {
+    font-style: italic;
+    font-size: 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 16.94px;
+    margin-left: 14px;
+    color: #000;
+}
+
+.final-percent {
+    margin: 0;
+    padding: 8px 0;
+
+}
+
+.passing-criteria {
+    padding: 20px;
+
+}
+
+.criteria-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    line-height: 24px;
+
+
+}
+
+.gpa-percent {
+    margin-top: 20px;
+
+}

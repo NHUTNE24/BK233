@@ -1,25 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { combineReducers } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice'; // Adjust the path as necessary
-import counterReducer from './slices/counterSlice';
+import rootReducer from './rootReducer';
 
 const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['auth'], // Only persist the auth slice
+    key: 'root',
+    storage,
+    whitelist: ['auth'], // Chỉ lưu trữ slice auth
 };
-
-const rootReducer = combineReducers({
-  auth: authReducer,
-  counter: counterReducer,
-});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ['persist/PERSIST'],
+            },
+        }),
 });
 
 const persistor = persistStore(store);

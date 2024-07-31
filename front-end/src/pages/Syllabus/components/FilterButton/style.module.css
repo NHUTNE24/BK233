@@ -1,0 +1,17 @@
+.filter-btn {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    background-color: #2D3748;
+    border-radius: 8px;
+    color: #fff;
+    width: 85px;
+}
+
+.filter-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    line-height: 24px;
+    margin: 0;
+    margin-left: 5px;
+}

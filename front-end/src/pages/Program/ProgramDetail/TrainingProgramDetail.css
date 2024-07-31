@@ -1,0 +1,33 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+#training-program-detail-header,
+#training-program-detail-duration > *,
+#training-program-view > *,
+#training-program-detail > * {
+    padding-left: 30px;
+    padding-right: 25px;
+    letter-spacing: 0.0625rem;
+}
+
+#program-day-card .ant-collapse-header,
+#unit-tab .ant-collapse-header {
+    padding: 0;
+    background-color: transparent;
+}
+
+#program-day-card .ant-collapse-content {
+    border: 0;
+    border-radius: 20px;
+}
+
+#unit-tab .ant-collapse-content {
+    border: 0;
+    padding-bottom: 30px;
+}
+
+#program-day-card .ant-collapse-content-box,
+#unit-tab .ant-collapse-content-box {
+    padding: 0;
+}

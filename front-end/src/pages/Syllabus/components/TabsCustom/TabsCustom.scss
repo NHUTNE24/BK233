@@ -1,0 +1,42 @@
+.tabs-custom {
+
+  .ant-tabs-card.ant-tabs-top>.ant-tabs-nav .ant-tabs-tab {
+    border-radius: 20px 20px 0 0;
+    width: 200px;
+    height: 30px;
+    color: #fff;
+    justify-content: center;
+    border: 1px solid #fff;
+    background-color: #6D7684;
+  }
+
+  .ant-tabs-nav {
+    margin-left: 6px;
+  }
+
+
+  .ant-tabs-card.ant-tabs-top>.ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active {
+
+    background: var(--primary-color);
+  }
+
+  .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+    text-shadow: 0 0 0.25px currentcolor;
+
+  }
+
+  :where(.css-dev-only-do-not-override-m4timi).ant-tabs-top>.ant-tabs-nav::before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    border-bottom: 1.3px solid #8BBBBB;
+    content: '';
+  }
+
+
+}
+
+.d-none {
+  display: none;
+}

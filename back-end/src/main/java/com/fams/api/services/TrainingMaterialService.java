@@ -1,13 +1,15 @@
 package com.fams.api.services;
 
+import com.fams.api.entity.TrainingMaterial;
+import com.fams.api.entity.UnitChapter;
+import com.fams.api.repository.TrainingMaterialRepository;
+import com.fams.api.repository.UnitChapterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.fams.api.entity.TrainingMaterial;
-import com.fams.api.repository.TrainingMaterialRepository;
-import com.fams.api.repository.UnitChapterRepository; 
 
 @Service
 public class TrainingMaterialService {
@@ -15,7 +17,7 @@ public class TrainingMaterialService {
     private final TrainingMaterialRepository trainingMaterialRepository;
     private final UnitChapterRepository unitChapterRepository; 
 
-    
+    @Autowired
     public TrainingMaterialService(TrainingMaterialRepository trainingMaterialRepository, UnitChapterRepository unitChapterRepository) { // Modify this constructor
         this.trainingMaterialRepository = trainingMaterialRepository;
         this.unitChapterRepository = unitChapterRepository; // Initialize the unitChapterRepository
@@ -69,6 +71,19 @@ public class TrainingMaterialService {
             return trainingMaterial.get();
         } else {
             throw new RuntimeException("TrainingMaterial not found with id " + trainingMaterialId);
+        }
+    }
+
+    // Get a list of Training material by id
+    public List<TrainingMaterial> getTrainingMaterialByChapter(String unitChapterId) {
+        Optional<UnitChapter> chapterFound = unitChapterRepository.findById(unitChapterId);
+        if (chapterFound.isPresent()) {
+            List<TrainingMaterial> trainingMaterials = trainingMaterialRepository.findByUnitChapterId(chapterFound.get().getId());
+
+            return trainingMaterials;
+        }
+        else {
+            throw new RuntimeException("Chapter Not Found woth id " + unitChapterId);
         }
     }
 }

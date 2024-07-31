@@ -28,7 +28,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasAuthority('VIEW_USER')")
+    // @PreAuthorize("hasAuthority('VIEW_USER')")
     @GetMapping
     public ResponseEntity<List<UserModel>> getAllUsers() {
         try {
@@ -39,14 +39,14 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority('VIEW_USER')")
+    // @PreAuthorize("hasAuthority('VIEW_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<UserModel> getUserById(@PathVariable String id) {
         UserModel user = userService.findByID(id);
         return ResponseEntity.ok(user);
     }
 
-    @PreAuthorize("hasRole('Admin') and hasAuthority('MODIFY_USER')")
+    // @PreAuthorize("hasRole('Admin') and hasAuthority('MODIFY_USER')")
     @PutMapping("/{id}")
     public ResponseEntity<UserModel> updateUser(@PathVariable String id, @RequestBody UserModel user) {
         try {
@@ -56,15 +56,8 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // @PreAuthorize("hasRole('Admin') and hasPermission('Modify', 'user')")
-    // @PostMapping("/user/{email}")
-    // public void changeToAdmin(@PathVariable String email) {
-    //     userService.findByEmail(email).ifPresent(userEntity -> {
-    //         userEntity.setRole(UserRole.ROLE_ADMIN);
-    //         userService.save(userEntity);
-    //     });
-    // }
-    @PreAuthorize("hasRole('Admin') and hasAuthority('MODIFY_USER')")
+    
+    // @PreAuthorize("hasRole('Admin') and hasAuthority('MODIFY_USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable String id) {
         try {
