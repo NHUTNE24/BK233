@@ -13,7 +13,7 @@ import {
     MdOutlineDeleteForever, } from "react-icons/md";
 
 import { MdOutlineSnippetFolder } from 'react-icons/md';
-
+import { useSelector } from 'react-redux';
 // import './TrainingProgramDetail.css';
 
 import { Divider, Popover } from 'antd';
@@ -37,13 +37,13 @@ const ManageTrainingProgramMenu = ({
     const username = import.meta.env.VITE_USERNAME;
     const password = import.meta.env.VITE_PASSWORD;
     const token = btoa(`${username}:${password}`);
-
+    const currentUsername = useSelector((state) => state.auth?.username || '');
     const initializeProgram = () => ({
         trainingProgramCode: null,
         createdBy: null,
         createdDate: null,
-        modifiedBy: null,
-        modifiedDate: null,
+        modifiedBy: currentUsername,
+        modifiedDate: new Date(),
         days: null,
         hours: null,
         startTime: null,

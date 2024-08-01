@@ -14,6 +14,7 @@ const username = import.meta.env.VITE_USERNAME;
 const password = import.meta.env.VITE_PASSWORD;
 const token = btoa(`${username}:${password}`);
 const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
+import { useSelector } from 'react-redux';
 
 const ViewProgramMaterial = ({
     day_no,
@@ -24,6 +25,7 @@ const ViewProgramMaterial = ({
     setIsOpen,
 }) => {
     const { userName } = useContext(ProgramDetailContext);
+    const currentUsername = useSelector((state) => state.auth?.username || '');
 
     const [UnitChapter, setUnitChapter] = useState(null);
     const [toggleFetch, setToggleFetch] = useState(false);
@@ -172,7 +174,7 @@ const ViewProgramMaterial = ({
         const newMaterial = {
             name: material.name,
             fileName: material.fileName,
-            modifiedBy: userName,
+            modifiedBy: currentUsername,
             modifiedDate: new Date().toISOString(),
             url: material.url,
             file: material.file,
@@ -279,10 +281,10 @@ const ViewProgramMaterial = ({
         const newMaterial = {
             name: material.name,
             fileName: isFile ? material.fileName : '',
-            createdBy: material.createdBy,
-            createdDate: material.createdDate,
-            modifiedBy: material.createdBy,
-            modifiedDate: material.createdDate,
+            createdBy: currentUsername,
+            createdDate: new Date(),
+            modifiedBy: currentUsername,
+            modifiedDate: new Date(),
             unitChapterId: material.unitChapterId,
             url: url,
             file: material.file,

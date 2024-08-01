@@ -478,7 +478,7 @@ const TrainingProgram = () => {
                     <MdOutlineSort onClick={() => sortByColumn('createdDate')} />
                   </div>
                 </th>
-                <th className="px-4 py-3">
+                <th className="px-4 py-3 w-[15%]">
                   <div className="flex flex-row items-center gap-1">
                     Created by
                     <MdOutlineSort onClick={() => sortByColumn('createdBy')} />

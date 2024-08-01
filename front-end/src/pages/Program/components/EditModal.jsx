@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import { MdOutlineCancel } from "react-icons/md";
 import { DropdownBox2, Inputs } from 'src/components';
 
+
 const EditModal = ({
     editmodalIsOpen,
     setEditmodalIsOpen,
@@ -21,6 +22,7 @@ const EditModal = ({
     const username = import.meta.env.VITE_USERNAME;
     const password = import.meta.env.VITE_PASSWORD;
     const token = btoa(`${username}:${password}`);
+
 
     const closeEditModal = () => {
         setEditmodalIsOpen(false);

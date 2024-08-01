@@ -8,7 +8,7 @@ import './TrainingProgramDetail.css';
 import GeneralInfoCard from './GeneralInfoCard';
 import ProgramDayCard from './ProgramDayCard';
 
-import { SyllabusCard2, Button, TooltipCustom } from 'src/components';
+import { SyllabusCard, Button, TooltipCustom } from 'src/components';
 import { MdArrowRightAlt as FaArrowRightLong } from 'react-icons/md';
 
 import { ProgramDetailContext } from './ProgramDetailContext';
@@ -106,10 +106,10 @@ const TrainingProgramDetail = ({ TrainingProgram, setDestination }) => {
                                 <Link
                                     to={`/program/view-program/${trainingProgramCode}`}
                                 >
-                                    <SyllabusCard2
+                                    <SyllabusCard
                                         syllabusId={Syllabus?.id}
-                                        syllabusName={Syllabus?.topicName}
-                                        syllabusCode={
+                                        programName={Syllabus?.topicName}
+                                        syllabusName={
                                             Syllabus?.topicCode +
                                             ' v' +
                                             Syllabus?.version

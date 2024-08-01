@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 import { Button } from 'src/components';
 
 import TrainingProgramDetailHeader from '../ProgramDetail/TrainingProgramDetailHeader';
@@ -22,6 +22,7 @@ export default function Screen3() {
     const [saved, setSaved] = useState(false);
     const days = selected.reduce((s1, s2) => s1 + s2.days, 0);
     const hours = selected.reduce((s1, s2) => s1 + s2.hours, 0);
+    const currentUsername = useSelector((state) => state.auth?.username || '');
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -54,9 +55,9 @@ export default function Screen3() {
 
     const handleSave = () => {
         const TrainingProgram = {
-            createdBy: 'abc',
+            createdBy: currentUsername,
             createdDate: new Date(),
-            modifiedBy: 'abc',
+            modifiedBy: currentUsername,
             modifiedDate: new Date(),
             days: days,
             hours: hours,
@@ -139,7 +140,7 @@ export default function Screen3() {
                     days={days}
                     hours={hours}
                     modified_on={new Date().toLocaleDateString('en-gb')}
-                    modified_by={'Warrior Tran'}
+                    modified_by={currentUsername}
                 />
             </section>
             <main className="pl-[20px] pr-[25px]">
