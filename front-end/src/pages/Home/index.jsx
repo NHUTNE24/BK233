@@ -7,7 +7,7 @@ const content = {
     subheader:
         'Blah bluisfhkoewhpwe mniweppe ifpewo ersif hui ah hsdhj ouirio 3ruu iu8er 99wew 89e uur u  u reoi juew iueh iewyrewiurieru    uir o hfiriuf e ipsjkdjkdh jwj ',
     videoTitle: 'Lesson 1',
-    videoName: 'Welcome to FPT',
+    videoName: 'Introduction to FSA',
 };
 
 const HomePage = () => {
@@ -16,7 +16,7 @@ const HomePage = () => {
             style={{ height: 'calc(100vh - 70px - 32px)' }}
             className="py-5 px-10 flex flex-col justify-start"
         >
-            <div className="w-full h-[90%] py-[10px] flex flex-col gap-[10px] rounded-[20px] justify-start items-center bg-primary">
+            <div className="w-full h-[90%] py-5 flex flex-col gap-[10px] rounded-[20px] justify-start items-center bg-primary">
                 <HeaderChip text={content.headerChip} />
                 <header className="w-[90%] flex flex-col gap-[10px] justify-center items-center">
                     <h3 className="text-main font-bold text-center">
@@ -49,8 +49,8 @@ const VideoPlayer = () => {
     };
     const videoSrc = "https://www.youtube.com/embed/MlLRo-GpHO4?autoplay=0";
     return (
-        <div className="w-[55%] translate-y-12 relative ">
-              <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
+        <div className="w-[700px] translate-y-12 relative ">
+            <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
                 <iframe
                     ref={iframeRef}
                     className="w-full h-full rounded-[20px]"
@@ -60,8 +60,11 @@ const VideoPlayer = () => {
                     allowFullScreen
                 ></iframe>
             </div>
-            <div className='flex items-center gap-[10px] absolute left-[20px] bottom-[20px] bg-white/20 px-2 py-2 rounded-2xl backdrop-blur-lg'>
-                <Button id='play-button' shape="circle" icon={<FaPlayCircle />} onClick={handlePlayVideo}></Button>
+            <div className='flex items-center gap-[10px] absolute left-4 bottom-12 bg-white/20 px-3 py-3 rounded-2xl backdrop-blur-sm'>
+                <button id='play-button' className='w-10 h-10 bg-white rounded-full flex justify-center items-center' onClick={handlePlayVideo}>
+                    <FaPlayCircle className='text-4xl' />
+                </button>
+
                 <div className='flex flex-col gap-[0.5rem] text-white font-[400]'>
                     <p>{content.videoTitle}</p>
                     <p>{content.videoName}</p>
