@@ -72,7 +72,7 @@ export default function Screen3() {
                 },
             })
             .then((res) => {
-                console.log(res);
+                console.log(TrainingProgram);
                 handleSuccess();
                 // selected.map((Syllabus) => {
                 //     Syllabus.trainingProgramCode = Syllabus.trainingProgramCode

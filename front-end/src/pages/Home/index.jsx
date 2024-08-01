@@ -32,7 +32,7 @@ const HomePage = () => {
 
 const HeaderChip = ({ text }) => {
     return (
-        <div className="px-[15px] py-[10px] bg-[#DFDEDE] text-main font-semibold rounded-full text-[0.875rem]">
+        <div className="px-[15px] py-[10px] bg-[#DFDEDE] text-main font-semibold rounded-full text-xl">
             {text}
         </div>
     );
@@ -50,7 +50,7 @@ const VideoPlayer = () => {
     const videoSrc = "https://www.youtube.com/embed/MlLRo-GpHO4?autoplay=0";
     return (
         <div className="w-[700px] translate-y-12 relative ">
-            <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
+            <div className="w-full aspect-[16/9] bg-black rounded-3xl shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
                 <iframe
                     ref={iframeRef}
                     className="w-full h-full rounded-[20px]"
@@ -60,9 +60,9 @@ const VideoPlayer = () => {
                     allowFullScreen
                 ></iframe>
             </div>
-            <div className='flex items-center gap-[10px] absolute left-4 bottom-12 bg-white/20 px-3 py-3 rounded-2xl backdrop-blur-sm'>
-                <button id='play-button' className='w-10 h-10 bg-white rounded-full flex justify-center items-center' onClick={handlePlayVideo}>
-                    <FaPlayCircle className='text-4xl' />
+            <div className='flex items-center gap-[10px] absolute left-4 bottom-12  bg-white/20 px-3 py-3 rounded-2xl backdrop-blur-sm'>
+                <button id='play-button' className='w-10 h-10 bg-white transition-all duration-500 rounded-full flex justify-center items-center hover:bg-black' onClick={handlePlayVideo}>
+                    <FaPlayCircle className='text-4xl hover:text-white transition-all duration-500' />
                 </button>
 
                 <div className='flex flex-col gap-[0.5rem] text-white font-[400]'>
