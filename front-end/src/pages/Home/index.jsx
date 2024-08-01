@@ -14,9 +14,9 @@ const HomePage = () => {
     return (
         <div
             style={{ height: 'calc(100vh - 70px - 32px)' }}
-            className="py/-[20px] flex flex-col justify-start"
+            className="py-5 px-10 flex flex-col justify-start"
         >
-            <div className="w-full h-[90%] py-[10px] flex flex-col gap-[10px] rounded-[20px] justify-center items-center bg-primary">
+            <div className="w-full h-[90%] py-[10px] flex flex-col gap-[10px] rounded-[20px] justify-start items-center bg-primary">
                 <HeaderChip text={content.headerChip} />
                 <header className="w-[90%] flex flex-col gap-[10px] justify-center items-center">
                     <h3 className="text-main font-bold text-center">
@@ -49,7 +49,7 @@ const VideoPlayer = () => {
     };
     const videoSrc = "https://www.youtube.com/embed/MlLRo-GpHO4?autoplay=0";
     return (
-        <div className="w-[55%] translate-y-12 relative">
+        <div className="w-[55%] translate-y-12 relative ">
               <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
                 <iframe
                     ref={iframeRef}
