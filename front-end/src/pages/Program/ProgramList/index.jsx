@@ -308,7 +308,7 @@ const TrainingProgram = () => {
 
   const csvContent = "trainingProgramCode,createdBy,createdDate,modifiedBy,modifiedDate,days,hours,startTime,name,status,userId\nCO3005,John,07-12-2024,John,07-12-2024,23,123,07-19-2024,Fundamental of Angular,Active,101";
   return (
-    <section className="w-full h-[750px] relative bg-default" style={{ display: 'block' }}>
+    <section className="w-full h-[720px] relative bg-default" style={{ display: 'block' }}>
       <NotificationModal
         modalMessage={modalMessage}
         status={modalStatus}
