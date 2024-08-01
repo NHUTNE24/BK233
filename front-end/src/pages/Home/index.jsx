@@ -1,11 +1,9 @@
 import { Button } from 'antd';
-import React from 'react';
-
 import { FaPlayCircle } from 'react-icons/fa';
-
+import { useRef } from 'react';
 const content = {
-    headerChip: 'Updated December 2023',
-    header: 'Graphic Design Basics: Core Principles for Visual Design',
+    headerChip: 'Updated August 2024',
+    header: 'Fresher Academy Management System',
     subheader:
         'Blah bluisfhkoewhpwe mniweppe ifpewo ersif hui ah hsdhj ouirio 3ruu iu8er 99wew 89e uur u  u reoi juew iueh iewyrewiurieru    uir o hfiriuf e ipsjkdjkdh jwj ',
     videoTitle: 'Lesson 1',
@@ -41,14 +39,28 @@ const HeaderChip = ({ text }) => {
 };
 
 const VideoPlayer = () => {
+    const iframeRef = useRef(null);
+
     const handlePlayVideo = () => {
-
-    }
-
+        if (iframeRef.current) {
+            const src = iframeRef.current.src;
+            iframeRef.current.src = src.replace('autoplay=0', 'autoplay=1');
+        }
+    };
+    const videoSrc = "https://www.youtube.com/embed/MlLRo-GpHO4?autoplay=0";
     return (
-        <div className="w-[55%] translate-y-[20px] relative">
-            <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]"></div>
-            <div className='flex items-center gap-[10px] absolute left-[20px] bottom-[20px]'>
+        <div className="w-[55%] translate-y-12 relative">
+              <div className="w-full aspect-[16/9] bg-black rounded-[20px] shadow-[0_20px_40px_0_rgba(0,0,0,0.2)]">
+                <iframe
+                    ref={iframeRef}
+                    className="w-full h-full rounded-[20px]"
+                    src={`${videoSrc}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+            <div className='flex items-center gap-[10px] absolute left-[20px] bottom-[20px] bg-white/20 px-2 py-2 rounded-2xl backdrop-blur-lg'>
                 <Button id='play-button' shape="circle" icon={<FaPlayCircle />} onClick={handlePlayVideo}></Button>
                 <div className='flex flex-col gap-[0.5rem] text-white font-[400]'>
                     <p>{content.videoTitle}</p>
