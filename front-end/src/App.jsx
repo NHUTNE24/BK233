@@ -7,6 +7,9 @@ import {
     RouterProvider,
 } from 'react-router-dom';
 import './App.css';
+
+import HomePage from './pages/Home'
+
 import HomeLayout from './layout/HomeLayout/HomeLayout';
 import ClassLayout from './layout/ClassLayout/ClassLayout';
 import CreateClassLayout from './layout/ClassLayout/CreateClassLayout';
@@ -59,6 +62,7 @@ const App = () => {
                             </ProtectedRoute>
                         }
                         >
+                        <Route path='home-page' element={<HomePage />}></Route>
                         <Route path="class" element={<ClassLayout />}>
                             <Route path="list" element={<ClassList />} />
                             <Route path=":id" element={<ClassDetail />} />
