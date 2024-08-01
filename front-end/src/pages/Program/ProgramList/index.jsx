@@ -123,6 +123,8 @@ const TrainingProgram = () => {
   };
   const [page, setPage] = useState(1);
   const tableHeight = window.innerHeight - 320;
+  const topPosition = tableHeight + 109 + 60;
+
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState('');
   const [tags, setTags] = useState([]);
@@ -293,6 +295,7 @@ const TrainingProgram = () => {
     });
     return processedData;
   }
+  
 
   function downloadCSV(csvContent, fileName = "download.csv") {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -530,7 +533,7 @@ const TrainingProgram = () => {
           </table>
         </div>
       </div>
-      <div className="w-full h-[40px] absolute bottom-[100px] flex flex-row justify-between">
+      <div className="w-full h-[40px] absolute flex flex-row justify-between" style={{ top: `${topPosition}px` }}>
         <div></div>
         <Pagination
           current={page}
