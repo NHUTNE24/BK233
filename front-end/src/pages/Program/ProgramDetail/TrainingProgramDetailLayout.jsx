@@ -80,6 +80,7 @@ const TrainingProgramDetailLayout = () => {
             .get(`${baseUrl}/api/training-programs/${trainingProgramCode}`, {
                 headers: {
                     Authorization: `Basic ${token}`,
+                    
                 },
             })
             .then((res) => {
@@ -93,6 +94,7 @@ const TrainingProgramDetailLayout = () => {
     if (!TrainingProgram) {
         return <div></div>;
     }
+    console.log("fs",TrainingProgram)
 
     return (
         <div id="training-program-detail-layout">
