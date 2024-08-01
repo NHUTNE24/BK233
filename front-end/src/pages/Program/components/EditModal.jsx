@@ -200,7 +200,9 @@ const EditModal = ({
                                 ? updatedProgram?.startTime.substring(0, 10)
                                 : 'Start Time'
                         }
-                        style={{ width: '300px' }}
+                        style={{ width: 300 }}
+                        popupStyle={{ zIndex: 100000 }} 
+                     
                         value={
                             submitedProgram?.startTime ||
                             dayjs(updatedProgram?.startTime || new Date())
