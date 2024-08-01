@@ -1,4 +1,3 @@
-
 import {
     Alert,
     Button,
@@ -36,6 +35,8 @@ function CreateSyllabus() {
 
     const [outputStandardList, setOutputStandardList] = useState([]);
     const [deliveryTypeList, setDeliveryTypeList] = useState([]);
+
+    const userInfo = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(resetState());
@@ -150,7 +151,7 @@ function CreateSyllabus() {
                     ...createSyllabus,
                     isAssessmentSchemaValid:
                         createSyllabus.isAssessmentSchemaValid.status,
-                    userName: 'syllabus group', // Need replace by User info
+                    userName: userInfo.username, // Need replace by User info
                     status: 'Active',
                     isGeneralValid: createSyllabus.isGeneralValid.status,
                 };
@@ -207,7 +208,7 @@ function CreateSyllabus() {
                             'http://localhost:8080/api/syllabus',
                             {
                                 ...createSyllabus,
-                                userName: 'Syllabus Group',
+                                userName: userInfo.username,
                                 isAssessmentSchemaValid:
                                     createSyllabus.isAssessmentSchemaValid
                                         .status,

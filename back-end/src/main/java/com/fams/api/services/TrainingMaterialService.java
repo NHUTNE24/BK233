@@ -6,7 +6,12 @@ import com.fams.api.repository.TrainingMaterialRepository;
 import com.fams.api.repository.UnitChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +20,23 @@ import java.util.Optional;
 public class TrainingMaterialService {
 
     private final TrainingMaterialRepository trainingMaterialRepository;
-    private final UnitChapterRepository unitChapterRepository; 
+    private final UnitChapterRepository unitChapterRepository;
+
+    private final Path rootLocation = Paths.get("uploads");
+
+
+
+
 
     @Autowired
     public TrainingMaterialService(TrainingMaterialRepository trainingMaterialRepository, UnitChapterRepository unitChapterRepository) { // Modify this constructor
-        this.trainingMaterialRepository = trainingMaterialRepository;
-        this.unitChapterRepository = unitChapterRepository; // Initialize the unitChapterRepository
+        try {
+            this.trainingMaterialRepository=trainingMaterialRepository;
+            this.unitChapterRepository = unitChapterRepository;
+            Files.createDirectories(rootLocation);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize storage!", e);
+        }// Initialize the unitChapterRepository
     }
 
     // Get all training materials
@@ -29,13 +45,39 @@ public class TrainingMaterialService {
     }
 
     // Add a training material 
-    public TrainingMaterial addTrainingMaterial(TrainingMaterial trainingMaterial) {
-        if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
-            if (!unitChapterRepository.existsById(trainingMaterial.getUnitChapterId())) {
-                throw new RuntimeException("UnitChapter not found with id: " + trainingMaterial.getUnitChapterId());
+    public TrainingMaterial addTrainingMaterial(MultipartFile file, String chapterId) {
+        try {
+            if (file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file.");
             }
+            String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+            Path destinationFile = rootLocation.resolve(
+                            Paths.get(filename))
+                    .normalize().toAbsolutePath();
+
+            // Ensure the file is within the target directory
+            if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
+                throw new RuntimeException("Cannot store file outside current directory.");
+            }
+
+            try (var inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destinationFile);
+            }
+
+            // Save file metadata to database
+            TrainingMaterial trainingMaterial = new TrainingMaterial();
+            trainingMaterial.setName(file.getOriginalFilename());
+            trainingMaterial.setUnitChapterId(chapterId);
+            trainingMaterial.setUrl("http://localhost:8080/uploads/" + filename);
+
+
+            trainingMaterialRepository.save(trainingMaterial);
+
+            return trainingMaterial;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file.", e);
         }
-        return trainingMaterialRepository.save(trainingMaterial);
     }
 
     // Update an existing training material

@@ -38,7 +38,7 @@ function TrainingMaterialModal({material, chapterInfo}) {
                 footer={null}
             >
                 <div className={styles.body}>
-                    <TrainingMaterial chapterInfo={chapterInfo} handleCloseBtn={handleCancel} />
+                    <TrainingMaterial material={material} chapterInfo={chapterInfo} handleCloseBtn={handleCancel} />
                 </div>
             </Modal>
         </div>

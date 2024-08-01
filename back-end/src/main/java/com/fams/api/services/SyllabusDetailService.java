@@ -193,6 +193,7 @@ public class SyllabusDetailService {
         // Create Syllabus
         syllabus.setCreatedDate(dateTime);
         syllabus.setCreatedBy(userName);
+        syllabus.setAttendeeNumber(syllabusCreateDTO.getGeneral().getAttendeeNumber());
         syllabus.setModifiedDate(dateTime);
         syllabus.setModifiedBy(userName);
         syllabus.setDays(syllabusDays.size());
@@ -299,6 +300,7 @@ public class SyllabusDetailService {
 
         // Update Syllabus
         syllabus.setId(syllabusId);
+        syllabus.setAttendeeNumber(syllabusCreateDTO.getGeneral().getAttendeeNumber());
         syllabus.setModifiedDate(dateTime);
         syllabus.setModifiedBy(userName);
         syllabus.setDays(syllabusCreateDTO.getSyllabusDay().size());

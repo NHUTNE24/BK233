@@ -45,6 +45,7 @@ import { setSelectedKey } from '../../../store/app/siderBarSlice';
 EditSyllabus.propTypes = {};
 function EditSyllabus() {
     const { id } = useParams();
+    const userInfo = useSelector(state=>state.auth);
 
     const nameRef = useRef(null);
     const codeRef = useRef(null);
@@ -358,7 +359,7 @@ function EditSyllabus() {
                     `http://localhost:8080/api/syllabus/${id}`,
                     {
                         ...data,
-                        userName: 'Syllabus Group', // Need replace by User info
+                        userName: userInfo.username, // Need replace by User info
                         isAssessmentSchemaValid:
                             data.isAssessmentSchemaValid.status,
                         isGeneralValid: data.isGeneralValid.status,

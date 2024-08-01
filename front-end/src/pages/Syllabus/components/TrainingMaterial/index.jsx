@@ -17,7 +17,9 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
 
     const fetchMaterial = async () => {
         try {
-            const result = await axios.get(`http://localhost:8080/api/training-materials/by-chapter/${chapterInfo.id}`);
+            const result = await axios.get(
+                `http://localhost:8080/api/training-materials/by-chapter/${chapterInfo.id}`
+            );
             if (result.status === 200) {
                 setMaterial(result.data);
             } else {
@@ -38,7 +40,9 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
 
     const handleDeleteMaterial = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/training-materials/${id}`);
+            const response = await axios.delete(
+                `http://localhost:8080/api/training-materials/${id}`
+            );
             if (response.status === 200) {
                 console.log('Material deleted successfully', response.data);
                 fetchMaterial();
@@ -52,7 +56,9 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
 
     const handleDeleteMaterial2 = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/training-materials/${id}`);
+            const response = await axios.delete(
+                `http://localhost:8080/api/training-materials/${id}`
+            );
             if (response.status === 200) {
                 console.log('Material deleted successfully', response.data);
             } else {
@@ -64,16 +70,17 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
     };
 
     const handleUpload = async ({ file, onSuccess, onError }) => {
-        const fileData = {};
-        fileData.name = file.name;
-        fileData.fileName = file.name;
-        fileData.unitChapterId = chapterInfo.id;
-        fileData.url = `http://192.168.148.1:8000/${file.name}`;
-
-        console.log('FILE INFORMATION: ', fileData);
+        const formData = new FormData();
+        formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:8080/api/training-materials', fileData);
+            const response = await axios.post(
+                `http://localhost:8080/api/training-materials/upload/${chapterInfo.id}`,
+                formData,
+                {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }
+            );
 
             if (response.status === 200) {
                 console.log('File uploaded successfully', response.data);
@@ -97,10 +104,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
         <div className={styles.container}>
             <div className={styles.header}>
                 <p className={styles['day-number']}>Day 3</p>
-                <div
-                    className={styles['close-btn']}
-                    onClick={handleCloseBtn}
-                >
+                <div className={styles['close-btn']} onClick={handleCloseBtn}>
                     <AiOutlineCloseCircle />
                 </div>
             </div>
@@ -113,10 +117,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                     <p className={styles['chapter-name']}>.NET Introduction</p>
                     <ul className={styles['material-list']}>
                         {material.map((item, idx) => (
-                            <li
-                                className={styles['material-item']}
-                                key={idx}
-                            >
+                            <li className={styles['material-item']} key={idx}>
                                 <a
                                     href={item.url}
                                     target="_blank"
@@ -125,8 +126,16 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                                     {item.name}
                                 </a>
                                 <div className={styles.action}>
-                                    <p className={styles.history}>{`by ${item.modifiedBy} on ${item.modifiedDate}`}</p>
-                                    <div onClick={() => handleDeleteMaterial2(item.trainingMaterialId)}>
+                                    <p
+                                        className={styles.history}
+                                    >{`by ${item.modifiedBy} on ${item.modifiedDate}`}</p>
+                                    <div
+                                        onClick={() =>
+                                            handleDeleteMaterial2(
+                                                item.trainingMaterialId
+                                            )
+                                        }
+                                    >
                                         <Upload
                                             customRequest={handleUpload}
                                             showUploadList={false}
@@ -140,7 +149,11 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                                     <Popconfirm
                                         title="Delete the material"
                                         description="Are you sure to delete this material?"
-                                        onConfirm={() => handleDeleteMaterial(item.trainingMaterialId)}
+                                        onConfirm={() =>
+                                            handleDeleteMaterial(
+                                                item.trainingMaterialId
+                                            )
+                                        }
                                         onCancel={cancel}
                                         okText="Yes"
                                         cancelText="No"
@@ -154,11 +167,15 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                     </ul>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Upload
-                        customRequest={handleUpload}
-                        showUploadList={false}
-                    >
-                        <Button style={{ backgroundColor: '#2D3748', color: '#fff' }}>Upload new</Button>
+                    <Upload customRequest={handleUpload} showUploadList={false}>
+                        <Button
+                            style={{
+                                backgroundColor: '#2D3748',
+                                color: '#fff',
+                            }}
+                        >
+                            Upload new
+                        </Button>
                     </Upload>
                 </div>
             </div>

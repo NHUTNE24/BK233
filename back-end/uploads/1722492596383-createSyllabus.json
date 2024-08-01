@@ -1,0 +1,113 @@
+{
+  "syllabusDays": [
+    {
+      "syllabusUnits": [
+        {
+          "unitName": "Day 1 Unit 1",
+          "unitChapters": [
+            {
+              "chapterName": "Chapter1",
+              "duration": 12,
+              "isOnline": true,
+              "deliveryType": "Guide/Review",
+              "outputStandard": "Fundamental Knowledge"
+            },
+            {
+              "chapterName": "Chapter2",
+              "duration": 10,
+              "isOnline": false,
+              "deliveryType": "Test/Quiz",
+              "outputStandard": "Advance Knowledge"
+            }
+          ]
+        },
+        {
+          "unitName": "Day 1Unit 2",
+          "unitChapters": [
+            {
+              "chapterName": "Chapter 1",
+              "duration": 11,
+              "isOnline": false,
+              "deliveryType": "Assignment/Lab",
+              "outputStandard": "Fundamental Knowledge"
+            },
+            {
+              "chapterName": "Chapter2",
+              "duration": 5,
+              "isOnline": false,
+              "deliveryType": "Concept/Lecture",
+              "outputStandard": "Fundamental Knowledge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "syllabusUnits": [
+        {
+          "unitName": "Day2 Unit 1",
+          "unitChapters": [
+            {
+              "chapterName": "Chapter 3",
+              "duration": 16,
+              "isOnline": true,
+              "deliveryType": "Exam",
+              "outputStandard": "Fundamental Knowledge"
+            },
+            {
+              "chapterName": "Test",
+              "duration": 7,
+              "isOnline": false,
+              "deliveryType": "Seminar/Workshop",
+              "outputStandard": "Fundamental Knowledge"
+            }
+          ]
+        },
+        {
+          "unitName": "Day 2 Unit 2",
+          "unitChapters": [
+            {
+              "chapterName": "Chapter 1",
+              "duration": 19,
+              "isOnline": true,
+              "deliveryType": "Guide/Review",
+              "outputStandard": "Fundamental Knowledge"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assessmentSchema": {
+    "quiz": 10,
+    "assignment": 30,
+    "final": 60,
+    "finalTheory": 50,
+    "finalPractice": 50,
+    "gpa": 3
+  },
+  "basicInfo": {
+    "syllabusName": "Syllabus Name",
+    "code": "Code123",
+    "version": "1.0"
+  },
+  "general": {
+    "level": "Beginner",
+    "attendeeNumber": 29,
+    "technicalContent": "<ul>\n      <li>Microsoft SQL Server 2005 Express (in which the trainees can create & manipulate on their own database)</li>\n      <li>Microsoft Visual Studio 2017</li>\n      <li>Microsoft Office 2007 (Visio, Word, PowerPoint)</li>\n    </ul>",
+    "courseContent": "\n                            <p>This topic is to introduce about C# programming language knowledge; adapt trainees with skills, lessons and practices which\nis specifically used in the</p>\n<p>\nFsoft projects.\n</p>\n\n        <p>In details, after completing the topic, trainees will:</p>\n        <ul>\n            <li>Understand basic concepts of high-level programming languages (keyword, statement, operator, control-of-flow)</li>\n            <li>Understand and distinguish two concepts: class (Class) and object (Object)</li>\n            <li>Understand and apply object-oriented programming knowledge to resolve simple problems (Inheritance, Encapsulation, Abstraction, Polymorphism)</li>\n        </ul>\n    "
+  },
+  "trainingPrinciple": {
+    "training": "<ul>\n<li>Trainee who actively complete online learning according to MOOC links provided</li>\n<li>At the end of the day, students complete Daily Quiz for 30 minutes</li>\n<li>Trainer/Mentor supports answering questions, guiding exercises 1.5-2.0h/day</li>\n<li>Trainer conducts the workshops\n    </li><li class=\"ql-indent-1\">Trainees complete Assignments and Labs</li>\n    <li class=\"ql-indent-1\">Trainees have 1 final test in 4 hours (1 hour theory + 3 hours of practice)</li>\n\n</ul>",
+    "reTest": "<ul>\n<li>Only allow each student to retake the test up to 2 times</li>\n<li>Re-exam the same structure as the Final Test</li>\n</ul>",
+    "marking": "<ul>\n<li>Mentor review students on 2 Assignments</li>\n<li>Mentor marks the 3 Quizzes and Final Exam Theory</li>\n<li>Trainer marks the Final Exam Practice</li>\n<li>If the trainees have to retake test, the score will be calculated:\n    </li><li class=\"ql-indent-1\">The score &gt;=6, the score will be 6</li>\n    <li class=\"ql-indent-1\">The score &lt;6, the score will be that score</li>\n\n</ul>",
+    "waiverCriteria": "<ul>\n<li>Students pass the quick test</li>\n<li>Trainer Audit: rank B</li>\n</ul>",
+    "others": "<ul>\n<li>Trainers can allow students to complete homework and submit the next day</li>\n</ul>"
+  },
+  "isSyllabusDaysValid": true,
+  "isAssessmentSchemaValid": true,
+  "isBasicInfoValid": true,
+  "isGeneralValid": true,
+  "isTrainingPrincipleValid": true,
+  "status": "draft"
+}
