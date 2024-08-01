@@ -434,7 +434,7 @@ const ViewProgramMaterial = ({
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    rules={[{ required: true }]}
+                    rules={[{ required: TrainingMaterial?.file }]}
                     label="File Name"
                     name="File Name"
                     labelCol={{
@@ -447,7 +447,7 @@ const ViewProgramMaterial = ({
                     value={material.fileName}
                     onChange={handleChangeFileName}
                 >
-                    <Input />
+                    <Input disabled={!TrainingMaterial?.file} />
                 </Form.Item>
                 <Form.Item
                     rules={[{ required: true }]}
