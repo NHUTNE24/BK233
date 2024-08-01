@@ -1,5 +1,6 @@
 package com.fams.api.services;
-
+import com.fams.api.entity.TrainingProgram;
+import com.fams.api.repository.TrainingProgramRepository;
 import com.fams.api.dto.*;
 import com.fams.api.dto.createData.DayCreate;
 import com.fams.api.dto.createData.UnitCreate;
@@ -28,6 +29,7 @@ public class SyllabusDetailService {
 
     private final SyllabusServices syllabusServices;
     private final SyllabusUnitServices syllabusUnitServices;
+    private final TrainingProgramRepository trainingProgramRepository;
 
     private final SyllabusMapper syllabusMapper;
     private final DetailMapperImpl detailMapper;
@@ -495,6 +497,19 @@ public class SyllabusDetailService {
 
             // Delete Syllabus
             syllabusRepository.deleteById(id);
+        }
+        // Find the training program that contains the syllabus ID
+        List<TrainingProgram> trainingPrograms = trainingProgramRepository.findAll();
+        for (TrainingProgram trainingProgram : trainingPrograms) {
+            List<String> syllabusIds = trainingProgram.getSyllabusId();
+            if (syllabusIds != null && syllabusIds.contains(id)) {
+                // Remove the syllabus ID from the training program
+                syllabusIds.remove(id);
+                trainingProgram.setSyllabusId(syllabusIds);
+                // Save the updated training program
+                trainingProgramRepository.save(trainingProgram);
+                break;
+            }
         }
     }
 
