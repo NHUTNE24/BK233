@@ -8,6 +8,7 @@ export { default as SyllabusTab } from './SyllabusTab';
 export { default as SyllabusDetail } from './SyllabusDetail';
 export { default as SyllabusDetail2 } from './SyllabusDetail2';
 export { default as SyllabusCard } from './SyllabusCard';
+export { default as SyllabusCard2 } from './SyllabusCard2';
 export { default as SyllabusGeneral } from './SyllabusGeneral';
 export { default as SyllabusDetailInformation } from './SyllabusDetailInformation';
 export { default as Chips } from './Chips';

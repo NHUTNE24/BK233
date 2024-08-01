@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { SyllabusCard } from 'src/components';
+import { SyllabusCard2 } from 'src/components';
 
 const DragDropList = ({ selected, setSelected }) => {
     const handleRemove = (syllabusId) => {
@@ -51,10 +51,10 @@ const DragDropList = ({ selected, setSelected }) => {
                                             provided.draggableProps.style
                                         )}
                                     >
-                                        <SyllabusCard
+                                        <SyllabusCard2
                                             syllabusId={Syllabus.id}
-                                            programName={Syllabus.topicName}
-                                            syllabusName={
+                                            syllabusName={Syllabus.topicName}
+                                            syllabusCode={
                                                 Syllabus.topicCode +
                                                 ' v' +
                                                 Syllabus.version

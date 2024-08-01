@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { SyllabusCard } from 'src/components';
+import { SyllabusCard2 } from 'src/components';
 import { useEffect, useState } from 'react';
 
 const TrainingProgramView = ({ TrainingProgram, setDestination }) => {
@@ -59,10 +59,10 @@ const TrainingProgramView = ({ TrainingProgram, setDestination }) => {
                                         key={index}
                                         to={`${Syllabus?.id?.toLowerCase()}`}
                                     >
-                                        <SyllabusCard
+                                        <SyllabusCard2
                                             syllabusId={Syllabus?.id}
-                                            programName={Syllabus?.topicName}
-                                            syllabusName={
+                                            syllabusName={Syllabus?.topicName}
+                                            syllabusCode={
                                                 Syllabus?.topicCode +
                                                 ' v' +
                                                 Syllabus?.version

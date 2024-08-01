@@ -31,7 +31,7 @@ const ProgramDayCard = ({
                 <div
                     className={`!w-full min-h-[39px] px-[20px] py-[10px] ${roundedCorner ? '!rounded-t-[20px]' : ''} ${roundedBottom ? '!rounded-b-[20px]' : ''} !bg-main font-bold !text-white !shadow-none`}
                 >
-                    <h6>Day {SyllabusDay?.day_no}</h6>
+                    <h6>Day {SyllabusDay?.dayNo}</h6>
                 </div>
             ),
             children: (
@@ -40,9 +40,9 @@ const ProgramDayCard = ({
                         <UnitTab
                             key={SyllabusUnit?.id}
                             index={suIndex}
-                            day_no={SyllabusDay?.day_no}
+                            day_no={SyllabusDay?.dayNo}
                             SyllabusUnit={SyllabusUnit}
-                            maxIdx={syllabusUnits[suIndex]?.length - 1}
+                            maxIdx={syllabusUnits[index]?.length - 1}
                         />
                     ))}
                 </div>

@@ -396,7 +396,8 @@ const ViewProgramMaterial = ({
                 <p>Are you sure you want to delete this training material?</p>
             </Modal>
             <Modal
-                width={800}
+                className='material-edit-modal'
+                width={700}
                 centered
                 title="Edit training material"
                 open={isModalEdit}
@@ -464,7 +465,8 @@ const ViewProgramMaterial = ({
                 </Form.Item>
             </Modal>
             <Modal
-                width={800}
+                className='material-create-modal'
+                width={700}
                 centered
                 title="Upload new training material"
                 open={isModalCreate}

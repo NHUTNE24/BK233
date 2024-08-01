@@ -19,8 +19,6 @@ const UnitTab = ({ index, day_no, SyllabusUnit, maxIdx }) => {
         []
     );
 
-    console.log(filteredUnitChapters)
-
     const items = [
         {
             key: SyllabusUnit?.id,
@@ -39,7 +37,7 @@ const UnitTab = ({ index, day_no, SyllabusUnit, maxIdx }) => {
                             <SyllabusDetail2
                                 width="w-full"
                                 day_no={day_no}
-                                unit_no={SyllabusUnit?.unit_no}
+                                unit_no={SyllabusUnit?.unitNo}
                                 unit_name={SyllabusUnit?.name}
                                 UnitChapter={UnitChapter}
                             />
@@ -49,13 +47,17 @@ const UnitTab = ({ index, day_no, SyllabusUnit, maxIdx }) => {
             ),
         },
     ];
+
+    console.log(index)
+    console.log(maxIdx)
+
     return (
         <div
             id="unit-tab"
             className={`flex font-bold ${index < maxIdx ? 'border-b-[0.7px] border-[#000]' : ''}`}
         >
             <h6 className="w-[150px] h-full p-[20px]">
-                Unit {SyllabusUnit?.unit_no}
+                Unit {SyllabusUnit?.unitNo}
             </h6>
             <Collapse
                 className="w-full !shadow-none border-0"

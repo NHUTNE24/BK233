@@ -21,7 +21,7 @@ const DropdownSearch = ({
     }));
 
     return (
-        <div className="relative">
+        <div id='dropdown-search' className="relative">
             <Select
                 style={{ width: width, minWidth: minWidth, height: height }}
                 showSearch

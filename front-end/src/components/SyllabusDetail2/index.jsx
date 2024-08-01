@@ -2,14 +2,14 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './SyllabusDetail.css';
-// import {
-//     DeliveryTypeIcon1,
-//     DeliveryTypeIcon2,
-//     DeliveryTypeIcon3,
-//     DeliveryTypeIcon4,
-//     DeliveryTypeIcon5,
-//     DeliveryTypeIcon6,
-// } from 'src/assets/icons/DeliveryTypes';
+import {
+    DeliveryTypeIcon1,
+    DeliveryTypeIcon2,
+    DeliveryTypeIcon3,
+    DeliveryTypeIcon4,
+    DeliveryTypeIcon5,
+    DeliveryTypeIcon6,
+} from 'src/assets/icons/DeliveryTypes';
 import MaterialFolderIcon from 'src/assets/icons/NavigationMenu/MaterialFolderIcon';
 
 import { ProgramComponents } from 'src/pages/Program';
@@ -17,14 +17,14 @@ import { Chips, TooltipCustom } from 'src/components';
 
 import { ProgramDetailContext } from '../../pages/Program/ProgramDetail/ProgramDetailContext';
 
-// const deliveryTypeIcons = {
-//     dt001: { icon: DeliveryTypeIcon1, tooltip: 'Assignment/Lab' },
-//     dt002: { icon: DeliveryTypeIcon2, tooltip: 'Concept/Lecture' },
-//     dt003: { icon: DeliveryTypeIcon3, tooltip: 'Guide/Review' },
-//     dt004: { icon: DeliveryTypeIcon4, tooltip: 'Test/Quiz' },
-//     dt005: { icon: DeliveryTypeIcon5, tooltip: 'Exam' },
-//     dt006: { icon: DeliveryTypeIcon6, tooltip: 'Seminar/Workshop' },
-// };
+const deliveryTypeIcons = {
+    '1': { icon: DeliveryTypeIcon1, tooltip: 'Assignment/Lab' },
+    '2': { icon: DeliveryTypeIcon2, tooltip: 'Concept/Lecture' },
+    '3': { icon: DeliveryTypeIcon3, tooltip: 'Guide/Review' },
+    '4': { icon: DeliveryTypeIcon4, tooltip: 'Test/Quiz' },
+    '5': { icon: DeliveryTypeIcon5, tooltip: 'Exam' },
+    '6': { icon: DeliveryTypeIcon6, tooltip: 'Seminar/Workshop' },
+};
 
 // const detailInfo2 = { name: '.NET Introduction', standard: 'H4SD', duration: 30, status: 'Online', delivery_type_id: 2 };
 
@@ -44,6 +44,7 @@ const SyllabusDetail2 = ({
     const DeliveryType = deliveryTypes.filter(
         (DeliveryType) => DeliveryType.id === UnitChapter?.deliveryTypeId
     )[0];
+    const DeliveryTypeIcon = deliveryTypeIcons[DeliveryType?.icon];
 
     console.log(OutputStandard);
     console.log(DeliveryType);
@@ -65,7 +66,7 @@ const SyllabusDetail2 = ({
                         </div>
                     }
                     trigger={
-                        <span>
+                        <span className="content-center">
                             <Chips.ChipSquare
                                 text={OutputStandard?.code}
                                 backgroundColor="var(--primary-color)"
@@ -76,16 +77,24 @@ const SyllabusDetail2 = ({
                 <div className="duration-info font-normal">
                     {UnitChapter?.duration}mins
                 </div>
-                <Chips.ChipRounded
-                    text={UnitChapter?.isOnline ? 'Online' : 'Offline'}
-                    outlined={true}
-                    inactive={!UnitChapter?.isOnline}
-                    textColor="var(--highlight-one)"
-                    inactiveBackgroundColor="var(--primary-color)"
-                />
+                <div className="items-center">
+                    <Chips.ChipRounded
+                        text={UnitChapter?.isOnline ? 'Online' : 'Offline'}
+                        outlined={true}
+                        inactive={!UnitChapter?.isOnline}
+                        textColor="var(--highlight-one)"
+                        inactiveBackgroundColor="var(--primary-color)"
+                    />
+                </div>
                 <TooltipCustom
                     title={DeliveryType?.name}
-                    trigger={<img className="icon" src={DeliveryType?.icon} />}
+                    trigger={
+                        <div className="icon">
+                            {DeliveryTypeIcon && (
+                                <DeliveryTypeIcon.icon width="24" height="24" />
+                            )}
+                        </div>
+                    }
                 />
                 <div>
                     <ProgramComponents.ViewProgramMaterial
