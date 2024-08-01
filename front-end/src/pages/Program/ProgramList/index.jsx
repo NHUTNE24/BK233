@@ -118,7 +118,7 @@ const TrainingProgram = () => {
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.75)',
-      zIndex: 1000,
+      zIndex: 99999,
     }
   };
   const [page, setPage] = useState(1);
