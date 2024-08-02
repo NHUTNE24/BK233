@@ -1,6 +1,6 @@
-import { Button } from 'antd';
 import { FaPlayCircle } from 'react-icons/fa';
 import { useRef } from 'react';
+
 const content = {
     headerChip: 'Updated August 2024',
     header: 'Fresher Academy Management System',

@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -7,14 +8,12 @@ import Button from 'src/components/Button';
 import { MdOutlineModeEdit, MdOutlineDeleteForever } from 'react-icons/md';
 import { Modal, Input, Form, Radio } from 'antd';
 
-import { ProgramDetailContext } from '../ProgramDetail/ProgramDetailContext';
-
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const username = import.meta.env.VITE_USERNAME;
 const password = import.meta.env.VITE_PASSWORD;
 const token = btoa(`${username}:${password}`);
 const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
-import { useSelector } from 'react-redux';
+const cloudinaryUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const ViewProgramMaterial = ({
     day_no,
@@ -24,7 +23,6 @@ const ViewProgramMaterial = ({
     isOpen,
     setIsOpen,
 }) => {
-    const { userName } = useContext(ProgramDetailContext);
     const currentUsername = useSelector((state) => state.auth?.username || '');
 
     const [UnitChapter, setUnitChapter] = useState(null);
@@ -203,7 +201,7 @@ const ViewProgramMaterial = ({
         setSelectedFile(null);
         setMaterial({
             ...material,
-            createdBy: userName,
+            createdBy: currentUsername,
             createdDate: new Date(),
             unitChapterId: unitChapterId,
             fileName: '',
@@ -260,7 +258,7 @@ const ViewProgramMaterial = ({
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                formData.append('upload_preset', 'ml_default');
+                formData.append('upload_preset', cloudinaryUploadPreset);
 
                 const res = await axios.post(
                     `${cloudinaryUrl}/auto/upload`,

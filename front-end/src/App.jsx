@@ -62,7 +62,7 @@ const App = () => {
                             </ProtectedRoute>
                         }
                         >
-                        <Route path='home-page' element={<HomePage />}></Route>
+                        <Route path='' element={<HomePage />}></Route>
                         <Route path="class" element={<ClassLayout />}>
                             <Route path="list" element={<ClassList />} />
                             <Route path=":id" element={<ClassDetail />} />
