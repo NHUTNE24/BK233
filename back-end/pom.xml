@@ -158,6 +158,17 @@
 			<artifactId>jaxb-runtime</artifactId>
 			<version>2.3.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-core</artifactId>
+			<version>1.29.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.29.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -23,6 +23,10 @@ const ViewProgramMaterial = ({
     isOpen,
     setIsOpen,
 }) => {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const username = import.meta.env.VITE_USERNAME;
+    const password = import.meta.env.VITE_PASSWORD;
+    const token = btoa(`${username}:${password}`);
     const currentUsername = useSelector((state) => state.auth?.username || '');
 
     const [UnitChapter, setUnitChapter] = useState(null);
@@ -106,6 +110,22 @@ const ViewProgramMaterial = ({
 
     const confirmDelete = async () => {
         try {
+            const TrainingMaterial = await axios.get(
+                `${baseUrl}/api/training-materials/${currentMaterialId}`,
+                {
+                    headers: {
+                        Authorization: `Basic ${token}`,
+                    },
+                }
+            );
+            if (TrainingMaterial?.file) {
+                await axios.delete(`${baseUrl}/api/files/${TrainingMaterial?.trainingMaterialId}`, {
+                    headers: {
+                        Authorization: `Basic ${token}`,
+                    }
+                })
+            }
+
             await axios.delete(
                 `${baseUrl}/api/training-materials/${currentMaterialId}`,
                 {
@@ -253,19 +273,27 @@ const ViewProgramMaterial = ({
 
     const confirmCreate = async () => {
         var url = material.url;
+        var trainingMaterialId = '';
 
         if (isFile && selectedFile) {
-            try {
+            try {       
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 formData.append('upload_preset', cloudinaryUploadPreset);
 
                 const res = await axios.post(
-                    `${cloudinaryUrl}/auto/upload`,
-                    formData
+                    `${baseUrl}/api/files`,
+                    formData,
+                    { headers: {
+                        Authorization: `Basic ${token}`,
+                        "Content-Type": "multipart/form-data"
+                    }}
                 );
-                url = res.data.secure_url;
+                url = res.data.url;
+                trainingMaterialId = res.data.publicId;
+
                 console.log(res);
+                console.log(res.data);
             } catch (error) {
                 console.error(
                     'Error creating new material:',
@@ -277,6 +305,7 @@ const ViewProgramMaterial = ({
         }
 
         const newMaterial = {
+            trainingMaterialId: trainingMaterialId,
             name: material.name,
             fileName: isFile ? material.fileName : '',
             createdBy: currentUsername,
@@ -548,8 +577,11 @@ const ViewProgramMaterial = ({
                                     '.pdf',
                                     '.doc',
                                     '.docx',
+                                    '.txt',
                                     '.jpg',
                                     '.png',
+                                    '.mp3',
+                                    '.mp4',
                                     '.svg',
                                 ]}
                                 style={{ display: 'none' }}
