@@ -67,7 +67,7 @@ public class UploadController {
             cloudinaryService.deleteFile(publicId);
             return ResponseEntity.ok("File deleted successfully.");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("An error occurred while deleting the file.");
+            return ResponseEntity.status(500).body("An error occurred while deleting the file: " + e.getMessage());
         }
     }
 }

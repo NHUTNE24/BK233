@@ -110,7 +110,7 @@ const ViewProgramMaterial = ({
 
     const confirmDelete = async () => {
         try {
-            const TrainingMaterial = await axios.get(
+            const res = await axios.get(
                 `${baseUrl}/api/training-materials/${currentMaterialId}`,
                 {
                     headers: {
@@ -118,8 +118,8 @@ const ViewProgramMaterial = ({
                     },
                 }
             );
-            if (TrainingMaterial?.file) {
-                await axios.delete(`${baseUrl}/api/files/${TrainingMaterial?.trainingMaterialId}`, {
+            if (res.data.file) {
+                await axios.delete(`${baseUrl}/api/files/${res.data.trainingMaterialId}`, {
                     headers: {
                         Authorization: `Basic ${token}`,
                     }

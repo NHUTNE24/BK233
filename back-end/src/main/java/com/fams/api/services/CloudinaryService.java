@@ -38,7 +38,9 @@ public class CloudinaryService {
         return cloudinary.uploader().upload(file.getBytes(), options);
     }
 
-    public Map<String, ?> deleteFile(String publicId) throws Exception {
-        return cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+    public void deleteFile(String publicId) throws Exception {
+        cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("resource_type", "image"));
+        cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("resource_type", "video"));
+        cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("resource_type", "raw"));
     }
 }
