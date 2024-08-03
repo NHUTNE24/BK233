@@ -7,11 +7,13 @@ import com.fams.api.repository.UnitChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +25,6 @@ public class TrainingMaterialService {
     private final UnitChapterRepository unitChapterRepository;
 
     private final Path rootLocation = Paths.get("uploads");
-
-
-
-
 
     @Autowired
     public TrainingMaterialService(TrainingMaterialRepository trainingMaterialRepository, UnitChapterRepository unitChapterRepository) { // Modify this constructor
@@ -50,6 +48,7 @@ public class TrainingMaterialService {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file.");
             }
+            // Create a unique filename
             String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
             Path destinationFile = rootLocation.resolve(
                             Paths.get(filename))
@@ -60,16 +59,17 @@ public class TrainingMaterialService {
                 throw new RuntimeException("Cannot store file outside current directory.");
             }
 
+            // Copy the file to the destination directory
             try (var inputStream = file.getInputStream()) {
-                Files.copy(inputStream, destinationFile);
+                Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }
 
             // Save file metadata to database
             TrainingMaterial trainingMaterial = new TrainingMaterial();
+            trainingMaterial.setFileName(filename);
             trainingMaterial.setName(file.getOriginalFilename());
             trainingMaterial.setUnitChapterId(chapterId);
-            trainingMaterial.setUrl("http://localhost:8080/uploads/" + filename);
-
+            trainingMaterial.setUrl("/api/files/download/" + filename); // Set download URL
 
             trainingMaterialRepository.save(trainingMaterial);
 
@@ -77,6 +77,22 @@ public class TrainingMaterialService {
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file.", e);
+        }
+    }
+
+    public Resource loadFileAsResource(String filename) {
+        try {
+            Path filePath = rootLocation.resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+
+                return resource;
+            } else {
+                throw new RuntimeException("File not found: " + filename);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("File not found: " + filename, e);
         }
     }
 

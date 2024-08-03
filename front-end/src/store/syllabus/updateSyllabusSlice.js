@@ -77,8 +77,8 @@ const updateSyllabusSlice = createSlice({
             const { technicalRequirement } = action.payload;
             state.general.technicalContent = technicalRequirement;
             if (
-                state.general.technicalContent !== '<p><br></p>' &&
-                state.general.courseContent !== '<p><br></p>' &&
+                state.general.technicalContent  &&
+                state.general.courseContent  &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;
@@ -162,8 +162,8 @@ const updateSyllabusSlice = createSlice({
             const { courseObjective } = action.payload;
             state.general.courseContent = courseObjective;
             if (
-                state.general.technicalContent !== '<p><br></p>' &&
-                state.general.courseContent !== '<p><br></p>' &&
+                state.general.technicalContent  &&
+                state.general.courseContent  &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;
@@ -180,8 +180,8 @@ const updateSyllabusSlice = createSlice({
             const { attendeeNumber } = action.payload;
             state.general.attendeeNumber = attendeeNumber;
             if (
-                state.general.technicalContent !== '<p><br></p>' &&
-                state.general.courseContent !== '<p><br></p>' &&
+                state.general.technicalContent  &&
+                state.general.courseContent  &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;

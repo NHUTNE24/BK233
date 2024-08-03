@@ -159,11 +159,12 @@ select:focus {
 }  */
 
 .ant-modal-content {
-    width: 700px !important;
+    /* width: 700px !important; */
+    width: 100%;
 }
 
 .ant-modal-body {
-    width: 700px !important;
+    /* width: 700px !important; */
 }
 
 /* .filter-container {

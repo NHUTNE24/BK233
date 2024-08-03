@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import './WordEditor.scss';
 
-function WordEditor({ content, setContent, minHeight = '200px' }) {
+function WordEditor({ content, setContent, minHeight = '200px', errorStyle }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const quillRef = useRef(null);
@@ -11,7 +11,10 @@ function WordEditor({ content, setContent, minHeight = '200px' }) {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            if (
+                wrapperRef.current &&
+                !wrapperRef.current.contains(event.target)
+            ) {
                 setIsEditing(false);
             }
         };
@@ -40,7 +43,12 @@ function WordEditor({ content, setContent, minHeight = '200px' }) {
             [{ header: [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
             [{ size: [] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+            [
+                { list: 'ordered' },
+                { list: 'bullet' },
+                { indent: '-1' },
+                { indent: '+1' },
+            ],
             ['link', 'image'],
             ['clean'],
         ],
@@ -49,13 +57,10 @@ function WordEditor({ content, setContent, minHeight = '200px' }) {
     return (
         <div
             ref={wrapperRef}
-            className="editable-div"
+            className={`editable-div ${errorStyle ? 'error-style' : ''}`}
         >
             {isEditing ? (
-                <div
-                    className="editor-mode"
-                    style={{ minHeight }}
-                >
+                <div className="editor-mode" style={{ minHeight }}>
                     <ReactQuill
                         ref={quillRef}
                         value={content}

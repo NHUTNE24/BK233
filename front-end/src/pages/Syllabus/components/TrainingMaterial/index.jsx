@@ -15,6 +15,8 @@ TrainingMaterial.propTypes = {
 function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
     const [material, setMaterial] = useState([]);
 
+    const [fileUrl, setFileUrl] = useState(null);
+
     const fetchMaterial = async () => {
         try {
             const result = await axios.get(
@@ -84,6 +86,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
 
             if (response.status === 200) {
                 console.log('File uploaded successfully', response.data);
+
                 fetchMaterial();
                 onSuccess('Ok');
             } else {
@@ -93,6 +96,28 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
         } catch (error) {
             console.error('Error uploading file:', error);
             onError('Error');
+        }
+    };
+
+    const handleDownloadFile = async (fileName) => {
+        try {
+            const result = axios.get(
+                `http://localhost:8080/api/training-materials/download/${fileName}`,
+                { responseType: 'blob' }
+            );
+            const fileUrl = window.URL.createObjectURL(new Blob([result.data]));
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            setFileUrl(fileUrl);
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+
+            // Hiển thị tài liệu PDF
+            // setFileUrl(fileUrl);
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -119,12 +144,15 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                         {material.map((item, idx) => (
                             <li className={styles['material-item']} key={idx}>
                                 <a
-                                    href={item.url}
+                                    onClick={() =>
+                                        handleDownloadFile(item.fileName)
+                                    }
                                     target="_blank"
                                     className={styles['material-name']}
                                 >
                                     {item.name}
                                 </a>
+
                                 <div className={styles.action}>
                                     <p
                                         className={styles.history}

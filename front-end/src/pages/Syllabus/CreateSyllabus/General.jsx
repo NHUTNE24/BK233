@@ -9,7 +9,14 @@ import {
 import WordEditor from '../components/WordEditor';
 import ErrorText from './ErrorText';
 
-function General({ courseRef, dataSource, onFormChange, form, attendeeNumberRef, technicalRef }) {
+function General({
+    courseRef,
+    dataSource,
+    onFormChange,
+    form,
+    attendeeNumberRef,
+    technicalRef,
+}) {
     const data = useSelector((state) => state.updateSyllabus);
 
     const dispatch = useDispatch();
@@ -25,24 +32,35 @@ function General({ courseRef, dataSource, onFormChange, form, attendeeNumberRef,
     return (
         <>
             <div className="general-tab-create">
-                <label style={{ marginRight: '89px', marginLeft: '8px' }}>
-                    Level <span style={{ color: 'red' }}>*</span>
-                </label>
-                <Select
-                    // className="custom-select-one"
-                    style={{ minWidth: '200px' }}
-                    value={data.general.level}
-                    onChange={(e) => dispatch(setLevel({ level: e }))}
-                >
-                    <Select.Option value="Beginner">Beginner</Select.Option>
-                    <Select.Option value="Intermediate">Intermediate</Select.Option>
-                    <Select.Option value="Advanced">Advanced</Select.Option>
-                </Select>
+                <div style={{ paddingTop: '12px' }}>
+                    <label style={{ marginRight: '89px', marginLeft: '8px' }}>
+                        Level <span style={{ color: 'red' }}>*</span>
+                    </label>
+                    <Select
+                        // className="custom-select-one"
+                        style={{ minWidth: '200px' }}
+                        value={data.general.level}
+                        onChange={(e) => dispatch(setLevel({ level: e }))}
+                    >
+                        <Select.Option value="Beginner">Beginner</Select.Option>
+                        <Select.Option value="Intermediate">
+                            Intermediate
+                        </Select.Option>
+                        <Select.Option value="Advanced">Advanced</Select.Option>
+                    </Select>
+                </div>
+
                 <div
                     ref={attendeeNumberRef}
-                    style={{ display: 'flex', marginTop: '16px', alignItems: 'center' }}
+                    style={{
+                        display: 'flex',
+                        marginTop: '16px',
+                        alignItems: 'center',
+                    }}
                 >
-                    <label style={{ marginRight: '4px', marginLeft: '8px' }}>Attendee number</label>
+                    <label style={{ marginRight: '4px', marginLeft: '8px' }}>
+                        Attendee number
+                    </label>
                     <span style={{ color: 'red', marginRight: '8px' }}>*</span>
 
                     <InputNumber
@@ -53,13 +71,17 @@ function General({ courseRef, dataSource, onFormChange, form, attendeeNumberRef,
                             dispatch(setAttendeeNumber({ attendeeNumber: e }));
                         }}
                         className={
-                            data.isGeneralValid.errorSection.includes('attendee-number')
+                            data.isGeneralValid.errorSection.includes(
+                                'attendee-number'
+                            )
                                 ? 'input-error'
                                 : 'input-normal'
                         }
                     />
                 </div>
-                {data.isGeneralValid.errorSection.includes('attendee-number') && (
+                {data.isGeneralValid.errorSection.includes(
+                    'attendee-number'
+                ) && (
                     <p
                         style={{
                             color: 'red',
@@ -75,15 +97,33 @@ function General({ courseRef, dataSource, onFormChange, form, attendeeNumberRef,
 
                 <div className="contenteditable">
                     <p className="subtitle1 ">
-                        Technical Requirement(s) <span style={{ color: 'red' }}>*</span>
+                        Technical Requirement(s){' '}
+                        <span style={{ color: 'red' }}>*</span>
                     </p>
                     <div ref={technicalRef}>
                         <WordEditor
                             content={data.general.technicalContent}
-                            setContent={(value) => changeTechnicalContent(value)}
+                            setContent={(value) =>
+                                changeTechnicalContent(value)
+                            }
+                            errorStyle={
+                                data.isGeneralValid.errorSection.includes(
+                                    'technical'
+                                )
+                                    ? true
+                                    : false
+                            }
                         />
-                        {data.isGeneralValid.errorSection.includes('technical') && (
-                            <p style={{ fontSize: '12px', color: 'red', fontStyle: 'italic' }}>
+                        {data.isGeneralValid.errorSection.includes(
+                            'technical'
+                        ) && (
+                            <p
+                                style={{
+                                    fontSize: '12px',
+                                    color: 'red',
+                                    fontStyle: 'italic',
+                                }}
+                            >
                                 Technical requirement is require!
                             </p>
                         )}
@@ -91,16 +131,32 @@ function General({ courseRef, dataSource, onFormChange, form, attendeeNumberRef,
                     <ErrorText />
                     {/* </Form.Item> */}
                     <p className="subtitle1 ">
-                        Course Objectives <span style={{ color: 'red' }}>*</span>
+                        Course Objectives{' '}
+                        <span style={{ color: 'red' }}>*</span>
                     </p>
                     <div ref={courseRef}>
                         <WordEditor
                             content={data.general.courseContent}
                             setContent={changeCourseContent}
+                            errorStyle={
+                                data.isGeneralValid.errorSection.includes(
+                                    'course-objective'
+                                )
+                                    ? true
+                                    : false
+                            }
                         />
                     </div>
-                    {data.isGeneralValid.errorSection.includes('course-objective') && (
-                        <p style={{ fontSize: '12px', color: 'red', fontStyle: 'italic' }}>
+                    {data.isGeneralValid.errorSection.includes(
+                        'course-objective'
+                    ) && (
+                        <p
+                            style={{
+                                fontSize: '12px',
+                                color: 'red',
+                                fontStyle: 'italic',
+                            }}
+                        >
                             Course objective is require!
                         </p>
                     )}

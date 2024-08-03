@@ -50,7 +50,7 @@
 .ant-table-wrapper .ant-table-column-sorter {
   display: none !important;
 }
-.ant-checkbox+span {
-  font-size: 1.25rem; 
-  line-height: 1.75rem; 
-}
+  /* .ant-checkbox+span {
+    font-size: 1.25rem; 
+    line-height: 1.75rem; 
+  } */

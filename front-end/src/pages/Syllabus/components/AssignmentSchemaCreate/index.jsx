@@ -31,9 +31,10 @@ function AssessmentSchemeCreate({ dataSource }) {
                             <Form.Item
                                 name="quiz"
                                 labelCol={{
-                                    span: 3,
+                                    span: 4,
                                 }}
                                 label=<p>Quiz</p>
+                                colon={false}
                                 labelAlign="left"
                                 rules={formRules}
                                 initialValue={assessmentSchema.quiz}
@@ -52,8 +53,9 @@ function AssessmentSchemeCreate({ dataSource }) {
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{
-                                    span: 3,
+                                    span: 4,
                                 }}
+                                colon={false}
                                 name="assignment"
                                 label="Assignment"
                                 labelAlign="left"
@@ -74,10 +76,11 @@ function AssessmentSchemeCreate({ dataSource }) {
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{
-                                    span: 3,
+                                    span: 4,
                                 }}
                                 name="final"
                                 label="Final"
+                                colon={false}
                                 labelAlign="left"
                                 rules={formRules}
                                 initialValue={assessmentSchema.finalAssessment}
@@ -117,10 +120,12 @@ function AssessmentSchemeCreate({ dataSource }) {
                         <Col span={12}>
                             <Form.Item
                                 labelCol={{
-                                    span: 6,
+                                    span: 8,
                                 }}
+                                labelAlign='left'
+                                colon={false}
                                 wrapperCol={{
-                                    span: 12,
+                                    span: 24,
                                 }}
                                 name="final-theory"
                                 label="Final Theory"
@@ -142,8 +147,9 @@ function AssessmentSchemeCreate({ dataSource }) {
                                 labelCol={{
                                     span: 8,
                                 }}
+                                colon={false}
                                 wrapperCol={{
-                                    span: 10,
+                                    span: 24,
                                 }}
                                 name="final-practice"
                                 label="Final Practice"
@@ -187,11 +193,12 @@ function AssessmentSchemeCreate({ dataSource }) {
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{
-                                    span: 3,
+                                    span: 4,
                                 }}
                                 name="gpa"
                                 label="GPA"
-                                labelAlign="left"
+                                colon={false}
+                                    labelAlign="left"
                                 rules={formRules}
                                 initialValue={assessmentSchema.gpa}
                             >

@@ -2,12 +2,12 @@
     display: flex;
     width: 1134px;
     gap: 42px;
+    padding-top: 12px;
 }
 
 .syllabus-general-left-column {
     flex: 1;
     width: 407px;
-    height: 132px;
     border-radius: 10px;
     border: rgba(109, 109, 109, 0.2) 1px solid;
     box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
@@ -20,6 +20,10 @@
     border: rgba(109, 109, 109, 0.2) 1px solid;
     box-shadow: 1px 1px 1px 1px rgba(109, 109, 109, 0.2);
     padding: 20px;
+}
+
+.technical-requirement-content > ul {
+    list-style-type: circle;
 }
 
 .level-container {
@@ -80,6 +84,12 @@
 
 .course-objectives-content {
     font-weight: 500;
+    padding-left: 12px;
+    padding-top: 12px;
+}
+
+.course-objectives-content > ul {
+    list-style-type: circle;
 }
 
 .output-standard-info {

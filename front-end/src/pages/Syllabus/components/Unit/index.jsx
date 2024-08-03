@@ -41,7 +41,7 @@ function Unit({ unitInfo, chapterInfo }) {
                 </div>
             ),
             children: (
-                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <div className={styles['chapter-list']}>
                         <ul className={styles['chapter-list-wrapper']}>
                             {chapterListRender.map((chapter, idx) => (

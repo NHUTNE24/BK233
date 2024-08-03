@@ -1,8 +1,13 @@
 package com.fams.api.controller;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,6 +30,34 @@ public class TrainingMaterialController {
     @GetMapping
     public List<TrainingMaterial> getAllTrainingMaterials() {
         return trainingMaterialService.getAllTrainingMaterials();
+    }
+
+    @GetMapping("/download/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+        try {
+            Resource resource = trainingMaterialService.loadFileAsResource(filename);
+            String contentType = Files.probeContentType(Paths.get(resource.getURI()));
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType)) // Cập nhật loại nội dung đúng
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"") // sử dụng inline thay cho attachment để hiển thị trực tiếp
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/view/{filename:.+}")
+    public ResponseEntity<Resource> viewFile(@PathVariable String filename) {
+        try {
+            Resource resource = trainingMaterialService.loadFileAsResource(filename);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(Files.probeContentType(Paths.get(resource.getURI()))))
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     // Add a training material

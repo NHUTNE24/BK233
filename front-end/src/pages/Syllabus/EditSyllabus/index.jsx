@@ -5,18 +5,16 @@ import {
     Input,
     message,
     Modal,
-    Popconfirm,
     Row,
     Space,
-    Spin,
+    Spin
 } from 'antd';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import TabsCustom from '../components/TabsCustom';
+import { BiError } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
     changeAssignment,
     changeFinal,
@@ -31,21 +29,20 @@ import {
     setAttendeeNumber,
     setCourseObjective,
     setLevel,
-    setStatus,
     setSyllabusDays,
     setTechnicalRequirement,
     setTrainingDeliveryPrinciple,
-    updateGeneralIsValid,
+    updateGeneralIsValid
 } from '../../../store/syllabus/updateSyllabusSlice';
+import TabsCustom from '../components/TabsCustom';
 import './EditSyllabus.scss';
-import { BiError } from 'react-icons/bi';
 import styles from './style.module.scss';
 
 import { setSelectedKey } from '../../../store/app/siderBarSlice';
 EditSyllabus.propTypes = {};
 function EditSyllabus() {
     const { id } = useParams();
-    const userInfo = useSelector(state=>state.auth);
+    const userInfo = useSelector((state) => state.auth);
 
     const nameRef = useRef(null);
     const codeRef = useRef(null);
@@ -233,29 +230,35 @@ function EditSyllabus() {
                 dispatch(
                     changeQuiz({ value: result.assignmentSchema?.quiz || '' })
                 );
+
                 dispatch(
                     changeAssignment({
                         value: result.assignmentSchema?.assignment || '',
                     })
                 );
+
                 dispatch(
                     changeFinal({
                         value: result.assignmentSchema?.finalAssessment || '',
                     })
                 );
+
                 dispatch(
                     changeFinalTheory({
                         value: result.assignmentSchema?.finalTheory || '',
                     })
                 );
+
                 dispatch(
                     changeFinalPractice({
                         value: result.assignmentSchema?.finalPractice || '',
                     })
                 );
+
                 dispatch(
                     changeGpa({ value: result.assignmentSchema?.gpa || '' })
                 );
+                
                 setDataSource(result);
             } catch (error) {
                 console.error('Error fetching syllabus data:', error);
@@ -308,7 +311,7 @@ function EditSyllabus() {
                     behavior: 'smooth',
                     block: 'end',
                 });
-            } else if (data.general.technicalContent === '<p><br></p>') {
+            } else if (!data.general.technicalContent) {
                 const newGeneralIsValid = {
                     status: false,
                     errorSection: [
@@ -368,9 +371,9 @@ function EditSyllabus() {
                 );
 
                 if (result.status === 200) {
-                    message.success('Update syllabus successfully');
                     setLoading(false);
                     navigate('/syllabus');
+                    message.success('Update syllabus successfully');
                     dispatch(resetState());
                 } else {
                     message.error('Failed to update syllabus');
@@ -412,16 +415,27 @@ function EditSyllabus() {
                     </div>
 
                     <div className="create-syllabus__basic-info">
-                        <Row style={{ width: '100%' }} gutter={30}>
-                            <Col span={9}>
+                        <Row
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'start',
+                            }}
+                            gutter={30}
+                        >
+                            <Col span={11}>
                                 <div className="syllabus-name">
                                     <Row
                                         // justify=""
-                                        align="middle"
+                                        // align="right"
                                         gutter={10}
-                                        style={{ width: '100%' }}
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
                                     >
-                                        <Col>
+                                        <Col span={7}>
                                             <div
                                                 style={{
                                                     paddingBottom: '22px',
@@ -446,7 +460,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={14}>
+                                        <Col span={16}>
                                             <div
                                                 ref={nameRef}
                                                 className="syllabus-name-wrapper"
@@ -493,25 +507,28 @@ function EditSyllabus() {
                                     </Row>
                                 </div>
                             </Col>
-                            <Col span={7}>
+                            <Col span={5}>
                                 <div className="syllabus-code">
                                     <Row
-                                        // justify=""
-                                        align="middle"
                                         gutter={10}
-                                        style={{ width: '100%' }}
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
                                     >
-                                        <Col>
+                                        <Col span={6}>
                                             <div
                                                 style={{
                                                     paddingBottom: '22px',
+                                                    marginBottom: '11px',
                                                 }}
                                             >
                                                 <label
                                                     className="label subtitle1"
                                                     htmlFor="syllabus-code"
                                                 >
-                                                    <p>
+                                                    <div>
                                                         Code
                                                         <span
                                                             style={{
@@ -522,11 +539,11 @@ function EditSyllabus() {
                                                         >
                                                             *
                                                         </span>
-                                                    </p>
+                                                    </div>
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={16}>
+                                        <Col span={14}>
                                             <div
                                                 ref={codeRef}
                                                 className="syllabus-code-wrapper"
@@ -574,10 +591,11 @@ function EditSyllabus() {
                                         gutter={10}
                                         style={{ width: '100%' }}
                                     >
-                                        <Col>
+                                        <Col span={5}>
                                             <div
                                                 style={{
                                                     paddingBottom: '22px',
+                                                    marginBottom: '11px',
                                                 }}
                                             >
                                                 <label
@@ -599,7 +617,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={14}>
+                                        <Col span={8}>
                                             <div
                                                 ref={versionRef}
                                                 className="syllabus-version-wrapper"

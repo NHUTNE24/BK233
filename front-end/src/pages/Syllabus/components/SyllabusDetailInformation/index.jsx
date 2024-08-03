@@ -9,7 +9,10 @@ import { FaRegEye } from 'react-icons/fa';
 import './SyllabusDetailInformation.css';
 import { setData } from '../../../../store/syllabus/syllabusDetailSlice';
 
-import { deleteSyllabus, duplicateSyllabus } from '../../../../store/syllabus/viewSyllabusSlice';
+import {
+    deleteSyllabus,
+    duplicateSyllabus,
+} from '../../../../store/syllabus/viewSyllabusSlice';
 import {
     changeAssignment,
     changeFinal,
@@ -40,13 +43,21 @@ const SyllabusDetailInformation = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://localhost:8080/api/syllabus/${id}`);
+            const response = await axios.get(
+                `http://localhost:8080/api/syllabus/${id}`
+            );
             const result = response.data;
 
             dispatch(setData(result));
-            const flattenChapters = result.unitChapters.reduce((acc, cur) => [...acc, ...cur], []);
+            const flattenChapters = result.unitChapters.reduce(
+                (acc, cur) => [...acc, ...cur],
+                []
+            );
 
-            const flattenUnits = result.syllabusUnits.reduce((acc, cur) => [...acc, ...cur], []);
+            const flattenUnits = result.syllabusUnits.reduce(
+                (acc, cur) => [...acc, ...cur],
+                []
+            );
 
             const syllabusDayList = [];
 
@@ -58,8 +69,14 @@ const SyllabusDetailInformation = () => {
                     });
 
                     flattenUnits.forEach((unit) => {
-                        if ((unit.isDeleted === false || unit.isDeleted === null) && unit.syllabusDayId === day.id) {
-                            syllabusDayList[syllabusDayList.length - 1].syllabusUnits.push({
+                        if (
+                            (unit.isDeleted === false ||
+                                unit.isDeleted === null) &&
+                            unit.syllabusDayId === day.id
+                        ) {
+                            syllabusDayList[
+                                syllabusDayList.length - 1
+                            ].syllabusUnits.push({
                                 unitName: unit.name,
                                 unitChapters: [],
                                 unitId: unit.id,
@@ -68,17 +85,23 @@ const SyllabusDetailInformation = () => {
                                 .filter(
                                     (chapter) =>
                                         chapter.syllabusUnitId === unit.id &&
-                                        (chapter.isDeleted === false || chapter.isDeleted === null),
+                                        (chapter.isDeleted === false ||
+                                            chapter.isDeleted === null)
                                 )
                                 .forEach((chapter) => {
-                                    syllabusDayList[syllabusDayList.length - 1].syllabusUnits[
-                                        syllabusDayList[syllabusDayList.length - 1].syllabusUnits.length - 1
+                                    syllabusDayList[
+                                        syllabusDayList.length - 1
+                                    ].syllabusUnits[
+                                        syllabusDayList[
+                                            syllabusDayList.length - 1
+                                        ].syllabusUnits.length - 1
                                     ].unitChapters.push({
                                         name: chapter.name,
                                         duration: chapter.duration,
                                         isOnline: chapter.isOnline,
                                         deliveryTypeId: chapter.deliveryTypeId,
-                                        outputStandardId: chapter.outputStandardId,
+                                        outputStandardId:
+                                            chapter.outputStandardId,
                                         id: chapter.id,
                                     });
                                 });
@@ -91,32 +114,68 @@ const SyllabusDetailInformation = () => {
 
             // clone dataSource into data
 
-            dispatch(changeSyllabusName({ name: result.syllabus?.topicName || '' }));
-            dispatch(changeSyllabusCode({ code: result.syllabus?.topicCode || '' }));
-            dispatch(changeSyllabusVersion({ version: result.syllabus?.version || '' }));
+            dispatch(
+                changeSyllabusName({ name: result.syllabus?.topicName || '' })
+            );
+            dispatch(
+                changeSyllabusCode({ code: result.syllabus?.topicCode || '' })
+            );
+            dispatch(
+                changeSyllabusVersion({
+                    version: result.syllabus?.version || '',
+                })
+            );
             dispatch(setLevel({ level: result.syllabus?.level || '' }));
-            dispatch(setAttendeeNumber({ attendeeNumber: result.syllabus.attendeeNumber }));
+            dispatch(
+                setAttendeeNumber({
+                    attendeeNumber: result.syllabus.attendeeNumber,
+                })
+            );
             dispatch(
                 setTechnicalRequirement({
-                    technicalRequirement: result.syllabus?.technicalRequirement || '',
-                }),
+                    technicalRequirement:
+                        result.syllabus?.technicalRequirement || '',
+                })
             );
-            dispatch(setCourseObjective({ courseObjective: result.syllabus?.courseObjective || '' }));
+            dispatch(
+                setCourseObjective({
+                    courseObjective: result.syllabus?.courseObjective || '',
+                })
+            );
             dispatch(
                 setTrainingDeliveryPrinciple({
                     training: result.trainingDeliveryPrinciple?.training,
                     pretest: result.trainingDeliveryPrinciple?.pretest,
                     marking: result.trainingDeliveryPrinciple?.marking,
-                    waiverCriteria: result.trainingDeliveryPrinciple?.waiverCriteria,
+                    waiverCriteria:
+                        result.trainingDeliveryPrinciple?.waiverCriteria,
                     others: result.trainingDeliveryPrinciple?.others,
-                }),
+                })
             );
 
-            dispatch(changeQuiz({ value: result.assignmentSchema?.quiz || '' }));
-            dispatch(changeAssignment({ value: result.assignmentSchema?.assignment || '' }));
-            dispatch(changeFinal({ value: result.assignmentSchema?.finalAssessment || '' }));
-            dispatch(changeFinalTheory({ value: result.assignmentSchema?.finalTheory || '' }));
-            dispatch(changeFinalPractice({ value: result.assignmentSchema?.finalPractice || '' }));
+            dispatch(
+                changeQuiz({ value: result.assignmentSchema?.quiz || '' })
+            );
+            dispatch(
+                changeAssignment({
+                    value: result.assignmentSchema?.assignment || '',
+                })
+            );
+            dispatch(
+                changeFinal({
+                    value: result.assignmentSchema?.finalAssessment || '',
+                })
+            );
+            dispatch(
+                changeFinalTheory({
+                    value: result.assignmentSchema?.finalTheory || '',
+                })
+            );
+            dispatch(
+                changeFinalPractice({
+                    value: result.assignmentSchema?.finalPractice || '',
+                })
+            );
             dispatch(changeGpa({ value: result.assignmentSchema?.gpa || '' }));
 
             setLoading(false);
@@ -155,16 +214,19 @@ const SyllabusDetailInformation = () => {
                     status = 'Active';
                 }
 
-                const result = await axios.put(`http://localhost:8080/api/syllabus/${id}`, {
-                    ...updateSyllabus,
-                    userName: 'Syllabus Group', // Need replace by User info
-                    isAssessmentSchemaValid: true,
-                    isGeneralValid: true,
-                    isSyllabusDaysValid: true,
-                    isBasicInfoValid: true,
-                    isTrainingPrincipleValid: true,
-                    status: status,
-                });
+                const result = await axios.put(
+                    `http://localhost:8080/api/syllabus/${id}`,
+                    {
+                        ...updateSyllabus,
+                        userName: 'Syllabus Group', // Need replace by User info
+                        isAssessmentSchemaValid: true,
+                        isGeneralValid: true,
+                        isSyllabusDaysValid: true,
+                        isBasicInfoValid: true,
+                        isTrainingPrincipleValid: true,
+                        status: status,
+                    }
+                );
 
                 if (result.status === 200) {
                     message.success('Active/Deactive syllabus successfully');
@@ -190,10 +252,7 @@ const SyllabusDetailInformation = () => {
     const items = [
         {
             label: (
-                <div
-                    className="edit"
-                    onClick={handleEditClick}
-                >
+                <div className="edit" onClick={handleEditClick}>
                     <i className="fa-solid fa-pencil"></i>
                     <p className="edit-label">Edit syllabus</p>
                 </div>
@@ -202,10 +261,7 @@ const SyllabusDetailInformation = () => {
         },
         {
             label: (
-                <div
-                    className="duplicate"
-                    onClick={handleDuplicate}
-                >
+                <div className="duplicate" onClick={handleDuplicate}>
                     <i className="fa-regular fa-clone"></i>
                     <p className="duplicate-label">Duplicate syllabus</p>
                 </div>
@@ -214,10 +270,7 @@ const SyllabusDetailInformation = () => {
         },
         {
             label: (
-                <div
-                    className="delete"
-                    onClick={handleDelete}
-                >
+                <div className="delete" onClick={handleDelete}>
                     <i className="fa-regular fa-trash-can"></i>
                     <p className="delete-label">Delete syllabus</p>
                 </div>
@@ -226,13 +279,13 @@ const SyllabusDetailInformation = () => {
         },
     ];
 
-    if (data.syllabus.status === 'Active' || data.syllabus.status === 'Deactive') {
+    if (
+        data.syllabus.status === 'Active' ||
+        data.syllabus.status === 'Deactive'
+    ) {
         items.push({
             label: (
-                <div
-                    className="de-activate"
-                    onClick={handleDeActive}
-                >
+                <div className="de-activate" onClick={handleDeActive}>
                     {data.syllabus.status === 'Active' ? (
                         <>
                             <i className="fa-regular fa-eye-slash"></i>
@@ -250,20 +303,22 @@ const SyllabusDetailInformation = () => {
         });
     }
 
-    const totalDay = data.syllabusDays.filter((day) => day.isDeleted === false || day.isDeleted === null).length;
+    const totalDay = data.syllabusDays.filter(
+        (day) => day.isDeleted === false || day.isDeleted === null
+    ).length;
     const availableChapters = data.unitChapters
         ? data.unitChapters
               .reduce((acc, cur) => [...acc, ...cur], [])
-              .filter((chapter) => chapter.isDeleted === false || chapter.isDeleted === null)
+              .filter(
+                  (chapter) =>
+                      chapter.isDeleted === false || chapter.isDeleted === null
+              )
         : [];
 
     return (
         <>
             {loading ? (
-                <Spin
-                    size="large"
-                    fullscreen
-                />
+                <Spin size="large" fullscreen />
             ) : (
                 <div className="syllabus-detail-information-container">
                     <div className="syllabus-detail-information-first-container">
@@ -296,7 +351,9 @@ const SyllabusDetailInformation = () => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="dropdown__body">{menu}</div>
+                                        <div className="dropdown__body">
+                                            {menu}
+                                        </div>
                                     </div>
                                 )}
                             >
@@ -310,29 +367,45 @@ const SyllabusDetailInformation = () => {
                             </Dropdown>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <div className="syllabus-code-info">{data.syllabus.topicCode}</div>
-                            <div className="syllabus-version-info">{data.syllabus.version}</div>
+                            <div className="syllabus-code-info">
+                                {data.syllabus.topicCode}
+                            </div>
+                            <div className="syllabus-version-info">
+                                {data.syllabus.version}
+                            </div>
                         </div>
                     </div>
                     <hr />
                     <div className="syllabus-detail-information-second-container">
                         <div>
-                            <span style={{ fontSize: '24px', fontWeight: '600' }}>{totalDay}</span>{' '}
+                            <span
+                                style={{ fontSize: '24px', fontWeight: '600' }}
+                            >
+                                {totalDay}
+                            </span>{' '}
                             {totalDay > 1 ? 'days' : 'day'}
-                            <span style={{ fontFamily: 'Inter Tight', fontStyle: 'italic' }}>
+                            <span
+                                style={{
+                                    fontFamily: 'Inter Tight',
+                                    fontStyle: 'italic',
+                                }}
+                            >
                                 (
                                 {(
                                     availableChapters.reduce(
-                                        (accumulator, current) => accumulator + current.duration,
-                                        0,
+                                        (accumulator, current) =>
+                                            accumulator + current.duration,
+                                        0
                                     ) / 60
                                 ).toFixed(2)}{' '}
                                 hours)
                             </span>
                         </div>
-                        <div>
+                        <div style={{ marginTop: '8px' }}>
                             Modified on {data.syllabus.modifiedDate || '...'} by
-                            <span style={{ fontWeight: '700', marginLeft: '4px' }}>
+                            <span
+                                style={{ fontWeight: '700', marginLeft: '4px' }}
+                            >
                                 {data.syllabus.modifiedBy || '...'}
                             </span>
                         </div>

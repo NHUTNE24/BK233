@@ -2,7 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Modal, Spin } from 'antd';
-import { deleteSyllabus, duplicateSyllabus } from '../../../../store/syllabus/viewSyllabusSlice';
+import {
+    deleteSyllabus,
+    duplicateSyllabus,
+} from '../../../../store/syllabus/viewSyllabusSlice';
 import './ActionDropdown.scss';
 import { useState } from 'react';
 
@@ -10,7 +13,9 @@ function ActionDropdown(props) {
     const { actions, id } = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { currentPage, pageSize, totalItems, loading } = useSelector((state) => state.viewSyllabus);
+    const { currentPage, pageSize, totalItems, loading } = useSelector(
+        (state) => state.viewSyllabus
+    );
     // const [localLoading, setLocalLoading] = useState(false);
 
     const handleOk = async () => {
@@ -18,15 +23,30 @@ function ActionDropdown(props) {
             // setLocalLoading(true);
             switch (actions.action) {
                 case 'Add':
+                    navigate('/program/create-program');
                     return;
                 case 'Edit':
                     navigate(`/edit-syllabus/${id}`);
                     return;
                 case 'Duplicate':
-                    await dispatch(duplicateSyllabus({ syllabusId: id, currentPage, pageSize, totalItems }));
+                    await dispatch(
+                        duplicateSyllabus({
+                            syllabusId: id,
+                            currentPage,
+                            pageSize,
+                            totalItems,
+                        })
+                    );
                     break;
                 case 'Delete':
-                    await dispatch(deleteSyllabus({ syllabusId: id, currentPage, pageSize, totalItems }));
+                    await dispatch(
+                        deleteSyllabus({
+                            syllabusId: id,
+                            currentPage,
+                            pageSize,
+                            totalItems,
+                        })
+                    );
                     break;
                 default:
                     break;
@@ -58,12 +78,11 @@ function ActionDropdown(props) {
 
     return (
         <>
-            <div
-                className="action-dropdown__item"
-                onClick={confirm}
-            >
+            <div className="action-dropdown__item" onClick={confirm}>
                 <div className="action-dropdown__item-icon">{actions.icon}</div>
-                <div className="action-dropdown__item-text">{actions.label}</div>
+                <div className="action-dropdown__item-text">
+                    {actions.label}
+                </div>
             </div>
             {contextHolder}
             {/* {localLoading && (
