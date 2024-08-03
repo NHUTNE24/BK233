@@ -12,8 +12,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 const username = import.meta.env.VITE_USERNAME;
 const password = import.meta.env.VITE_PASSWORD;
 const token = btoa(`${username}:${password}`);
-const cloudinaryUrl = import.meta.env.VITE_CLOUDINARY_URL;
-const cloudinaryUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const ViewProgramMaterial = ({
     day_no,
@@ -297,7 +295,7 @@ const ViewProgramMaterial = ({
             try {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                formData.append('upload_preset', cloudinaryUploadPreset);
+                // formData.append('upload_preset', cloudinaryUploadPreset);
 
                 const res = await axios.post(`${baseUrl}/api/files`, formData, {
                     headers: {
@@ -323,7 +321,11 @@ const ViewProgramMaterial = ({
         const newMaterial = {
             trainingMaterialId: trainingMaterialId,
             name: material.name,
-            fileName: isFile ? material.fileName : '',
+            fileName: isFile
+                ? material.fileName === ''
+                    ? selectedFile?.name
+                    : material.fileName
+                : '',
             createdBy: currentUsername,
             createdDate: new Date(),
             modifiedBy: currentUsername,
@@ -698,7 +700,7 @@ const MaterialTab = ({
                         headers: {
                             Authorization: `Basic ${token}`,
                         },
-                        responseType: 'blob', // ensure that the response is handled as a binary file
+                        responseType: 'arraybuffer',
                     }
                 );
 

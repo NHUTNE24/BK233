@@ -10,7 +10,8 @@ import {
     MdOutlineContentCopy,
     MdOutlineVisibilityOff,
     MdOutlineVisibility,
-    MdOutlineDeleteForever, } from "react-icons/md";
+    MdOutlineDeleteForever,
+} from 'react-icons/md';
 
 import { MdOutlineSnippetFolder } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -102,29 +103,27 @@ const ManageTrainingProgramMenu = ({
             // {
             //     // cloudinary server-side fetch test
             //     const publicId = 'pbpstgogzccjw0vy01cp';
-            //     const res = await axios.get(`${baseUrl}/api/files/${publicId}`, {
-            //         headers: {
-            //             Authorization: `Basic ${token}`,
-            //         },
-            //     });
-            //     console.log(res);
-            //     console.log(res.data);
+            //     const res = await axios.get(
+            //         `http://localhost:8080/api/files/${publicId}`,
+            //         {
+            //             headers: {
+            //                 Authorization: `Basic ${token}`,
+            //             },
+            //             responseType: 'blob', // ensure that the response is handled as a binary file
+            //         }
+            //     );
 
-            //     if (res.status === 200) {
-            //         const blob = await res.blob();
-            //         const url = window.URL.createObjectURL(blob);
-            //         const a = document.createElement('a');
-            //         a.href = url;
-            //         a.download = publicId; // You can set a custom filename here
-            //         document.body.appendChild(a);
-            //         a.click();
-            //         a.remove();
-            //         window.URL.revokeObjectURL(url);
-            //     } else {
-            //         console.error('File download failed:', res.statusText);
-            //     }
+            //     // create link and trigger download
+            //     const url = window.URL.createObjectURL(new Blob([res.data]));
+            //     const a = document.createElement('a');
+            //     a.href = url;
+            //     a.setAttribute('download', 'test.png');
+            //     document.body.appendChild(a);
+            //     a.click();
+            //     a.remove();
+            //     window.URL.revokeObjectURL(url);
 
-            //     // zipper.file('test', res.data);
+            //     zipper.file('test.png', res.data);
             // }
 
             handleSuccess('Processed successfully. Downloading...');
@@ -158,9 +157,15 @@ const ManageTrainingProgramMenu = ({
                 // handle download file
                 console.log(file.fileName + ' is a file: ' + file.url);
                 try {
-                    const res = await axios.get(file.url, {
-                        responseType: 'arraybuffer',
-                    });
+                    const res = await axios.get(
+                        `http://localhost:8080/api/files/${file.trainingMaterialId}`,
+                        {
+                            headers: {
+                                Authorization: `Basic ${token}`,
+                            },
+                            responseType: 'arraybuffer',
+                        }
+                    );
                     // example URL: https://res.cloudinary.com/dshbngqoj/image/upload/v1721988400/file5.pdf
                     zipper.file(file.fileName, res.data);
                 } catch (error) {

@@ -21,13 +21,13 @@ import java.net.URLConnection;
 import java.util.Map;
 
 @Service
-public class CloudinaryService {
+public class FileService {
 
     private final Cloudinary cloudinary;
     private final TrainingMaterialRepository trainingMaterialRepository;
 
     @Autowired
-    public CloudinaryService(Cloudinary cloudinary, TrainingMaterialRepository trainingMaterialRepository) {
+    public FileService(Cloudinary cloudinary, TrainingMaterialRepository trainingMaterialRepository) {
         this.cloudinary = cloudinary;
         this.trainingMaterialRepository = trainingMaterialRepository;
     }

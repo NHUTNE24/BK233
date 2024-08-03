@@ -71,7 +71,7 @@ export default function Screen3() {
                     Authorization: `Basic ${token}`,
                 },
             })
-            .then((res) => {
+            .then(() => {
                 console.log(TrainingProgram);
                 handleSuccess();
                 // selected.map((Syllabus) => {
