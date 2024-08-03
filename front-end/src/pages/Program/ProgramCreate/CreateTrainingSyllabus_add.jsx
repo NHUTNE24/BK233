@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Button } from 'src/components';
@@ -9,10 +9,12 @@ import TrainingProgramDetailDuration from '../ProgramDetail/TrainingProgramDetai
 import ProgramComponents from '../components';
 
 export default function Screen3() {
+    const currentUsername = useSelector((state) => state.auth?.username || '');
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const username = import.meta.env.VITE_USERNAME;
     const password = import.meta.env.VITE_PASSWORD;
     const token = btoa(`${username}:${password}`);
+
     const [modalMessage, setModalMessage] = useState('');
     const [status, setStatus] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +24,14 @@ export default function Screen3() {
     const [saved, setSaved] = useState(false);
     const days = selected.reduce((s1, s2) => s1 + s2.days, 0);
     const hours = selected.reduce((s1, s2) => s1 + s2.hours, 0);
-    const currentUsername = useSelector((state) => state.auth?.username || '');
+
+    const navigate = useNavigate();
+    const [navigateTarget, setNavigateTarget] = useState('');
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        navigate(navigateTarget);
+        setNavigateTarget('');
     };
 
     useEffect(() => {
@@ -71,9 +78,10 @@ export default function Screen3() {
                     Authorization: `Basic ${token}`,
                 },
             })
-            .then(() => {
+            .then((res) => {
                 console.log(TrainingProgram);
                 handleSuccess();
+                setNavigateTarget(`/program/view-program/${res.data.trainingProgramCode}`);
                 // selected.map((Syllabus) => {
                 //     Syllabus.trainingProgramCode = Syllabus.trainingProgramCode
                 //         ? [

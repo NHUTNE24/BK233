@@ -12,9 +12,9 @@ const TrainingProgramDetailDuration = ({
             className="flex flex-col justify-around min-h-[91px] text-[0.875rem] border-b-[1.5px] py-[20px]"
         >
             <p>
-                <strong className="text-[1.5rem]">{(days ? days : '...') + ' '}</strong> days{' '}
+                <strong className="text-[1.5rem]">{days + ' '}</strong> days{' '}
                 <em>
-                    {'(' + (hours ? hours : '...') + ' '} hours{')'}
+                    {'(' + hours + ' '} hours{')'}
                 </em>
             </p>
             <p>
