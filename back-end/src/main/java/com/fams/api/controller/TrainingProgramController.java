@@ -2,16 +2,20 @@ package com.fams.api.controller;
 
 import com.fams.api.entity.TrainingProgram;
 import com.fams.api.services.TrainingProgramService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/training-programs")
+@CrossOrigin
 public class TrainingProgramController {
 
     private final TrainingProgramService trainingProgramService;
 
+    @Autowired
     public TrainingProgramController(TrainingProgramService trainingProgramService) {
         this.trainingProgramService = trainingProgramService;
     }
@@ -48,13 +52,25 @@ public class TrainingProgramController {
 
     // Activate a training program
     @PutMapping("/{trainingProgramCode}/activate")
-    public TrainingProgram activateTrainingProgram(@PathVariable String trainingProgramCode, @RequestBody TrainingProgram activatedTrainingProgram) {
+    public TrainingProgram activateTrainingProgram(@PathVariable String trainingProgramCode) {
         return trainingProgramService.activateTrainingProgram(trainingProgramCode);
     }
 
     // Deactivate a training program
     @PutMapping("/{trainingProgramCode}/deactivate")
-    public TrainingProgram deactivateTrainingProgram(@PathVariable String trainingProgramCode, @RequestBody TrainingProgram deactivatedTrainingProgram) {
+    public TrainingProgram deactivateTrainingProgram(@PathVariable String trainingProgramCode) {
         return trainingProgramService.deactivateTrainingProgram(trainingProgramCode);
+    }
+
+    // Duplicate a training program
+    @PostMapping("/{trainingProgramCode}/duplicate")
+    public TrainingProgram duplicateTrainingProgram(@PathVariable String trainingProgramCode) {
+        return trainingProgramService.duplicateTrainingProgram(trainingProgramCode);
+    }
+
+    // Get all training materials of a training program
+    @GetMapping("/{trainingProgramCode}/getMaterials")
+    public String getAllTrainingMaterials(@PathVariable String trainingProgramCode) {
+        return trainingProgramService.getAllTrainingMaterials(trainingProgramCode);
     }
 }

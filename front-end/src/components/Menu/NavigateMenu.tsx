@@ -20,7 +20,7 @@ const { Sider } = Layout;
 
 
 const items: MenuItem[] = [
-  { key: '1', icon: <HomeOutlined />, label: <Link to="/home-page">Home</Link>, className: styles['menu-item'] },
+  { key: '1', icon: <HomeOutlined />, label: <Link to="/">Home</Link>, className: styles['menu-item'] },
   {
     key: 'sub1',
     label: 'Syllabus',
@@ -89,7 +89,7 @@ const NavigateMenu: React.FC = () => {
   };
   const getDefaultSelectedKey = () => {
     switch (location.pathname) {
-      case '/home-page':
+      case '/':
         return '1';
       case '/syllabus':
         return '2';

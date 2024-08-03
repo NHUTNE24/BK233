@@ -10,10 +10,11 @@ import {
     MdOutlineContentCopy,
     MdOutlineVisibilityOff,
     MdOutlineVisibility,
-    MdOutlineDeleteForever, } from "react-icons/md";
+    MdOutlineDeleteForever,
+} from 'react-icons/md';
 
 import { MdOutlineSnippetFolder } from 'react-icons/md';
-
+import { useSelector } from 'react-redux';
 // import './TrainingProgramDetail.css';
 
 import { Divider, Popover } from 'antd';
@@ -37,13 +38,13 @@ const ManageTrainingProgramMenu = ({
     const username = import.meta.env.VITE_USERNAME;
     const password = import.meta.env.VITE_PASSWORD;
     const token = btoa(`${username}:${password}`);
-
+    const currentUsername = useSelector((state) => state.auth?.username || '');
     const initializeProgram = () => ({
         trainingProgramCode: null,
         createdBy: null,
         createdDate: null,
-        modifiedBy: null,
-        modifiedDate: null,
+        modifiedBy: currentUsername,
+        modifiedDate: new Date(),
         days: null,
         hours: null,
         startTime: null,
@@ -83,20 +84,46 @@ const ManageTrainingProgramMenu = ({
             await handleZipFiles(zipper, iterator);
 
             // {
-            //     // cloudinary fetch test
+            //     // cloudinary client-side fetch test
             //     const url =
             //         // 'https://res.cloudinary.com/dshbngqoj/image/upload/v1721988175/samples/landscapes/nature-mountains.jpg';
             //         // 'https://res.cloudinary.com/dshbngqoj/image/upload/v1721988175/samples/animals/kitten-playing.gif';
-            //         'https://res.cloudinary.com/dshbngqoj/video/upload/v1721988177/samples/sea-turtle.mp4';
+            //         'http://res.cloudinary.com/dshbngqoj/image/upload/v1722624559/pbpstgogzccjw0vy01cp.png';
             //         // 'https://res.cloudinary.com/dshbngqoj/video/upload/v1721988177/samples/cld-sample-video.mp4';
             //     const res = await axios.get(url, {
-            //         responseType: 'arraybuffer',
+            //         responseType: 'blob',
             //     });
             //     console.log(res);
             //     // const blob = new Blob([res.data], {
             //     //     type: res.headers['Content-Type'],
             //     // });
             //     zipper.file(url.split('/').pop(), res.data);
+            // }
+
+            // {
+            //     // cloudinary server-side fetch test
+            //     const publicId = 'pbpstgogzccjw0vy01cp';
+            //     const res = await axios.get(
+            //         `http://localhost:8080/api/files/${publicId}`,
+            //         {
+            //             headers: {
+            //                 Authorization: `Basic ${token}`,
+            //             },
+            //             responseType: 'blob', // ensure that the response is handled as a binary file
+            //         }
+            //     );
+
+            //     // create link and trigger download
+            //     const url = window.URL.createObjectURL(new Blob([res.data]));
+            //     const a = document.createElement('a');
+            //     a.href = url;
+            //     a.setAttribute('download', 'test.png');
+            //     document.body.appendChild(a);
+            //     a.click();
+            //     a.remove();
+            //     window.URL.revokeObjectURL(url);
+
+            //     zipper.file('test.png', res.data);
             // }
 
             handleSuccess('Processed successfully. Downloading...');
@@ -130,9 +157,15 @@ const ManageTrainingProgramMenu = ({
                 // handle download file
                 console.log(file.fileName + ' is a file: ' + file.url);
                 try {
-                    const res = await axios.get(file.url, {
-                        responseType: 'arraybuffer',
-                    });
+                    const res = await axios.get(
+                        `http://localhost:8080/api/files/${file.trainingMaterialId}`,
+                        {
+                            headers: {
+                                Authorization: `Basic ${token}`,
+                            },
+                            responseType: 'arraybuffer',
+                        }
+                    );
                     // example URL: https://res.cloudinary.com/dshbngqoj/image/upload/v1721988400/file5.pdf
                     zipper.file(file.fileName, res.data);
                 } catch (error) {

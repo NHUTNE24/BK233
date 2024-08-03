@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import { MdOutlineCancel } from "react-icons/md";
 import { DropdownBox2, Inputs } from 'src/components';
 
+
 const EditModal = ({
     editmodalIsOpen,
     setEditmodalIsOpen,
@@ -21,6 +22,7 @@ const EditModal = ({
     const username = import.meta.env.VITE_USERNAME;
     const password = import.meta.env.VITE_PASSWORD;
     const token = btoa(`${username}:${password}`);
+
 
     const closeEditModal = () => {
         setEditmodalIsOpen(false);
@@ -198,7 +200,9 @@ const EditModal = ({
                                 ? updatedProgram?.startTime.substring(0, 10)
                                 : 'Start Time'
                         }
-                        style={{ width: '300px' }}
+                        style={{ width: 300 }}
+                        popupStyle={{ zIndex: 100000 }} 
+                     
                         value={
                             submitedProgram?.startTime ||
                             dayjs(updatedProgram?.startTime || new Date())

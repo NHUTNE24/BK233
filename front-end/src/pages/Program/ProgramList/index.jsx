@@ -193,7 +193,7 @@ const TrainingProgram = () => {
         const newProgram = submitedData
           .filter(row => row.trainingProgramCode && row.trainingProgramCode.trim() !== '')
           .map(row => ({
-            trainingProgramCode: row.trainingProgramCode,
+            trainingProgramCode: null,
             createdBy: row.createdBy,
             createdDate: new Date(row.createdDate).toISOString(),
             modifiedBy: row.modifiedBy,
@@ -207,7 +207,7 @@ const TrainingProgram = () => {
             technicalCodeId: null,
             technicalGroupId: null,
             moduleId: null,
-            syllabusId: null,
+            syllabusId: [],
           }));
         newProgram.forEach(program => {
           try {
@@ -217,7 +217,7 @@ const TrainingProgram = () => {
                 'Authorization': `Basic ${token}`
               }
             }).then(response => {
-              console.log('Import program successfully:', response.data);
+              console.log('Import program successfully:', program);
             }).catch((error) => {
               handleError(error, "getting");
             });
@@ -309,7 +309,7 @@ const TrainingProgram = () => {
     document.body.removeChild(link);
   }
 
-  const csvContent = "trainingProgramCode,createdBy,createdDate,modifiedBy,modifiedDate,days,hours,startTime,name,status,userId\nCO3005,John,07-12-2024,John,07-12-2024,23,123,07-19-2024,Fundamental of Angular,Active,101";
+  const csvContent = "trainingProgramCode,createdBy,createdDate,modifiedBy,modifiedDate,days,hours,startTime,name,status,userId\nCC03,John,07-12-2024,John,07-12-2024,23,123,07-19-2024,Fundamental of Angular,Active,101";
   return (
     <section className="w-full max-h-[720px] relative bg-default" style={{ display: 'block' }}>
       <NotificationModal
@@ -478,7 +478,7 @@ const TrainingProgram = () => {
                     <MdOutlineSort onClick={() => sortByColumn('createdDate')} />
                   </div>
                 </th>
-                <th className="px-4 py-3">
+                <th className="px-4 py-3 w-[15%]">
                   <div className="flex flex-row items-center gap-1">
                     Created by
                     <MdOutlineSort onClick={() => sortByColumn('createdBy')} />
