@@ -1,0 +1,141 @@
+// Cái nào cũ còn giữ được id thì thêm id vào, còn không thì để id = null
+
+{
+  "userName": "Black Swan",
+  "syllabusDay": [
+    {
+      "dayId": "66a1aef1bd554b0b50378de5",
+      "syllabusUnits": [
+        {
+          "unitId": "66a1aef1bd554b0b50378de8",
+          "unitName": "Introduction to Programming",
+          "unitChapters": [
+            {
+              "id": "66a1aef2bd554b0b50378dec",
+              "duration": 60,
+              "isOnline": true,
+              "name": "Getting Started",
+              "deliveryTypeId": "6698d910aabdd109ad04abd6",
+              "outputStandardId": "6698d8e8aabdd109ad04abd1"
+            },
+            {
+              "id": "66a1aef2bd554b0b50378ded",
+              "duration": 90,
+              "isOnline": true,
+              "name": "Basic Syntax",
+              "deliveryTypeId": "6698d914aabdd109ad04abd7",
+              "outputStandardId": "6698d8ebaabdd109ad04abd2"
+            }
+          ]
+        },
+        {
+          "unitId": "66a1aef1bd554b0b50378de9",
+          "unitName": "Data Structures",
+          "unitChapters": [
+            {
+              "id": "66a1aef2bd554b0b50378dee",
+              "duration": 120,
+              "isOnline": true,
+              "name": "Arrays and Lists",
+              "deliveryTypeId": "6698d918aabdd109ad04abd8",
+              "outputStandardId": "6698d8efaabdd109ad04abd3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dayId": "66a1aef1bd554b0b50378de6",
+      "syllabusUnits": [
+        {
+          "unitId": "66a1aef1bd554b0b50378dea",
+          "unitName": "Algorithms",
+          "unitChapters": [
+            {
+              "id": "66a1aef2bd554b0b50378def",
+              "duration": 180,
+              "isOnline": true,
+              "name": "Sorting Algorithms",
+              "deliveryTypeId": "6698d94baabdd109ad04abdb",
+              "outputStandardId": "6698d8f3aabdd109ad04abd4"
+            },
+            {
+              "id": "66a1aef2bd554b0b50378df0",
+              "duration": 150,
+              "isOnline": true,
+              "name": "Searching Algorithms",
+              "deliveryTypeId": "6698d951aabdd109ad04abdc",
+              "outputStandardId": "6698d8f6aabdd109ad04abd5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dayId": "66a1aef1bd554b0b50378de7",
+      "syllabusUnits": [
+        {
+          "unitId": "66a1aef2bd554b0b50378deb",
+          "unitName": "Advanced Topics",
+          "unitChapters": [
+            {
+              "id": "66a1aef3bd554b0b50378df1",
+              "duration": 60,
+              "isOnline": true,
+              "name": "Concurrency",
+              "deliveryTypeId": "6698d958aabdd109ad04abdd",
+              "outputStandardId": "6698d8e8aabdd109ad04abd1"
+            },
+            {
+              "id": "66a1aef3bd554b0b50378df2",
+              "duration": 90,
+              "isOnline": true,
+              "name": "Distributed Systems",
+              "deliveryTypeId": "6698d910aabdd109ad04abd6",
+              "outputStandardId": "6698d8ebaabdd109ad04abd2"
+            },
+            {
+              "id": "66a1aef3bd554b0b50378df3",
+              "duration": 120,
+              "isOnline": true,
+              "name": "Machine Learning Basiccccs",
+              "deliveryTypeId": "6698d914aabdd109ad04abd7",
+              "outputStandardId": "6698d8efaabdd109ad04abd3"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assignmentSchema": {
+    "assignment": 25,
+    "finalPractice": 35,
+    "finalAssessment": 20,
+    "finalTheory": 20,
+    "gpa": 4,
+    "quiz": 15
+  },
+  "basicInfo": {
+    "syllabusName": "Advanced Computer Science",
+    "code": "CS201",
+    "version": "1.1"
+  },
+  "general": {
+    "level": "Intermediate",
+    "technicalContent": "Advanced programming, data structures, algorithms, and topics in computer science",
+    "courseContent": "Advanced programming concepts, detailed data structures, complex algorithms, and modern topics like concurrency and machine learning"
+  },
+  "trainingPrinciple": {
+    "training": "Interactive coding sessions",
+    "pretest": "Intermediate programming knowledge test",
+    "marking": "Combination of automated and manual grading",
+    "waiverCriteria": "Prior completion of beginner course",
+    "others": "Access to advanced learning materials and forums"
+  },
+  "isSyllabusDaysValid": true,
+  "isAssessmentSchemaValid": true,
+  "isBasicInfoValid": true,
+  "isGeneralValid": true,
+  "isTrainingPrincipleValid": true,
+  "status": "Active"
+}

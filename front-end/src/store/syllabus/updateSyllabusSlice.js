@@ -70,24 +70,29 @@ const updateSyllabusSlice = createSlice({
 
         updateTrainingPrinciple(state, action) {
             state.trainingPrinciple = action.payload;
-            state.isTrainingPrincipleValid = validateTrainingPrinciple(action.payload);
+            state.isTrainingPrincipleValid = validateTrainingPrinciple(
+                action.payload
+            );
         },
 
         setTechnicalRequirement: (state, action) => {
             const { technicalRequirement } = action.payload;
             state.general.technicalContent = technicalRequirement;
             if (
-                state.general.technicalContent  &&
-                state.general.courseContent  &&
+                state.general.technicalContent &&
+                state.general.technicalContent !== '<p><br></p>' &&
+                state.general.courseContent &&
+                state.general.courseContent !== '<p><br></p>' &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;
             } else {
                 state.isGeneralValid.status = false;
             }
-            state.isGeneralValid.errorSection = state.isGeneralValid.errorSection.filter(
-                (item) => item !== 'technical',
-            );
+            state.isGeneralValid.errorSection =
+                state.isGeneralValid.errorSection.filter(
+                    (item) => item !== 'technical'
+                );
         },
 
         setStatus: (state, action) => {
@@ -137,7 +142,13 @@ const updateSyllabusSlice = createSlice({
         setLevel: (state, action) => {
             const { level } = action.payload;
             state.general.level = level;
-            if (state.general.technicalContent && state.general.courseContent && state.general.attendeeNumber) {
+            if (
+                state.general.technicalContent &&
+                state.general.technicalContent !== '<p><br></p>' &&
+                state.general.courseContent &&
+                state.general.courseContent !== '<p><br></p>' &&
+                state.general.attendeeNumber
+            ) {
                 state.isGeneralValid.status = true;
             } else {
                 state.isGeneralValid.status = false;
@@ -145,7 +156,8 @@ const updateSyllabusSlice = createSlice({
         },
 
         setTrainingDeliveryPrinciple: (state, action) => {
-            const { training, pretest, marking, waiverCriteria, others } = action.payload;
+            const { training, pretest, marking, waiverCriteria, others } =
+                action.payload;
             state.trainingPrinciple.training = training;
             state.trainingPrinciple.pretest = pretest;
             state.trainingPrinciple.marking = marking;
@@ -162,8 +174,10 @@ const updateSyllabusSlice = createSlice({
             const { courseObjective } = action.payload;
             state.general.courseContent = courseObjective;
             if (
-                state.general.technicalContent  &&
-                state.general.courseContent  &&
+                state.general.technicalContent &&
+                state.general.technicalContent !== '<p><br></p>' &&
+                state.general.courseContent &&
+                state.general.courseContent !== '<p><br></p>' &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;
@@ -171,32 +185,41 @@ const updateSyllabusSlice = createSlice({
                 state.isGeneralValid.status = false;
             }
 
-            state.isGeneralValid.errorSection = state.isGeneralValid.errorSection.filter(
-                (item) => item !== 'course-objective',
-            );
+            state.isGeneralValid.errorSection =
+                state.isGeneralValid.errorSection.filter(
+                    (item) => item !== 'course-objective'
+                );
         },
 
         setAttendeeNumber: (state, action) => {
             const { attendeeNumber } = action.payload;
             state.general.attendeeNumber = attendeeNumber;
             if (
-                state.general.technicalContent  &&
-                state.general.courseContent  &&
+                state.general.technicalContent &&
+                state.general.technicalContent !== '<p><br></p>' &&
+                state.general.courseContent &&
+                state.general.courseContent !== '<p><br></p>' &&
                 state.general.attendeeNumber
             ) {
                 state.isGeneralValid.status = true;
             } else {
                 state.isGeneralValid.status = false;
             }
-            state.isGeneralValid.errorSection = state.isGeneralValid.errorSection.filter(
-                (item) => item !== 'attendee-number',
-            );
+            state.isGeneralValid.errorSection =
+                state.isGeneralValid.errorSection.filter(
+                    (item) => item !== 'attendee-number'
+                );
         },
 
         addChapter: (state, action) => {
             const { indexDay, indexUnit } = action.payload;
-            if (state.syllabusDay[indexDay] && state.syllabusDay[indexDay].syllabusUnits[indexUnit]) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters.push({
+            if (
+                state.syllabusDay[indexDay] &&
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+            ) {
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters.push({
                     name: '',
                     id: null,
                     duration: 0,
@@ -234,8 +257,12 @@ const updateSyllabusSlice = createSlice({
 
         changeUnitName: (state, action) => {
             const { indexDay, indexUnit, name } = action.payload;
-            if (state.syllabusDay[indexDay] && state.syllabusDay[indexDay].syllabusUnits[indexUnit]) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitName = name;
+            if (
+                state.syllabusDay[indexDay] &&
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+            ) {
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitName =
+                    name;
             }
             let isValid = true;
             state.syllabusDay.forEach((day) => {
@@ -265,14 +292,17 @@ const updateSyllabusSlice = createSlice({
         },
 
         changeOutputStandard: (state, action) => {
-            const { indexDay, indexUnit, indexChapter, outputStandard } = action.payload;
+            const { indexDay, indexUnit, indexChapter, outputStandard } =
+                action.payload;
             if (
                 state.syllabusDay[indexDay] &&
                 state.syllabusDay[indexDay].syllabusUnits[indexUnit] &&
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+                    .unitChapters[indexChapter]
             ) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].outputStandardId =
-                    outputStandard;
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters[indexChapter].outputStandardId = outputStandard;
             }
             let isValid = true;
             state.syllabusDay.forEach((day) => {
@@ -306,9 +336,12 @@ const updateSyllabusSlice = createSlice({
             if (
                 state.syllabusDay[indexDay] &&
                 state.syllabusDay[indexDay].syllabusUnits[indexUnit] &&
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+                    .unitChapters[indexChapter]
             ) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].name = name;
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters[indexChapter].name = name;
             }
             let isValid = true;
             state.syllabusDay.forEach((day) => {
@@ -338,14 +371,17 @@ const updateSyllabusSlice = createSlice({
         },
 
         changeDeliveryType: (state, action) => {
-            const { indexDay, indexUnit, indexChapter, deliveryType } = action.payload;
+            const { indexDay, indexUnit, indexChapter, deliveryType } =
+                action.payload;
             if (
                 state.syllabusDay[indexDay] &&
                 state.syllabusDay[indexDay].syllabusUnits[indexUnit] &&
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+                    .unitChapters[indexChapter]
             ) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].deliveryTypeId =
-                    deliveryType;
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters[indexChapter].deliveryTypeId = deliveryType;
             }
             let isValid = true;
             state.syllabusDay.forEach((day) => {
@@ -375,13 +411,17 @@ const updateSyllabusSlice = createSlice({
         },
 
         changeDuration: (state, action) => {
-            const { indexDay, indexUnit, indexChapter, duration } = action.payload;
+            const { indexDay, indexUnit, indexChapter, duration } =
+                action.payload;
             if (
                 state.syllabusDay[indexDay] &&
                 state.syllabusDay[indexDay].syllabusUnits[indexUnit] &&
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+                    .unitChapters[indexChapter]
             ) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].duration = duration;
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters[indexChapter].duration = duration;
             }
 
             let isValid = true;
@@ -412,22 +452,31 @@ const updateSyllabusSlice = createSlice({
         },
 
         changeMethod: (state, action) => {
-            const { indexDay, indexUnit, indexChapter, isOnline } = action.payload;
+            const { indexDay, indexUnit, indexChapter, isOnline } =
+                action.payload;
             if (
                 state.syllabusDay[indexDay] &&
                 state.syllabusDay[indexDay].syllabusUnits[indexUnit] &&
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+                    .unitChapters[indexChapter]
             ) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].isOnline = isOnline;
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters[indexChapter].isOnline = isOnline;
             }
         },
 
         deleteChapter: (state, action) => {
             const { indexDay, indexUnit, indexChapter } = action.payload;
-            if (state.syllabusDay[indexDay] && state.syllabusDay[indexDay].syllabusUnits[indexUnit]) {
-                state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters = state.syllabusDay[
-                    indexDay
-                ].syllabusUnits[indexUnit].unitChapters.filter((item, index) => index !== indexChapter);
+            if (
+                state.syllabusDay[indexDay] &&
+                state.syllabusDay[indexDay].syllabusUnits[indexUnit]
+            ) {
+                state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters = state.syllabusDay[indexDay].syllabusUnits[
+                    indexUnit
+                ].unitChapters.filter((item, index) => index !== indexChapter);
             }
             let isValid = true;
             state.syllabusDay.forEach((day) => {
@@ -499,9 +548,9 @@ const updateSyllabusSlice = createSlice({
         deleteUnit: (state, action) => {
             const { indexDay, indexUnit } = action.payload;
             if (state.syllabusDay[indexDay]) {
-                state.syllabusDay[indexDay].syllabusUnits = state.syllabusDay[indexDay].syllabusUnits.filter(
-                    (item, index) => index !== indexUnit,
-                );
+                state.syllabusDay[indexDay].syllabusUnits = state.syllabusDay[
+                    indexDay
+                ].syllabusUnits.filter((item, index) => index !== indexUnit);
             }
         },
 
@@ -551,68 +600,108 @@ const updateSyllabusSlice = createSlice({
 
         setUnitId: (state, action) => {
             const { unitId, indexDay, indexUnit } = action.payload;
-            state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitId = unitId;
+            state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitId =
+                unitId;
         },
         setChapterId: (state, action) => {
-            const { chapterId, indexDay, indexUnit, indexChapter } = action.payload;
-            state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].id = chapterId;
+            const { chapterId, indexDay, indexUnit, indexChapter } =
+                action.payload;
+            state.syllabusDay[indexDay].syllabusUnits[indexUnit].unitChapters[
+                indexChapter
+            ].id = chapterId;
         },
 
         deleteDay: (state, action) => {
             const { indexDay } = action.payload;
-            state.syllabusDay = state.syllabusDay.filter((item, index) => index !== indexDay);
+            state.syllabusDay = state.syllabusDay.filter(
+                (item, index) => index !== indexDay
+            );
         },
 
         changeQuiz: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.quiz = value;
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
 
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeAssignment: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.assignment = value;
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
 
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeFinal: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.finalAssessment = value;
 
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
 
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeFinalTheory: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.finalTheory = value;
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeFinalPractice: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.finalPractice = value;
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeGpa: (state, action) => {
             const { value } = action.payload;
             state.assignmentSchema.gpa = value;
-            const errorSection = [...state.isAssessmentSchemaValid.errorSection];
-            state.isAssessmentSchemaValid = validateAssessmentSchema(errorSection, state.assignmentSchema);
+            const errorSection = [
+                ...state.isAssessmentSchemaValid.errorSection,
+            ];
+            state.isAssessmentSchemaValid = validateAssessmentSchema(
+                errorSection,
+                state.assignmentSchema
+            );
         },
 
         changeSyllabusName: (state, action) => {
             const { name } = action.payload;
             state.basicInfo.syllabusName = name;
-            if (state.basicInfo.syllabusName && state.basicInfo.version && state.basicInfo.code) {
+            if (
+                state.basicInfo.syllabusName &&
+                state.basicInfo.version &&
+                state.basicInfo.code
+            ) {
                 state.isBasicInfoValid = true;
             } else {
                 state.isBasicInfoValid = false;
@@ -622,7 +711,11 @@ const updateSyllabusSlice = createSlice({
         changeSyllabusVersion: (state, action) => {
             const { version } = action.payload;
             state.basicInfo.version = version;
-            if (state.basicInfo.syllabusName && state.basicInfo.version && state.basicInfo.code) {
+            if (
+                state.basicInfo.syllabusName &&
+                state.basicInfo.version &&
+                state.basicInfo.code
+            ) {
                 state.isBasicInfoValid = true;
             } else {
                 state.isBasicInfoValid = false;
@@ -632,7 +725,11 @@ const updateSyllabusSlice = createSlice({
         changeSyllabusCode: (state, action) => {
             const { code } = action.payload;
             state.basicInfo.code = code;
-            if (state.basicInfo.syllabusName && state.basicInfo.version && state.basicInfo.code) {
+            if (
+                state.basicInfo.syllabusName &&
+                state.basicInfo.version &&
+                state.basicInfo.code
+            ) {
                 state.isBasicInfoValid = true;
             } else {
                 state.isBasicInfoValid = false;
@@ -642,14 +739,19 @@ const updateSyllabusSlice = createSlice({
         changeAttendeeNumber: (state, action) => {
             const { attendeeNumber } = action.payload;
             state.general.attendeeNumber = attendeeNumber;
-            if (state.general.technicalContent && state.general.courseContent && state.general.attendeeNumber) {
+            if (
+                state.general.technicalContent &&
+                state.general.courseContent &&
+                state.general.attendeeNumber
+            ) {
                 state.isGeneralValid = true;
             } else {
                 state.isGeneralValid = false;
             }
-            state.isGeneralValid.errorSection = state.isGeneralValid.errorSection.filter(
-                (item) => item !== 'attendee-number',
-            );
+            state.isGeneralValid.errorSection =
+                state.isGeneralValid.errorSection.filter(
+                    (item) => item !== 'attendee-number'
+                );
         },
     },
 });

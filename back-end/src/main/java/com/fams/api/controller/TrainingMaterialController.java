@@ -38,9 +38,13 @@ public class TrainingMaterialController {
             Resource resource = trainingMaterialService.loadFileAsResource(filename);
             String contentType = Files.probeContentType(Paths.get(resource.getURI()));
 
+            if (contentType == null) {
+                contentType = "application/octet-stream"; // Loại mặc định cho dữ liệu nhị phân
+            }
+
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType)) // Cập nhật loại nội dung đúng
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"") // sử dụng inline thay cho attachment để hiển thị trực tiếp
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"") // sử dụng inline thay cho attachment để hiển thị trực tiếp
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

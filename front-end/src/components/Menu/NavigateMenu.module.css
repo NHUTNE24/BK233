@@ -1,6 +1,6 @@
 .container {
   background-color: #EDF2F7;
-  height: calc(100vh - 64px - 32px);
+  height: calc(100vh - 64px);
   padding: 20px 0;
   transition: width 0.2s;
   /* margin-top: 79px; */

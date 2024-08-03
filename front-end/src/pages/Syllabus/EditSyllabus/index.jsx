@@ -7,7 +7,7 @@ import {
     Modal,
     Row,
     Space,
-    Spin
+    Spin,
 } from 'antd';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
@@ -32,7 +32,7 @@ import {
     setSyllabusDays,
     setTechnicalRequirement,
     setTrainingDeliveryPrinciple,
-    updateGeneralIsValid
+    updateGeneralIsValid,
 } from '../../../store/syllabus/updateSyllabusSlice';
 import TabsCustom from '../components/TabsCustom';
 import './EditSyllabus.scss';
@@ -258,7 +258,7 @@ function EditSyllabus() {
                 dispatch(
                     changeGpa({ value: result.assignmentSchema?.gpa || '' })
                 );
-                
+
                 setDataSource(result);
             } catch (error) {
                 console.error('Error fetching syllabus data:', error);
@@ -311,7 +311,10 @@ function EditSyllabus() {
                     behavior: 'smooth',
                     block: 'end',
                 });
-            } else if (!data.general.technicalContent) {
+            } else if (
+                !data.general.technicalContent ||
+                data.general.technicalContent === '<p><br></p>'
+            ) {
                 const newGeneralIsValid = {
                     status: false,
                     errorSection: [
@@ -325,7 +328,10 @@ function EditSyllabus() {
                 });
 
                 dispatch(updateGeneralIsValid(newGeneralIsValid));
-            } else {
+            } else if (
+                !data.general.courseContent ||
+                data.general.courseContent === '<p><br></p>'
+            ) {
                 const newGeneralIsValid = {
                     status: false,
                     errorSection: [
@@ -521,7 +527,6 @@ function EditSyllabus() {
                                             <div
                                                 style={{
                                                     paddingBottom: '22px',
-                                                    marginBottom: '11px',
                                                 }}
                                             >
                                                 <label
@@ -543,7 +548,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={14}>
+                                        <Col span={18}>
                                             <div
                                                 ref={codeRef}
                                                 className="syllabus-code-wrapper"
@@ -595,7 +600,6 @@ function EditSyllabus() {
                                             <div
                                                 style={{
                                                     paddingBottom: '22px',
-                                                    marginBottom: '11px',
                                                 }}
                                             >
                                                 <label
@@ -617,7 +621,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={8}>
+                                        <Col span={11}>
                                             <div
                                                 ref={versionRef}
                                                 className="syllabus-version-wrapper"

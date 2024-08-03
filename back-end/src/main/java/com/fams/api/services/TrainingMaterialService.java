@@ -48,6 +48,9 @@ public class TrainingMaterialService {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file.");
             }
+
+            System.out.println("====================================DA NHAN FILE TEN:================ "+ file.getOriginalFilename());
+
             // Create a unique filename
             String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
             Path destinationFile = rootLocation.resolve(

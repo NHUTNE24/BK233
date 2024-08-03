@@ -85,7 +85,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
             );
 
             if (response.status === 200) {
-                console.log('File uploaded successfully', response.data);
+                console.log('File uploaded successfully');
 
                 fetchMaterial();
                 onSuccess('Ok');
@@ -101,11 +101,16 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
 
     const handleDownloadFile = async (fileName) => {
         try {
-            const result = axios.get(
+            const result = await axios.get(
                 `http://localhost:8080/api/training-materials/download/${fileName}`,
                 { responseType: 'blob' }
             );
-            const fileUrl = window.URL.createObjectURL(new Blob([result.data]));
+            console.log('header: ', result.headers);
+
+            const contentType = result.headers['content-type'];
+            console.log('content Type: ', contentType);
+            const blob = new Blob([result.data], { type: contentType });
+            const fileUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = fileUrl;
             setFileUrl(fileUrl);
