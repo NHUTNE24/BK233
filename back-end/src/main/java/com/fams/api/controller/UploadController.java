@@ -4,15 +4,12 @@ import com.fams.api.dto.UploadResponseDTO;
 import com.fams.api.services.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 @RestController
@@ -28,22 +25,8 @@ public class UploadController {
     }
 
     @GetMapping("/{publicId}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String publicId) {
-        try {
-            InputStream fileStream = cloudinaryService.downloadFile(publicId);
-            InputStreamResource resource = new InputStreamResource(fileStream);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + publicId);
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(resource);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(null);
-        }
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String publicId) throws Exception {
+        return cloudinaryService.downloadFile(publicId);
     }
 
     @PostMapping
