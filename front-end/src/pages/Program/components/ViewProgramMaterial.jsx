@@ -818,9 +818,10 @@ const MaterialTab = ({
     };
 
     return (
-        <div className="flex">
+        <div className="flex gap-[10px]">
             <p
-                className="grow hover:text-main hover:font-bold cursor-pointer duration-300"
+                id='material-name'
+                className="grow hover:text-main hover:font-bold cursor-pointer duration-300 truncate"
                 onClick={() =>
                     handleClickMaterial(
                         TrainingMaterial?.trainingMaterialId,
@@ -832,7 +833,7 @@ const MaterialTab = ({
             >
                 {TrainingMaterial?.name}
             </p>
-            <div className="flex ml-auto">
+            <div className="flex ml-auto shrink-0">
                 <p className="text-[#323232] italic mr-[10px]">
                     by{' '}
                     {TrainingMaterial?.modifiedBy

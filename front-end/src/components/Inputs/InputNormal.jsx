@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 import { Chips } from 'src/components';
-import { MdOutlineSearch } from "react-icons/md";
+import { MdOutlineSearch } from 'react-icons/md';
 
 const InputNormal = ({
     width,
     minWidth = 300,
     height = 36,
     placeholder = 'Search by...',
+    value = '', // default value
     hasPrefix = true,
     hasSuffix = true,
     multipleTags = false,
@@ -33,7 +34,9 @@ const InputNormal = ({
         );
     }, []);
 
-    const [content, setContent] = useState('');
+    useEffect(() => setContent(value), [value]); // change the default value in case the prop changes
+
+    const [content, setContent] = useState(value);
     const [tags, setTags] = useState([]);
 
     const saveTag = (e) => {
@@ -51,7 +54,7 @@ const InputNormal = ({
     };
 
     useEffect(() => {
-        setContent('');
+        if (multipleTags) setContent('');
     }, [tags]);
 
     const handleInputChange = (e) => {
@@ -64,6 +67,7 @@ const InputNormal = ({
     return (
         <div className="relative flex flex-col">
             <Input
+                id="input-normal"
                 style={{ width: width, minWidth: minWidth, height: height }}
                 className="border-borderColor text-[1em] font-primary !italic"
                 placeholder={placeholder}
@@ -112,6 +116,7 @@ InputNormal.propTypes = {
     minWidth: PropTypes.number,
     height: PropTypes.number,
     placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     hasPrefix: PropTypes.bool,
     hasSuffix: PropTypes.bool,
     multipleTags: PropTypes.bool,

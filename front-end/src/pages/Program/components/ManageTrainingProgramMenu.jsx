@@ -157,16 +157,19 @@ const ManageTrainingProgramMenu = ({
                 // handle download file
                 console.log(file.fileName + ' is a file: ' + file.url);
                 try {
+                    // const res = await axios.get(
+                    //     `http://localhost:8080/api/files/${file.trainingMaterialId}`,
+                    //     {
+                    //         headers: {
+                    //             Authorization: `Basic ${token}`,
+                    //         },
+                    //         responseType: 'arraybuffer',
+                    //     }
+                    // );
                     const res = await axios.get(
-                        `http://localhost:8080/api/files/${file.trainingMaterialId}`,
-                        {
-                            headers: {
-                                Authorization: `Basic ${token}`,
-                            },
-                            responseType: 'arraybuffer',
-                        }
+                        `http://localhost:8080/api/training-materials/view/${file.fileName}`,
+                        { responseType: 'arraybuffer' }
                     );
-                    // example URL: https://res.cloudinary.com/dshbngqoj/image/upload/v1721988400/file5.pdf
                     zipper.file(file.fileName, res.data);
                 } catch (error) {
                     handleError(error, 'fetching file: ' + file.fileName);

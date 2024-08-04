@@ -1,6 +1,6 @@
 /* DropDownSearch */
 
- #dropdown-search .ant-select-selector:not(:hover) {
+#dropdown-search .ant-select-selector:not(:hover) {
     border: 1px solid #8B8B8B ;
 }   
 
@@ -21,4 +21,12 @@
 .material-edit-modal .ant-modal-body,
 .material-create-modal .ant-modal-body {
     width: calc(700px - 48px) !important;
+}
+
+/* ViewProgramMaterial */
+
+#material-name:hover {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
 }

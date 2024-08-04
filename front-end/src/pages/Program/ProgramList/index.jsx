@@ -140,8 +140,9 @@ const TrainingProgram = () => {
       setTags(prevTags => [...prevTags, searchText]);
     }
   };
-  const handleRemoveTag = (tagToRemove) => {
-    setTags(prevTags => prevTags.filter(tag => tag !== tagToRemove));
+  const handleRemoveTag = (e, index) => {
+    e.preventDefault();
+    setTags([...tags.slice(0, index), ...tags.slice(index + 1)]);
   };
   const totalPageFilter = trainingProgramList?.filter(row => tags.every(tag => [row.name, row.days, row.createdBy, row.createdDate].some(field => field?.toString().toLowerCase().includes(tag.toLowerCase()))))
   const currentData = totalPageFilter?.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage);
@@ -453,7 +454,7 @@ const TrainingProgram = () => {
               text={tag}
               closable={true}
               hexColor="var(--primary-color)"
-              handleClose={() => handleRemoveTag(tag)}
+              handleClose={(e) => handleRemoveTag(e, index)}
             />
           ))}
         </div>
