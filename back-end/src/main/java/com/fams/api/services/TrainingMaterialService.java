@@ -131,7 +131,32 @@ public class TrainingMaterialService {
 
     // Delete a training material by ID
     public void deleteTrainingMaterial(String trainingMaterialId) {
-        trainingMaterialRepository.deleteById(trainingMaterialId);
+        try {
+            // Retrieve the training material from the database
+            TrainingMaterial trainingMaterial = trainingMaterialRepository.findById(trainingMaterialId)
+                    .orElseThrow(() -> new RuntimeException("Training material not found"));
+
+            // Construct the path to the file to be deleted
+            Path fileToDeletePath = rootLocation.resolve(trainingMaterial.getFileName()).normalize().toAbsolutePath();
+
+            // Check if the file exists and delete it
+            if (Files.exists(fileToDeletePath)) {
+                Files.delete(fileToDeletePath);
+
+            }
+
+            // Delete the metadata from the database
+            trainingMaterialRepository.delete(trainingMaterial);
+
+
+        } catch (IOException e) {
+
+            throw new RuntimeException("Failed to delete file.", e);
+        } catch (RuntimeException e) {
+
+            throw new RuntimeException("Error occurred while deleting training material.", e);
+        }
+
     }
 
     // Get a specific training material by ID
