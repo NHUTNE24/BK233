@@ -34,6 +34,8 @@ function ViewSyllabus() {
     });
     const navigate = useNavigate();
     const [importLoading, setImportLoading] = useState(false);
+    const [sorter, setSorter] = useState({ sortBy: null, order: null });
+
     const {
         data: tableData,
         loading,
@@ -46,9 +48,15 @@ function ViewSyllabus() {
 
     useEffect(() => {
         dispatch(
-            fetchSyllabusData({ page: currentPage, pageSize, tags, dateFilter })
+            fetchSyllabusData({
+                page: currentPage,
+                pageSize,
+                tags,
+                dateFilter,
+                sorter,
+            })
         );
-    }, [currentPage, pageSize, tags, dateFilter]);
+    }, [currentPage, pageSize, tags, dateFilter, sorter]);
 
     const handlePageChange = (page, pageSize) => {
         dispatch(setCurrentPage(page));
@@ -67,10 +75,7 @@ function ViewSyllabus() {
     // Handle Search
     const handlePressEnter = () => {
         const value = searchedText.trim().toLowerCase();
-        // Regular expression to match alphanumeric characters only
-        const validPattern =
-            /^[a-z0-9àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ#\s]+$/i;
-        if (value && validPattern.test(value) && !tags.includes(value)) {
+        if (value && !tags.includes(value)) {
             setTags([...tags, value]);
             setSearchedText('');
         }
@@ -180,14 +185,15 @@ function ViewSyllabus() {
         navigate(`${record.key}`);
     };
     // Columns format
+    const onSorter = (sorter) => {
+        setSorter({ ...sorter });
+    };
     const columns = [
         {
             title: 'Syllabus',
             dataIndex: 'topicName',
 
-            sorter: (a, b) => {
-                return a.topicName.localeCompare(b.topicName);
-            },
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
             render: (text, record, index) => (
                 <span
@@ -201,9 +207,7 @@ function ViewSyllabus() {
         {
             title: 'Code',
             dataIndex: 'topicCode',
-            sorter: (a, b) => {
-                return a.topicCode.localeCompare(b.topicCode);
-            },
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -212,19 +216,13 @@ function ViewSyllabus() {
             render: (text) => {
                 return formatDate(text);
             },
-            sorter: (a, b) => {
-                const dateA = parseDate(a.createdDate);
-                const dateB = parseDate(b.createdDate);
-                return dateA - dateB; // So sánh ngày
-            },
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
         },
         {
             title: 'Created by',
             dataIndex: 'createdBy',
-            sorter: (a, b) => {
-                return a.createdBy.localeCompare(b.createdBy);
-            },
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -232,7 +230,7 @@ function ViewSyllabus() {
             dataIndex: 'days',
             key: 'days',
             render: (days) => formatNumberOfDays(days),
-            sorter: (a, b) => a.days - b.days,
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -306,7 +304,7 @@ function ViewSyllabus() {
                     </>
                 );
             },
-            sorter: (a, b) => a.status.localeCompare(b.status),
+            sorter: true,
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -428,6 +426,7 @@ function ViewSyllabus() {
                             loading={loading}
                             columns={columns}
                             dataSource={tableData}
+                            onSorter={onSorter}
                         />
 
                         <Pagination

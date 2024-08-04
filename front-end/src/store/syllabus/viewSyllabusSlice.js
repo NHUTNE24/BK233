@@ -11,7 +11,16 @@ import { formatDate } from '../../helpers/daytimeFormat';
 // Async thunk for fetching syllabus data
 export const fetchSyllabusData = createAsyncThunk(
     'syllabus/fetchSyllabusData',
-    async ({ page = 1, pageSize = 5, tags = [], dateFilter }, thunkAPI) => {
+    async (
+        {
+            page = 1,
+            pageSize = 5,
+            tags = [],
+            dateFilter,
+            sorter = { sortBy: null, order: null },
+        },
+        thunkAPI
+    ) => {
         try {
             let URL = `http://localhost:8080/api/syllabus/list?page=${page}&pageSize=${pageSize}&`;
             let tagsParam = '';
@@ -29,6 +38,11 @@ export const fetchSyllabusData = createAsyncThunk(
                     URL = `http://localhost:8080/api/syllabus/list/tags?page=${page}&pageSize=${pageSize}&dateStart=${dateFilter.startDate}&dateEnd=${dateFilter.endDate}&`;
                 }
             }
+            const { sortBy, order } = sorter;
+            if (sortBy && order) {
+                URL += `sortBy=${sortBy}&order=${order}`;
+            }
+
             const response = await fetch(URL);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
@@ -39,7 +53,7 @@ export const fetchSyllabusData = createAsyncThunk(
             console.error('Error in fetchSyllabusData:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
-    },
+    }
 );
 
 // Async thunk for deleting a syllabus
@@ -47,12 +61,15 @@ export const deleteSyllabus = createAsyncThunk(
     'syllabus/deleteSyllabus',
     async ({ syllabusId, currentPage, pageSize, totalItems }, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8080/api/syllabus/${syllabusId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const res = await fetch(
+                `http://localhost:8080/api/syllabus/${syllabusId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             if (res.status === 200 && res.ok) {
                 let newPage = currentPage;
@@ -63,7 +80,14 @@ export const deleteSyllabus = createAsyncThunk(
                     newPage = totalPages;
                     thunkAPI.dispatch(setCurrentPage(newPage));
                 }
-                thunkAPI.dispatch(fetchSyllabusData({ page: newPage, pageSize, tags: [], dateFilter: {} }));
+                thunkAPI.dispatch(
+                    fetchSyllabusData({
+                        page: newPage,
+                        pageSize,
+                        tags: [],
+                        dateFilter: {},
+                    })
+                );
             } else {
                 throw new Error('Failed to delete');
             }
@@ -71,7 +95,7 @@ export const deleteSyllabus = createAsyncThunk(
             console.error('Error in deleteSyllabus:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
-    },
+    }
 );
 
 // Async thunk for duplicating a syllabus
@@ -79,14 +103,19 @@ export const duplicateSyllabus = createAsyncThunk(
     'syllabus/duplicateSyllabus',
     async ({ syllabusId, currentPage, pageSize, totalItems }, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8080/api/syllabus/duplicate/${syllabusId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const res = await fetch(
+                `http://localhost:8080/api/syllabus/duplicate/${syllabusId}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
             if (res.status === 200 && res.ok) {
-                thunkAPI.dispatch(fetchSyllabusData({ page: currentPage, pageSize }));
+                thunkAPI.dispatch(
+                    fetchSyllabusData({ page: currentPage, pageSize })
+                );
             } else {
                 throw new Error('Failed to duplicate');
             }
@@ -94,34 +123,37 @@ export const duplicateSyllabus = createAsyncThunk(
             console.error('Error in duplicateSyllabus:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
-    },
+    }
 );
 
-export const deleteSyllabusById = createAsyncThunk('syllabus/deleteSyllabusById', async (payload, thunkAPI) => {
-    try {
-        const URL = `http://localhost:8080/api/syllabus/${payload.id}`;
-        const response = await fetch(URL, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+export const deleteSyllabusById = createAsyncThunk(
+    'syllabus/deleteSyllabusById',
+    async (payload, thunkAPI) => {
+        try {
+            const URL = `http://localhost:8080/api/syllabus/${payload.id}`;
+            const response = await fetch(URL, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+
+            const data = await response.json();
+
+            if (data && data.id) {
+                // Cập nhật danh sách syllabus sau khi xoá
+                thunkAPI.dispatch(fetchSyllabusData());
+            }
+            return data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
         }
-
-        const data = await response.json();
-
-        if (data && data.id) {
-            // Cập nhật danh sách syllabus sau khi xoá
-            thunkAPI.dispatch(fetchSyllabusData());
-        }
-        return data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
     }
-});
+);
 const viewSyllabusSlice = createSlice({
     name: 'syllabus',
     initialState: {

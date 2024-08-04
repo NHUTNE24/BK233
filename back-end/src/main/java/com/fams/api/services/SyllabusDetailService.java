@@ -11,9 +11,11 @@ import com.fams.api.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.Collator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -123,43 +125,44 @@ public class SyllabusDetailService {
     }
 
     public SyllabusListDTO getSyllabusList(Integer pageNumber, Integer pageSize, String sortBy, String order) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Collator vietnameseCollator = Collator.getInstance(new Locale("vi", "VN"));
+        vietnameseCollator.setStrength(Collator.TERTIARY); // TERTIARY level for case-insensitive and accent-sensitive sorting
+
         List<Syllabus> syllabusFound = syllabusRepository.findAll();
+
+        Comparator<Syllabus> comparator;
         switch (sortBy) {
-            case "syllabus" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicName));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "code" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicCode));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "create_on" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedDate));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "create_by" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedBy));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "duration" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getDays));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "status" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getStatus));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            default -> {
-                Collections.reverse(syllabusFound);
-            }
+            case "topicName" -> comparator = Comparator.comparing(
+                    Syllabus::getTopicName,
+                    Comparator.nullsLast(vietnameseCollator::compare)
+            );
+            case "topicCode" -> comparator = Comparator.comparing(Syllabus::getTopicCode, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "createdDate" -> comparator = Comparator.comparing(
+                    syllabus -> LocalDate.parse(syllabus.getCreatedDate(), dateFormat),
+                    Comparator.nullsLast(Comparator.naturalOrder())
+            );
+            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "days" -> comparator = Comparator.comparing(Syllabus::getDays, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "status" -> comparator = Comparator.comparing(Syllabus::getStatus, Comparator.nullsLast(Comparator.naturalOrder()));
+//            default -> comparator = Comparator.comparing(Syllabus::getTopicName); // Default sort
+            default -> comparator = Comparator.comparing(Syllabus::getId, Comparator.reverseOrder()); // Default sort by ID descending
         }
 
-        Integer totalElements = syllabusFound.size();
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+
+        syllabusFound = syllabusFound.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        int totalElements = syllabusFound.size();
         if ((pageNumber - 1) * pageSize > totalElements) {
             throw new RuntimeException("No such page number " + pageNumber);
         }
-        Integer totalPages = Math.ceilDiv(totalElements, pageSize);
-        Boolean lastPage = (pageSize * pageNumber >= totalElements);
+        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
+        boolean lastPage = (pageSize * pageNumber >= totalElements);
 
         SyllabusListDTO syllabusList = new SyllabusListDTO();
         syllabusList.setPage(pageNumber);
@@ -168,13 +171,67 @@ public class SyllabusDetailService {
         syllabusList.setTotalPages(totalPages);
         syllabusList.setTotalElements(totalElements);
 
-        Integer fromIndex = (pageNumber - 1) * pageSize;
-        Integer toIndex = Math.min(fromIndex + pageSize, totalElements);
-        syllabusFound = syllabusFound.subList(fromIndex, toIndex);
-        syllabusList.setContent(syllabusFound);
+        int fromIndex = (pageNumber - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, totalElements);
+        syllabusList.setContent(syllabusFound.subList(fromIndex, toIndex));
 
         return syllabusList;
     }
+
+
+//    public SyllabusListDTO getSyllabusList(Integer pageNumber, Integer pageSize, String sortBy, String order) {
+//        List<Syllabus> syllabusFound = syllabusRepository.findAll();
+//        switch (sortBy) {
+//            case "topicName" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicName));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "topicCode" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicCode));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "createdDate" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedDate));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "createdBy" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedBy));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "days" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getDays));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "status" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getStatus));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            default -> {
+//                Collections.reverse(syllabusFound);
+//            }
+//        }
+//
+//        Integer totalElements = syllabusFound.size();
+//        if ((pageNumber - 1) * pageSize > totalElements) {
+//            throw new RuntimeException("No such page number " + pageNumber);
+//        }
+//        Integer totalPages = Math.ceilDiv(totalElements, pageSize);
+//        Boolean lastPage = (pageSize * pageNumber >= totalElements);
+//
+//        SyllabusListDTO syllabusList = new SyllabusListDTO();
+//        syllabusList.setPage(pageNumber);
+//        syllabusList.setLastPage(lastPage);
+//        syllabusList.setPageSize(pageSize);
+//        syllabusList.setTotalPages(totalPages);
+//        syllabusList.setTotalElements(totalElements);
+//
+//        Integer fromIndex = (pageNumber - 1) * pageSize;
+//        Integer toIndex = Math.min(fromIndex + pageSize, totalElements);
+//        syllabusFound = syllabusFound.subList(fromIndex, toIndex);
+//        syllabusList.setContent(syllabusFound);
+//
+//        return syllabusList;
+//    }
 
 
     public SyllabusDetailDTO createSyllabusDetail(SyllabusCreateDTO syllabusCreateDTO) {
@@ -577,51 +634,49 @@ public class SyllabusDetailService {
             String order
     ) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Collator vietnameseCollator = Collator.getInstance(new Locale("vi", "VN"));
+        vietnameseCollator.setStrength(Collator.TERTIARY); // TERTIARY level for case-insensitive and accent-sensitive sorting
+
+
         List<Syllabus> syllabusFound = syllabusRepository.findAll();
+
+        Comparator<Syllabus> comparator;
         switch (sortBy) {
-            case "syllabus" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicName));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "code" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicCode));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "create_on" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedDate));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "create_by" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedBy));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "duration" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getDays));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            case "status" -> {
-                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getStatus));
-                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
-            }
-            default -> {
-                Collections.reverse(syllabusFound);
-            }
+            case "topicName" -> comparator = Comparator.comparing(
+                    Syllabus::getTopicName,
+                    Comparator.nullsLast(vietnameseCollator::compare)
+            );
+            case "topicCode" -> comparator = Comparator.comparing(Syllabus::getTopicCode, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "createdDate" -> comparator = Comparator.comparing(
+                    syllabus -> LocalDate.parse(syllabus.getCreatedDate(), dateFormat),
+                    Comparator.nullsLast(Comparator.naturalOrder())
+            );
+            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "days" -> comparator = Comparator.comparing(Syllabus::getDays, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "status" -> comparator = Comparator.comparing(Syllabus::getStatus, Comparator.nullsLast(Comparator.naturalOrder()));
+            default -> comparator = Comparator.comparing(Syllabus::getId, Comparator.reverseOrder()); // Default sort by ID descending
+
         }
 
-        syllabusFound = syllabusFound.stream().filter(item ->
-                (item.getTopicName() != null
-                        &&
-                        tagList.stream().allMatch(item.getTopicName().toLowerCase()::contains)
-                        && (dateStart == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateStart, dateFormat)) >= 0)
-                        && (dateEnd == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateEnd, dateFormat)) <= 0))
-        ).toList();
 
-        Integer totalElements = syllabusFound.size();
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+
+        syllabusFound = syllabusFound.stream()
+                .filter(item -> item.getTopicName() != null &&
+                        tagList.stream().allMatch(tag -> item.getTopicName().toLowerCase().contains(tag.toLowerCase())) &&
+                        (dateStart == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateStart, dateFormat)) >= 0) &&
+                        (dateEnd == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateEnd, dateFormat)) <= 0))
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        int totalElements = syllabusFound.size();
         if ((pageNumber - 1) * pageSize > totalElements) {
             throw new RuntimeException("No such page number " + pageNumber);
         }
-        Integer totalPages = Math.ceilDiv(totalElements, pageSize);
-        Boolean lastPage = (pageSize * pageNumber >= totalElements);
+        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
+        boolean lastPage = (pageSize * pageNumber >= totalElements);
 
         SyllabusListDTO syllabusList = new SyllabusListDTO();
         syllabusList.setPage(pageNumber);
@@ -630,13 +685,84 @@ public class SyllabusDetailService {
         syllabusList.setTotalPages(totalPages);
         syllabusList.setTotalElements(totalElements);
 
-        Integer fromIndex = (pageNumber - 1) * pageSize;
-        Integer toIndex = Math.min(fromIndex + pageSize, totalElements);
-        syllabusFound = syllabusFound.subList(fromIndex, toIndex);
-        syllabusList.setContent(syllabusFound);
+        int fromIndex = (pageNumber - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, totalElements);
+        syllabusList.setContent(syllabusFound.subList(fromIndex, toIndex));
 
         return syllabusList;
     }
+
+
+//    public SyllabusListDTO getSyllabusByTags(
+//            List<String> tagList,
+//            Integer pageNumber,
+//            Integer pageSize,
+//            String dateStart,
+//            String dateEnd,
+//            String sortBy,
+//            String order
+//    ) {
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        List<Syllabus> syllabusFound = syllabusRepository.findAll();
+//        switch (sortBy) {
+//            case "topicName" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicName));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "topicCode" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getTopicCode));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "createdDate" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedDate));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "createdBy" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getCreatedBy));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "days" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getDays));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            case "status" -> {
+//                Collections.sort(syllabusFound, Comparator.comparing(Syllabus::getStatus));
+//                if ("desc".equalsIgnoreCase(order)) Collections.reverse(syllabusFound);
+//            }
+//            default -> {
+//                Collections.reverse(syllabusFound);
+//            }
+//        }
+//
+//        syllabusFound = syllabusFound.stream().filter(item ->
+//                (item.getTopicName() != null
+//                        &&
+//                        tagList.stream().allMatch(item.getTopicName().toLowerCase()::contains)
+//                        && (dateStart == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateStart, dateFormat)) >= 0)
+//                        && (dateEnd == null || LocalDate.parse(item.getCreatedDate(), dateFormat).compareTo(LocalDate.parse(dateEnd, dateFormat)) <= 0))
+//        ).toList();
+//
+//        Integer totalElements = syllabusFound.size();
+//        if ((pageNumber - 1) * pageSize > totalElements) {
+//            throw new RuntimeException("No such page number " + pageNumber);
+//        }
+//        Integer totalPages = Math.ceilDiv(totalElements, pageSize);
+//        Boolean lastPage = (pageSize * pageNumber >= totalElements);
+//
+//        SyllabusListDTO syllabusList = new SyllabusListDTO();
+//        syllabusList.setPage(pageNumber);
+//        syllabusList.setLastPage(lastPage);
+//        syllabusList.setPageSize(pageSize);
+//        syllabusList.setTotalPages(totalPages);
+//        syllabusList.setTotalElements(totalElements);
+//
+//        Integer fromIndex = (pageNumber - 1) * pageSize;
+//        Integer toIndex = Math.min(fromIndex + pageSize, totalElements);
+//        syllabusFound = syllabusFound.subList(fromIndex, toIndex);
+//        syllabusList.setContent(syllabusFound);
+//
+//        return syllabusList;
+//    }
 
 
     public void updateUnitDuration(String unitId) {
