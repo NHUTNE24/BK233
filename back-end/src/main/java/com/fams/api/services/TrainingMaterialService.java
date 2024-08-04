@@ -83,6 +83,15 @@ public class TrainingMaterialService {
         }
     }
 
+    public TrainingMaterial saveNonFileMaterial(TrainingMaterial trainingMaterial) {
+        if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
+            if (!unitChapterRepository.existsById(trainingMaterial.getUnitChapterId())) {
+                throw new RuntimeException("UnitChapter not found with id: " + trainingMaterial.getUnitChapterId());
+            }
+        }
+        return trainingMaterialRepository.save(trainingMaterial);
+    }
+
     public Resource loadFileAsResource(String filename) {
         try {
             Path filePath = rootLocation.resolve(filename).normalize();

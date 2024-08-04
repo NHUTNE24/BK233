@@ -72,6 +72,11 @@ public class TrainingMaterialController {
         return ResponseEntity.ok(uploadedFile);
     }
 
+    @PostMapping
+    public ResponseEntity<TrainingMaterial> saveNonFileMaterial(@RequestBody TrainingMaterial trainingMaterial) {
+        return ResponseEntity.ok(trainingMaterialService.saveNonFileMaterial(trainingMaterial));
+    }
+
     // Update an existing training material
     @PutMapping("/{trainingMaterialId}")
     public TrainingMaterial updateTrainingMaterial(@PathVariable String trainingMaterialId, @RequestBody TrainingMaterial updatedTrainingMaterial) {

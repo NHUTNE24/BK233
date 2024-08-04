@@ -93,7 +93,7 @@ const ViewProgramMaterial = ({
         modifiedDate: '',
         unitChapterId: '',
         url: '',
-        file: isFile,
+        file: true,
     };
 
     const [material, setMaterial] = useState(initialMaterial);
@@ -113,32 +113,27 @@ const ViewProgramMaterial = ({
         setProcessing(true);
 
         try {
-            const res = await axios.get(
-                `${baseUrl}/api/training-materials/${currentMaterialId}`,
-                {
-                    headers: {
-                        Authorization: `Basic ${token}`,
-                    },
-                }
-            );
-            if (res.data.file) {
-                await axios.delete(
-                    `${baseUrl}/api/files/${res.data.trainingMaterialId}`,
-                    {
-                        headers: {
-                            Authorization: `Basic ${token}`,
-                        },
-                    }
-                );
-            }
+            // const res = await axios.get(
+            //     `${baseUrl}/api/training-materials/${currentMaterialId}`,
+            //     {
+            //         headers: {
+            //             Authorization: `Basic ${token}`,
+            //         },
+            //     }
+            // );
+            // if (res.data.file) {
+            //     await axios.delete(
+            //         `${baseUrl}/api/files/${res.data.trainingMaterialId}`,
+            //         {
+            //             headers: {
+            //                 Authorization: `Basic ${token}`,
+            //             },
+            //         }
+            //     );
+            // }
 
             await axios.delete(
-                `${baseUrl}/api/training-materials/${currentMaterialId}`,
-                {
-                    headers: {
-                        Authorization: `Basic ${token}`,
-                    },
-                }
+                `${baseUrl}/api/training-materials/${currentMaterialId}`
             );
             console.log(
                 `Successfully deleted training material ${currentMaterialId}`
@@ -148,33 +143,13 @@ const ViewProgramMaterial = ({
                 UnitChapter?.trainingMaterialId?.indexOf(currentMaterialId),
                 1
             );
-            axios
-                .put(
-                    `${baseUrl}/api/unit-chapters/${unitChapterId}`,
-                    {
-                        trainingMaterialId: UnitChapter?.trainingMaterialId,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Basic ${token}`,
-                        },
-                    }
-                )
-                .then(() => {
-                    toggle();
-                });
-            // axios
-            //     .get(`${baseUrl}/api/unit-chapters/${unitChapterId}`, {
-            //         headers: {
-            //             Authorization: `Basic ${token}`,
-            //         },
-            //     })
-            //     .then((res) => {
-            //         console.log(res.data);
-            //     });
+            await axios.put(`${baseUrl}/api/unit-chapters/${unitChapterId}`, {
+                trainingMaterialId: UnitChapter?.trainingMaterialId,
+            });
+
+            toggle();
             setIsModalDelete(false);
             setCurrentMaterialId(null);
-            // setUnitChapterId(null);
         } catch (error) {
             console.log(error);
         } finally {
@@ -206,7 +181,7 @@ const ViewProgramMaterial = ({
             modifiedBy: currentUsername,
             modifiedDate: new Date().toISOString(),
             url: material.url,
-            file: material.file,
+            file: TrainingMaterial?.file,
         };
         try {
             await axios.put(
@@ -255,13 +230,13 @@ const ViewProgramMaterial = ({
         });
     };
 
-    const handleChangeFileName = (e) => {
-        const value = e.target.value;
-        setMaterial({
-            ...material,
-            fileName: value,
-        });
-    };
+    // const handleChangeFileName = (e) => {
+    //     const value = e.target.value;
+    //     setMaterial({
+    //         ...material,
+    //         fileName: value,
+    //     });
+    // };
 
     const handleChangeUrl = (e) => {
         const value = e.target.value;
@@ -288,81 +263,164 @@ const ViewProgramMaterial = ({
         if (processing) return;
         setProcessing(true);
 
-        var url = material.url;
-        var trainingMaterialId = null;
+        // var url = material.url;
+        // var trainingMaterialId = null;
+
+        // if (isFile && selectedFile) {
+        //     try {
+        //         const formData = new FormData();
+        //         formData.append('file', selectedFile);
+        //         // formData.append('upload_preset', cloudinaryUploadPreset);
+
+        //         const res = await axios.post(`${baseUrl}/api/files`, formData, {
+        //             headers: {
+        //                 Authorization: `Basic ${token}`,
+        //                 'Content-Type': 'multipart/form-data',
+        //             },
+        //         });
+        //         url = res.data.url;
+        //         trainingMaterialId = res.data.publicId;
+
+        //         console.log(res);
+        //         console.log(res.data);
+        //     } catch (error) {
+        //         console.error(
+        //             'Error creating new material:',
+        //             error.response ? error.response.data : error.message
+        //         );
+        //         alert('Error uploading file');
+        //         return;
+        //     }
+        // }
+
+        // const newMaterial = {
+        //     trainingMaterialId: trainingMaterialId,
+        //     name: material.name,
+        //     fileName: isFile
+        //         ? material.fileName === ''
+        //             ? selectedFile?.name
+        //             : material.fileName
+        //         : '',
+        //     createdBy: currentUsername,
+        //     createdDate: new Date(),
+        //     modifiedBy: currentUsername,
+        //     modifiedDate: new Date(),
+        //     unitChapterId: material.unitChapterId,
+        //     url: url,
+        //     file: material.file,
+        // };
+        // console.log(newMaterial);
+
+        // try {
+        //     const res = await axios.post(
+        //         `${baseUrl}/api/training-materials`,
+        //         newMaterial,
+        //         {
+        //             headers: {
+        //                 Authorization: `Basic ${token}`,
+        //             },
+        //         }
+        //     );
+        //     console.log('tm\n', res.data);
+        //     const id = res.data.trainingMaterialId;
+        //     UnitChapter.trainingMaterialId = UnitChapter?.trainingMaterialId
+        //         ? [...UnitChapter.trainingMaterialId, id]
+        //         : [id];
+        //     axios
+        //         .put(
+        //             `${baseUrl}/api/unit-chapters/${material.unitChapterId}`,
+        //             {
+        //                 trainingMaterialId: UnitChapter?.trainingMaterialId,
+        //             },
+        //             {
+        //                 headers: {
+        //                     Authorization: `Basic ${token}`,
+        //                 },
+        //             }
+        //         )
+        //         .then((res) => {
+        //             console.log(res);
+        //             toggle();
+        //             setIsModalCreate(false);
+        //         });
+        // } catch (err) {
+        //     console.error(
+        //         'Error creating new material:',
+        //         err.response ? err.response.data : err.message
+        //     );
+        // } finally {
+        //     setProcessing(false);
+        // }
+
+        var newTrainingMaterialId = '';
 
         if (isFile && selectedFile) {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
             try {
-                const formData = new FormData();
-                formData.append('file', selectedFile);
-                // formData.append('upload_preset', cloudinaryUploadPreset);
-
-                const res = await axios.post(`${baseUrl}/api/files`, formData, {
-                    headers: {
-                        Authorization: `Basic ${token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-                url = res.data.url;
-                trainingMaterialId = res.data.publicId;
-
-                console.log(res);
-                console.log(res.data);
-            } catch (error) {
-                console.error(
-                    'Error creating new material:',
-                    error.response ? error.response.data : error.message
+                const res = await axios.post(
+                    `${baseUrl}/api/training-materials/upload/${unitChapterId}`,
+                    formData,
+                    {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                    }
                 );
-                alert('Error uploading file');
-                return;
+
+                if (res.status === 200) {
+                    console.log('File uploaded successfully');
+                    newTrainingMaterialId = res.data.trainingMaterialId;
+                    toggle();
+                    setIsModalCreate(false);
+                } else {
+                    console.error('Failed to upload file: ', res);
+                }
+            } catch (error) {
+                console.error('Error uploading file: ', error);
             }
         }
 
         const newMaterial = {
-            trainingMaterialId: trainingMaterialId,
             name: material.name,
-            fileName: isFile
-                ? material.fileName === ''
-                    ? selectedFile?.name
-                    : material.fileName
-                : '',
+            // fileName: isFile
+            //     ? material.fileName === ''
+            //         ? selectedFile?.name
+            //         : material.fileName
+            //     : '',
             createdBy: currentUsername,
             createdDate: new Date(),
             modifiedBy: currentUsername,
             modifiedDate: new Date(),
             unitChapterId: material.unitChapterId,
-            url: url,
-            file: material.file,
+            url: !isFile ? material.url : '',
+            file: isFile,
         };
         console.log(newMaterial);
+        console.log(newTrainingMaterialId);
 
         try {
-            const res = await axios.post(
-                `${baseUrl}/api/training-materials`,
-                newMaterial,
-                {
-                    headers: {
-                        Authorization: `Basic ${token}`,
-                    },
-                }
-            );
-            console.log(res.data);
+            var res;
+
+            if (isFile) {
+                res = await axios.put(
+                    `${baseUrl}/api/training-materials/${newTrainingMaterialId}`,
+                    newMaterial
+                );
+            } else {
+                res = await axios.post(
+                    `${baseUrl}/api/training-materials`,
+                    newMaterial
+                );
+            }
+            console.log('tm\n', res.data);
             const id = res.data.trainingMaterialId;
             UnitChapter.trainingMaterialId = UnitChapter?.trainingMaterialId
                 ? [...UnitChapter.trainingMaterialId, id]
                 : [id];
             axios
-                .put(
-                    `${baseUrl}/api/unit-chapters/${material.unitChapterId}`,
-                    {
-                        trainingMaterialId: UnitChapter?.trainingMaterialId,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Basic ${token}`,
-                        },
-                    }
-                )
+                .put(`${baseUrl}/api/unit-chapters/${material.unitChapterId}`, {
+                    trainingMaterialId: UnitChapter?.trainingMaterialId,
+                })
                 .then((res) => {
                     console.log(res);
                     toggle();
@@ -480,7 +538,8 @@ const ViewProgramMaterial = ({
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+
+                {/* <Form.Item
                     rules={[{ required: TrainingMaterial?.file }]}
                     label="File Name"
                     name="File Name"
@@ -495,9 +554,23 @@ const ViewProgramMaterial = ({
                     onChange={handleChangeFileName}
                 >
                     <Input disabled={!TrainingMaterial?.file} />
-                </Form.Item>
+                </Form.Item> */}
+
                 <Form.Item
-                    rules={[{ required: true }]}
+                    label="File Name"
+                    name="File Name"
+                    labelCol={{
+                        span: 4,
+                    }}
+                    wrapperCol={{
+                        span: 20,
+                    }}
+                >
+                    <p>{TrainingMaterial?.fileName}</p>
+                </Form.Item>
+
+                <Form.Item
+                    rules={[{ required: !TrainingMaterial?.file }]}
                     label="URL"
                     name="URL"
                     labelCol={{
@@ -510,7 +583,8 @@ const ViewProgramMaterial = ({
                     value={material.url}
                     onChange={handleChangeUrl}
                 >
-                    <Input />
+                    {/* <Input /> */}
+                    <Input disabled={TrainingMaterial?.file} />
                 </Form.Item>
             </Modal>
             <Modal
@@ -549,7 +623,7 @@ const ViewProgramMaterial = ({
                     <Input />
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                     rules={[{ required: false }]}
                     label="File Name"
                     name="File Name"
@@ -566,7 +640,7 @@ const ViewProgramMaterial = ({
                         placeholder={isFile ? material.fileName : ''}
                         disabled={!isFile}
                     />
-                </Form.Item>
+                </Form.Item> */}
 
                 {isFile ? (
                     <Form.Item
@@ -693,28 +767,49 @@ const MaterialTab = ({
     ) => {
         if (file) {
             // download file
-            try {
-                const res = await axios.get(
-                    `http://localhost:8080/api/files/${trainingMaterialId}`,
-                    {
-                        headers: {
-                            Authorization: `Basic ${token}`,
-                        },
-                        responseType: 'arraybuffer',
-                    }
-                );
+            // try {
+            //     const res = await axios.get(
+            //         `http://localhost:8080/api/files/${trainingMaterialId}`,
+            //         {
+            //             headers: {
+            //                 Authorization: `Basic ${token}`,
+            //             },
+            //             responseType: 'arraybuffer',
+            //         }
+            //     );
 
-                // create link and trigger download
-                const url = window.URL.createObjectURL(new Blob([res.data]));
-                const a = document.createElement('a');
-                a.href = url;
-                a.setAttribute('download', fileName);
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
-            } catch (error) {
-                alert('Failed to download file. Please try again later');
+            //     // create link and trigger download
+            //     const url = window.URL.createObjectURL(new Blob([res.data]));
+            //     const a = document.createElement('a');
+            //     a.href = url;
+            //     a.setAttribute('download', fileName);
+            //     document.body.appendChild(a);
+            //     a.click();
+            //     a.remove();
+            //     window.URL.revokeObjectURL(url);
+            // } catch (error) {
+            //     alert('Failed to download file. Please try again later');
+            // }
+
+            try {
+                const result = await axios.get(
+                    `${baseUrl}/api/training-materials/download/${fileName}`,
+                    { responseType: 'arraybuffer' }
+                );
+                console.log('header: ', result.headers);
+
+                const contentType = result.headers['content-type'];
+                console.log('content Type: ', contentType);
+                const blob = new Blob([result.data], { type: contentType });
+                const fileUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = fileUrl;
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            } catch (err) {
+                console.error(err);
             }
         } else {
             // navigate to webpage

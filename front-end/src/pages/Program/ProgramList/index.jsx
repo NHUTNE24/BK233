@@ -461,24 +461,24 @@ const TrainingProgram = () => {
           <table className="w-full table-fixed whitespace-nowrap h-auto">
             <thead className="sticky top-0 z-[10]">
               <tr className="roboto border-b bg-main text-base font-thin text-left text-white">
-                <th className="px-4 py-3 w-[10%]">
+                <th className="px-4 py-3 w-[5%]">
                   <div className="flex flex-row items-center gap-1">
-                    Index
+                    No.
                   </div>
                 </th>
-                <th className="px-4 py-3 w-[35%]">
+                <th className="px-4 py-3 w-[30%]">
                   <div className="flex flex-row items-center gap-1">
                     Program name
                     <MdOutlineSort onClick={() => sortByColumn('name')} />
                   </div>
                 </th>
-                <th className="px-4 py-3">
+                <th className="px-2 py-3">
                   <div className="flex flex-row items-center gap-1">
                     Created on
                     <MdOutlineSort onClick={() => sortByColumn('createdDate')} />
                   </div>
                 </th>
-                <th className="px-4 py-3 w-[15%]">
+                <th className="px-4 py-3 w-[17%]">
                   <div className="flex flex-row items-center gap-1">
                     Created by
                     <MdOutlineSort onClick={() => sortByColumn('createdBy')} />
@@ -504,12 +504,12 @@ const TrainingProgram = () => {
             <tbody className="roboto h-[auto] divide-y">
               {currentData?.map((row, index) => (
                 <tr onClick={() => handleRowClick(row)} key={index} className="bg-default hover:bg-main/10  font-bold text-main text-base text-left" style={{ height: '50px !important' }}>
-                  <td className="px-4 py-3 w-[10%]">{(page - 1) * rowsPerPage + index + 1}</td>
-                  <td className="px-4 py-3 w-[35%]">{row.name.length > 45 ? row.name.substring(0, 45) + '...' : row.name}</td>
-                  <td className="px-4 py-3">{(row.createdDate)?.substr(0, 10)}</td>
-                  <td className="px-4 py-3">{row.createdBy}</td>
-                  <td className="px-4 py-3">{row.days} days</td>
-                  <td className="px-4 py-3  text-white">
+                  <td className="table-cell px-4 py-3 w-[10%] truncate">{(page - 1) * rowsPerPage + index + 1}</td>
+                  <td className="table-cell px-4 py-3 w-[35%] truncate">{row.name}</td>
+                  <td className="table-cell px-2 py-3 truncate">{(row.createdDate)?.substr(0, 10)}</td>
+                  <td className="table-cell px-4 py-3 truncate">{row.createdBy}</td>
+                  <td className="table-cell px-4 py-3 truncate">{row.days} days</td>
+                  <td className="table-cell px-4 py-3 text-white truncate">
                     <Chips.ChipRounded
                       text={`${row.status === 'Active' ? 'Active' : row.status === 'Inactive' ? 'Inactive' : 'Draft'}`}
                       backgroundColor={`${row.status === 'Active' ? 'var(--primary-color)' : row.status === 'Inactive' ? '#bcbcbc' : 'var(--secondary-color)'}`}
