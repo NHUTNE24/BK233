@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +30,7 @@ public class TrainingMaterialService {
     @Autowired
     public TrainingMaterialService(TrainingMaterialRepository trainingMaterialRepository, UnitChapterRepository unitChapterRepository) { // Modify this constructor
         try {
-            this.trainingMaterialRepository=trainingMaterialRepository;
+            this.trainingMaterialRepository = trainingMaterialRepository;
             this.unitChapterRepository = unitChapterRepository;
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
@@ -49,7 +50,7 @@ public class TrainingMaterialService {
                 throw new RuntimeException("Failed to store empty file.");
             }
 
-            System.out.println("====================================DA NHAN FILE TEN:================ "+ file.getOriginalFilename());
+            System.out.println("====================================DA NHAN FILE TEN:================ " + file.getOriginalFilename());
 
             // Create a unique filename
             String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
@@ -115,16 +116,24 @@ public class TrainingMaterialService {
                     if (updatedTrainingMaterial.getUnitChapterId() != null && !unitChapterRepository.existsById(updatedTrainingMaterial.getUnitChapterId())) {
                         throw new RuntimeException("UnitChapter not found with id: " + updatedTrainingMaterial.getUnitChapterId());
                     }
-                    if (updatedTrainingMaterial.getName() != null) existingTrainingMaterial.setName(updatedTrainingMaterial.getName());
-                    if (updatedTrainingMaterial.getFileName() != null) existingTrainingMaterial.setFileName(updatedTrainingMaterial.getFileName());
-                    if (updatedTrainingMaterial.getUrl() != null) existingTrainingMaterial.setUrl(updatedTrainingMaterial.getUrl());
-                    if (updatedTrainingMaterial.getCreatedBy() != null) existingTrainingMaterial.setCreatedBy(updatedTrainingMaterial.getCreatedBy());
-                    if (updatedTrainingMaterial.getCreatedDate() != null) existingTrainingMaterial.setCreatedDate(updatedTrainingMaterial.getCreatedDate());
-                    if (updatedTrainingMaterial.getModifiedBy() != null) existingTrainingMaterial.setModifiedBy(updatedTrainingMaterial.getModifiedBy());
-                    if (updatedTrainingMaterial.getModifiedDate() != null) existingTrainingMaterial.setModifiedDate(updatedTrainingMaterial.getModifiedDate());
+                    if (updatedTrainingMaterial.getName() != null)
+                        existingTrainingMaterial.setName(updatedTrainingMaterial.getName());
+                    if (updatedTrainingMaterial.getFileName() != null)
+                        existingTrainingMaterial.setFileName(updatedTrainingMaterial.getFileName());
+                    if (updatedTrainingMaterial.getUrl() != null)
+                        existingTrainingMaterial.setUrl(updatedTrainingMaterial.getUrl());
+                    if (updatedTrainingMaterial.getCreatedBy() != null)
+                        existingTrainingMaterial.setCreatedBy(updatedTrainingMaterial.getCreatedBy());
+                    if (updatedTrainingMaterial.getCreatedDate() != null)
+                        existingTrainingMaterial.setCreatedDate(updatedTrainingMaterial.getCreatedDate());
+                    if (updatedTrainingMaterial.getModifiedBy() != null)
+                        existingTrainingMaterial.setModifiedBy(updatedTrainingMaterial.getModifiedBy());
+                    if (updatedTrainingMaterial.getModifiedDate() != null)
+                        existingTrainingMaterial.setModifiedDate(updatedTrainingMaterial.getModifiedDate());
                     existingTrainingMaterial.setDeleted(updatedTrainingMaterial.isDeleted());
                     existingTrainingMaterial.setFile(updatedTrainingMaterial.isFile());
-                    if (updatedTrainingMaterial.getUnitChapterId() != null) existingTrainingMaterial.setUnitChapterId(updatedTrainingMaterial.getUnitChapterId());
+                    if (updatedTrainingMaterial.getUnitChapterId() != null)
+                        existingTrainingMaterial.setUnitChapterId(updatedTrainingMaterial.getUnitChapterId());
                     return trainingMaterialRepository.save(existingTrainingMaterial);
                 }).orElseThrow(() -> new RuntimeException("TrainingMaterial not found with id " + trainingMaterialId));
     }
@@ -136,33 +145,29 @@ public class TrainingMaterialService {
             TrainingMaterial trainingMaterial = trainingMaterialRepository.findById(trainingMaterialId)
                     .orElseThrow(() -> new RuntimeException("Training material not found"));
 
-            // Construct the path to the file to be deleted
-            Path fileToDeletePath = rootLocation.resolve(trainingMaterial.getFileName()).normalize().toAbsolutePath();
+            if (trainingMaterial.isFile()) {
+                // Construct the path to the file to be deleted
+                Path fileToDeletePath = rootLocation.resolve(trainingMaterial.getFileName()).normalize().toAbsolutePath();
 
-            // Check if the file exists and delete it
-            if (Files.exists(fileToDeletePath)) {
-                Files.delete(fileToDeletePath);
-
+                // Check if the file exists and delete it
+                if (Files.exists(fileToDeletePath)) {
+                    Files.delete(fileToDeletePath);
+                }
             }
 
             // Delete the metadata from the database
             trainingMaterialRepository.delete(trainingMaterial);
-
-
         } catch (IOException e) {
-
             throw new RuntimeException("Failed to delete file.", e);
         } catch (RuntimeException e) {
-
             throw new RuntimeException("Error occurred while deleting training material.", e);
         }
-
     }
 
     // Get a specific training material by ID
     public TrainingMaterial getTrainingMaterialById(String trainingMaterialId) {
         Optional<TrainingMaterial> trainingMaterial = trainingMaterialRepository.findById(trainingMaterialId);
-        if(trainingMaterial.isPresent()) {
+        if (trainingMaterial.isPresent()) {
             return trainingMaterial.get();
         } else {
             throw new RuntimeException("TrainingMaterial not found with id " + trainingMaterialId);
@@ -176,8 +181,7 @@ public class TrainingMaterialService {
             List<TrainingMaterial> trainingMaterials = trainingMaterialRepository.findByUnitChapterId(chapterFound.get().getId());
 
             return trainingMaterials;
-        }
-        else {
+        } else {
             throw new RuntimeException("Chapter Not Found woth id " + unitChapterId);
         }
     }

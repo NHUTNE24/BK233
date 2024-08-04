@@ -113,25 +113,6 @@ const ViewProgramMaterial = ({
         setProcessing(true);
 
         try {
-            // const res = await axios.get(
-            //     `${baseUrl}/api/training-materials/${currentMaterialId}`,
-            //     {
-            //         headers: {
-            //             Authorization: `Basic ${token}`,
-            //         },
-            //     }
-            // );
-            // if (res.data.file) {
-            //     await axios.delete(
-            //         `${baseUrl}/api/files/${res.data.trainingMaterialId}`,
-            //         {
-            //             headers: {
-            //                 Authorization: `Basic ${token}`,
-            //             },
-            //         }
-            //     );
-            // }
-
             await axios.delete(
                 `${baseUrl}/api/training-materials/${currentMaterialId}`
             );
@@ -151,6 +132,7 @@ const ViewProgramMaterial = ({
             setIsModalDelete(false);
             setCurrentMaterialId(null);
         } catch (error) {
+            alert('Error deleting material');
             console.log(error);
         } finally {
             setProcessing(false);
@@ -230,14 +212,6 @@ const ViewProgramMaterial = ({
         });
     };
 
-    // const handleChangeFileName = (e) => {
-    //     const value = e.target.value;
-    //     setMaterial({
-    //         ...material,
-    //         fileName: value,
-    //     });
-    // };
-
     const handleChangeUrl = (e) => {
         const value = e.target.value;
         setMaterial({
@@ -262,95 +236,6 @@ const ViewProgramMaterial = ({
     const confirmCreate = async () => {
         if (processing) return;
         setProcessing(true);
-
-        // var url = material.url;
-        // var trainingMaterialId = null;
-
-        // if (isFile && selectedFile) {
-        //     try {
-        //         const formData = new FormData();
-        //         formData.append('file', selectedFile);
-        //         // formData.append('upload_preset', cloudinaryUploadPreset);
-
-        //         const res = await axios.post(`${baseUrl}/api/files`, formData, {
-        //             headers: {
-        //                 Authorization: `Basic ${token}`,
-        //                 'Content-Type': 'multipart/form-data',
-        //             },
-        //         });
-        //         url = res.data.url;
-        //         trainingMaterialId = res.data.publicId;
-
-        //         console.log(res);
-        //         console.log(res.data);
-        //     } catch (error) {
-        //         console.error(
-        //             'Error creating new material:',
-        //             error.response ? error.response.data : error.message
-        //         );
-        //         alert('Error uploading file');
-        //         return;
-        //     }
-        // }
-
-        // const newMaterial = {
-        //     trainingMaterialId: trainingMaterialId,
-        //     name: material.name,
-        //     fileName: isFile
-        //         ? material.fileName === ''
-        //             ? selectedFile?.name
-        //             : material.fileName
-        //         : '',
-        //     createdBy: currentUsername,
-        //     createdDate: new Date(),
-        //     modifiedBy: currentUsername,
-        //     modifiedDate: new Date(),
-        //     unitChapterId: material.unitChapterId,
-        //     url: url,
-        //     file: material.file,
-        // };
-        // console.log(newMaterial);
-
-        // try {
-        //     const res = await axios.post(
-        //         `${baseUrl}/api/training-materials`,
-        //         newMaterial,
-        //         {
-        //             headers: {
-        //                 Authorization: `Basic ${token}`,
-        //             },
-        //         }
-        //     );
-        //     console.log('tm\n', res.data);
-        //     const id = res.data.trainingMaterialId;
-        //     UnitChapter.trainingMaterialId = UnitChapter?.trainingMaterialId
-        //         ? [...UnitChapter.trainingMaterialId, id]
-        //         : [id];
-        //     axios
-        //         .put(
-        //             `${baseUrl}/api/unit-chapters/${material.unitChapterId}`,
-        //             {
-        //                 trainingMaterialId: UnitChapter?.trainingMaterialId,
-        //             },
-        //             {
-        //                 headers: {
-        //                     Authorization: `Basic ${token}`,
-        //                 },
-        //             }
-        //         )
-        //         .then((res) => {
-        //             console.log(res);
-        //             toggle();
-        //             setIsModalCreate(false);
-        //         });
-        // } catch (err) {
-        //     console.error(
-        //         'Error creating new material:',
-        //         err.response ? err.response.data : err.message
-        //     );
-        // } finally {
-        //     setProcessing(false);
-        // }
 
         var newTrainingMaterialId = '';
 
@@ -539,23 +424,6 @@ const ViewProgramMaterial = ({
                     <Input />
                 </Form.Item>
 
-                {/* <Form.Item
-                    rules={[{ required: TrainingMaterial?.file }]}
-                    label="File Name"
-                    name="File Name"
-                    labelCol={{
-                        span: 4,
-                    }}
-                    wrapperCol={{
-                        span: 20,
-                    }}
-                    initialValue={TrainingMaterial?.fileName}
-                    value={material.fileName}
-                    onChange={handleChangeFileName}
-                >
-                    <Input disabled={!TrainingMaterial?.file} />
-                </Form.Item> */}
-
                 <Form.Item
                     label="File Name"
                     name="File Name"
@@ -622,25 +490,6 @@ const ViewProgramMaterial = ({
                 >
                     <Input />
                 </Form.Item>
-
-                {/* <Form.Item
-                    rules={[{ required: false }]}
-                    label="File Name"
-                    name="File Name"
-                    labelCol={{
-                        span: 4,
-                    }}
-                    wrapperCol={{
-                        span: 20,
-                    }}
-                    value={material.fileName}
-                    onChange={handleChangeFileName}
-                >
-                    <Input
-                        placeholder={isFile ? material.fileName : ''}
-                        disabled={!isFile}
-                    />
-                </Form.Item> */}
 
                 {isFile ? (
                     <Form.Item
@@ -766,31 +615,6 @@ const MaterialTab = ({
         url
     ) => {
         if (file) {
-            // download file
-            // try {
-            //     const res = await axios.get(
-            //         `http://localhost:8080/api/files/${trainingMaterialId}`,
-            //         {
-            //             headers: {
-            //                 Authorization: `Basic ${token}`,
-            //             },
-            //             responseType: 'arraybuffer',
-            //         }
-            //     );
-
-            //     // create link and trigger download
-            //     const url = window.URL.createObjectURL(new Blob([res.data]));
-            //     const a = document.createElement('a');
-            //     a.href = url;
-            //     a.setAttribute('download', fileName);
-            //     document.body.appendChild(a);
-            //     a.click();
-            //     a.remove();
-            //     window.URL.revokeObjectURL(url);
-            // } catch (error) {
-            //     alert('Failed to download file. Please try again later');
-            // }
-
             try {
                 const result = await axios.get(
                     `${baseUrl}/api/training-materials/download/${fileName}`,
@@ -820,7 +644,7 @@ const MaterialTab = ({
     return (
         <div className="flex gap-[10px]">
             <p
-                id='material-name'
+                id="material-name"
                 className="grow hover:text-main hover:font-bold cursor-pointer duration-300 truncate"
                 onClick={() =>
                     handleClickMaterial(

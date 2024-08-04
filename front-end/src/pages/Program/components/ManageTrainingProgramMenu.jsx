@@ -15,7 +15,6 @@ import {
 
 import { MdOutlineSnippetFolder } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-// import './TrainingProgramDetail.css';
 
 import { Divider, Popover } from 'antd';
 import EditModal from './EditModal';
@@ -83,49 +82,6 @@ const ManageTrainingProgramMenu = ({
             const zipName = iterator.name;
             await handleZipFiles(zipper, iterator);
 
-            // {
-            //     // cloudinary client-side fetch test
-            //     const url =
-            //         // 'https://res.cloudinary.com/dshbngqoj/image/upload/v1721988175/samples/landscapes/nature-mountains.jpg';
-            //         // 'https://res.cloudinary.com/dshbngqoj/image/upload/v1721988175/samples/animals/kitten-playing.gif';
-            //         'http://res.cloudinary.com/dshbngqoj/image/upload/v1722624559/pbpstgogzccjw0vy01cp.png';
-            //         // 'https://res.cloudinary.com/dshbngqoj/video/upload/v1721988177/samples/cld-sample-video.mp4';
-            //     const res = await axios.get(url, {
-            //         responseType: 'blob',
-            //     });
-            //     console.log(res);
-            //     // const blob = new Blob([res.data], {
-            //     //     type: res.headers['Content-Type'],
-            //     // });
-            //     zipper.file(url.split('/').pop(), res.data);
-            // }
-
-            // {
-            //     // cloudinary server-side fetch test
-            //     const publicId = 'pbpstgogzccjw0vy01cp';
-            //     const res = await axios.get(
-            //         `http://localhost:8080/api/files/${publicId}`,
-            //         {
-            //             headers: {
-            //                 Authorization: `Basic ${token}`,
-            //             },
-            //             responseType: 'blob', // ensure that the response is handled as a binary file
-            //         }
-            //     );
-
-            //     // create link and trigger download
-            //     const url = window.URL.createObjectURL(new Blob([res.data]));
-            //     const a = document.createElement('a');
-            //     a.href = url;
-            //     a.setAttribute('download', 'test.png');
-            //     document.body.appendChild(a);
-            //     a.click();
-            //     a.remove();
-            //     window.URL.revokeObjectURL(url);
-
-            //     zipper.file('test.png', res.data);
-            // }
-
             handleSuccess('Processed successfully. Downloading...');
 
             zipper.generateAsync({ type: 'blob' }).then((content) => {
@@ -157,15 +113,6 @@ const ManageTrainingProgramMenu = ({
                 // handle download file
                 console.log(file.fileName + ' is a file: ' + file.url);
                 try {
-                    // const res = await axios.get(
-                    //     `http://localhost:8080/api/files/${file.trainingMaterialId}`,
-                    //     {
-                    //         headers: {
-                    //             Authorization: `Basic ${token}`,
-                    //         },
-                    //         responseType: 'arraybuffer',
-                    //     }
-                    // );
                     const res = await axios.get(
                         `http://localhost:8080/api/training-materials/view/${file.fileName}`,
                         { responseType: 'arraybuffer' }
@@ -341,7 +288,6 @@ const ManageTrainingProgramMenu = ({
             className="flex w-full h-[34px] items-center px-[5px] gap-[8px] justify-start hover:bg-grey cursor-pointer"
             onClick={(e) => {
                 item.onClick(e);
-                // setOpenPopover(false);
             }}
         >
             {item.icon}
@@ -353,16 +299,6 @@ const ManageTrainingProgramMenu = ({
 
     return (
         <div className="relative">
-            {/* {openPopover && (
-                <div
-                    id="popover-wrapper"
-                    className="w-[100vw] h-[100vh] top-0 left-0 fixed"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setOpenPopover(false);
-                    }}
-                ></div>
-            )} */}
             <EditModal
                 editmodalIsOpen={editmodalIsOpen}
                 setEditmodalIsOpen={setEditmodalIsOpen}
