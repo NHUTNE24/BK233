@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "training_material")
@@ -16,10 +17,10 @@ public class TrainingMaterial {
     @Id
     private String trainingMaterialId;
     private String createdBy;
-    private Date createdDate;
+    private LocalDateTime createdDate;
     private boolean isDeleted;
     private String modifiedBy;
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
     private String fileName;
     private boolean isFile;
     private String name;

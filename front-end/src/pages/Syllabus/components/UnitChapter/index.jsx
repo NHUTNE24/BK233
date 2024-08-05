@@ -25,7 +25,7 @@ const deliveryTypeIcon = {
     'Seminar/Workshop': <RiBaseStationLine />,
 };
 
-function UnitChapter({ chapterInfo, unitInfo }) {
+function UnitChapter({ chapterInfo, unitInfo, dayInfo }) {
     const data = useSelector((state) => state.syllabusDetail);
 
     const [trainingMaterials, setTraningMaterials] = useState([]);
@@ -75,7 +75,7 @@ function UnitChapter({ chapterInfo, unitInfo }) {
                             }
                         </li>
                         <li className={styles['material-training']}>
-                            <TrainingMaterialModal chapterInfo={chapterInfo} material={trainingMaterials} />
+                            <TrainingMaterialModal dayInfo={dayInfo} unitInfo={unitInfo} chapterInfo={chapterInfo} material={trainingMaterials} />
                         </li>
                     </ul>
                 </div>

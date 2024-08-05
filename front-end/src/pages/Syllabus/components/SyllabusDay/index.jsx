@@ -31,6 +31,7 @@ function SyllabusDay({ dayInfo, chapterInfo, unitInfo }) {
                             <Unit
                                 unitInfo={unit}
                                 chapterInfo={chapterInfo}
+                                dayInfo={dayInfo}
                             />
                         </li>
                     ))}

@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 import styles from './style.module.scss';
 import TrainingMaterial from '../TrainingMaterial';
 
-function TrainingMaterialModal({material, chapterInfo}) {
+function TrainingMaterialModal({material, chapterInfo, dayInfo, unitInfo}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -38,7 +38,7 @@ function TrainingMaterialModal({material, chapterInfo}) {
                 footer={null}
             >
                 <div className={styles.body}>
-                    <TrainingMaterial material={material} chapterInfo={chapterInfo} handleCloseBtn={handleCancel} />
+                    <TrainingMaterial dayInfo={dayInfo} unitInfo={unitInfo} material={material} chapterInfo={chapterInfo} handleCloseBtn={handleCancel} />
                 </div>
             </Modal>
         </div>

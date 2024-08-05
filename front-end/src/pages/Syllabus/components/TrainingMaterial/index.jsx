@@ -6,16 +6,19 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PropsType from 'prop-types';
 import styles from './style.module.scss';
+import { useSelector } from 'react-redux';
 
 TrainingMaterial.propTypes = {
     chapterInfo: PropsType.object.isRequired,
     handleCloseBtn: PropsType.func.isRequired,
 };
 
-function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
+function TrainingMaterial({ handleCloseBtn, chapterInfo, dayInfo, unitInfo }) {
     const [material, setMaterial] = useState([]);
 
     const [fileUrl, setFileUrl] = useState(null);
+
+    const userInfo = useSelector((state) => state.auth);
 
     const fetchMaterial = async () => {
         try {
@@ -74,6 +77,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
     const handleUpload = async ({ file, onSuccess, onError }) => {
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('userName', userInfo.username);
 
         try {
             const response = await axios.post(
@@ -133,18 +137,18 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <p className={styles['day-number']}>Day 3</p>
+                <p className={styles['day-number']}>{`Day ${dayInfo.dayNo}`}</p>
                 <div className={styles['close-btn']} onClick={handleCloseBtn}>
                     <AiOutlineCloseCircle />
                 </div>
             </div>
             <div className={styles.body}>
                 <div className={styles.title}>
-                    <p className={styles['unit-number']}>Unit 5</p>
-                    <p className={styles['unit-name']}>.NET Introduction</p>
+                    <p className={styles['unit-number']}>{`Unit ${unitInfo.unitNo}`}</p>
+                    <p className={styles['unit-name']}>{unitInfo.unitName}</p>
                 </div>
                 <div className={styles.content}>
-                    <p className={styles['chapter-name']}>.NET Introduction</p>
+                    <p className={styles['chapter-name']}>{chapterInfo.name}</p>
                     <ul className={styles['material-list']}>
                         {material.map((item, idx) => (
                             <li className={styles['material-item']} key={idx}>
@@ -161,7 +165,7 @@ function TrainingMaterial({ handleCloseBtn, chapterInfo }) {
                                 <div className={styles.action}>
                                     <p
                                         className={styles.history}
-                                    >{`by ${item.modifiedBy} on ${item.modifiedDate}`}</p>
+                                    >{`by ${item.modifiedBy} on ${moment(item.modifiedDate).format('DD/MM/YYYY')}`}</p>
                                     <div
                                         onClick={() =>
                                             handleDeleteMaterial2(

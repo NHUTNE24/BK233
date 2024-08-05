@@ -67,8 +67,8 @@ public class TrainingMaterialController {
     // Add a training material
 
     @PostMapping("/upload/{chapterId}")
-    public ResponseEntity<TrainingMaterial> uploadFile( @PathVariable String chapterId, @RequestParam("file") MultipartFile file) {
-        TrainingMaterial uploadedFile = trainingMaterialService.addTrainingMaterial(file, chapterId);
+    public ResponseEntity<TrainingMaterial> uploadFile( @PathVariable String chapterId, @RequestParam("file") MultipartFile file, @RequestParam("userName") String userName) {
+        TrainingMaterial uploadedFile = trainingMaterialService.addTrainingMaterial(file, chapterId, userName);
         return ResponseEntity.ok(uploadedFile);
     }
 

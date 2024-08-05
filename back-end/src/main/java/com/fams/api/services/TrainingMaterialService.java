@@ -15,7 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +47,7 @@ public class TrainingMaterialService {
     }
 
     // Add a training material 
-    public TrainingMaterial addTrainingMaterial(MultipartFile file, String chapterId) {
+    public TrainingMaterial addTrainingMaterial(MultipartFile file, String chapterId, String userName) {
         try {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file.");
@@ -71,6 +74,10 @@ public class TrainingMaterialService {
             // Save file metadata to database
             TrainingMaterial trainingMaterial = new TrainingMaterial();
             trainingMaterial.setFileName(filename);
+            trainingMaterial.setCreatedBy(userName);
+            trainingMaterial.setModifiedBy(userName);
+            trainingMaterial.setCreatedDate(LocalDateTime.now());
+            trainingMaterial.setModifiedDate(LocalDateTime.now());
             trainingMaterial.setName(file.getOriginalFilename());
             trainingMaterial.setUnitChapterId(chapterId);
             trainingMaterial.setUrl("/api/files/download/" + filename); // Set download URL

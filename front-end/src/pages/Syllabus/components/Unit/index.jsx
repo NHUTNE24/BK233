@@ -9,7 +9,7 @@ Unit.propTypes = {
     chapterInfo: PropTypes.object.isRequired,
 };
 
-function Unit({ unitInfo, chapterInfo }) {
+function Unit({ unitInfo, chapterInfo, dayInfo }) {
     const flattenChapter = chapterInfo.reduce((acc, cur) => [...acc, ...cur], []);
 
     const filterChapter = flattenChapter.filter((chapter) => chapter.syllabusUnitId === unitInfo.id);
@@ -49,6 +49,7 @@ function Unit({ unitInfo, chapterInfo }) {
                                     <UnitChapter
                                         unitInfo={unitInfo}
                                         chapterInfo={chapter}
+                                        dayInfo={dayInfo}
                                     />
                                 </li>
                             ))}
