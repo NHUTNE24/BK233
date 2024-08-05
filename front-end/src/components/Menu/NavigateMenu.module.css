@@ -1,14 +1,16 @@
 .container {
   background-color: #EDF2F7;
-  height: calc(100vh - 70px - 39px);
+  /* height: calc(100vh - 70px - 39px); */
   padding: 20px 0;
   transition: width 0.2s;
   /* margin-top: 79px; */
-  z-index: 998;
-  position: sticky;
+  /* z-index: 998; */
+  /* position: sticky; */
+  /*   
   top: 70px;
   left: 0;
-  overflow-y: auto;
+  overflow-y: auto; */
+  height: 100%;
 }
 
 .container-expanded {
@@ -47,5 +49,3 @@
   background-color: #ECF8FF !important;
   color: #fff !important;
 }
-
-
