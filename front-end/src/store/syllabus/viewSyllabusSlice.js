@@ -45,14 +45,13 @@ export const fetchSyllabusData = createAsyncThunk(
                 URL += `sortBy=${sortBy}&order=${order}`;
             }
 
-            console.log(URL);
             const response = await fetch(URL, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(response);
+
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
