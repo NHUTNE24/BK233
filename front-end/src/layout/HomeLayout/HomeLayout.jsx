@@ -16,7 +16,7 @@ function HomeLayout() {
                     <div className="sidebar">
                         <NavigateMenu />
                     </div>
-                    <div className="grow w-auto px-5">
+                    <div className="right-content grow w-auto px-5">
                         <Outlet />
                     </div>
                 </div>

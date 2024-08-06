@@ -15,6 +15,8 @@ import java.text.Collator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -623,6 +625,7 @@ public class SyllabusDetailService {
 
         return syllabusToDuplicate;
     }
+
 
     public SyllabusListDTO getSyllabusByTags(
             List<String> tagList,

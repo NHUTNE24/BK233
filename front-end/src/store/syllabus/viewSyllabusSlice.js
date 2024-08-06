@@ -21,6 +21,8 @@ export const fetchSyllabusData = createAsyncThunk(
         },
         thunkAPI
     ) => {
+        const token = localStorage.getItem('jwtToken');
+        // console.log(token);
         try {
             let URL = `http://localhost:8080/api/syllabus/list?page=${page}&pageSize=${pageSize}&`;
             let tagsParam = '';
@@ -43,7 +45,14 @@ export const fetchSyllabusData = createAsyncThunk(
                 URL += `sortBy=${sortBy}&order=${order}`;
             }
 
-            const response = await fetch(URL);
+            console.log(URL);
+            const response = await fetch(URL, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(response);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }

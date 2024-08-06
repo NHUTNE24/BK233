@@ -75,9 +75,14 @@ function ViewSyllabus() {
     // Handle Search
     const handlePressEnter = () => {
         const value = searchedText.trim().toLowerCase();
-        if (value && !tags.includes(value)) {
+        // Regular expression to match alphanumeric characters only
+        const validPattern =
+            /^[a-z0-9àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ\s]+$/i;
+        if (value && validPattern.test(value) && !tags.includes(value)) {
             setTags([...tags, value]);
             setSearchedText('');
+        } else {
+            message.warning('Vui lòng không nhập kí tự đặc biệt');
         }
     };
 

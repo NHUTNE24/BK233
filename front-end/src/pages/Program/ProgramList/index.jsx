@@ -374,7 +374,7 @@ const TrainingProgram = () => {
 
                 <div className="flex flex-col gap-2 justify-between items-center px-10 w-full h-auto">
                     <div className="w-full mb-2 mt-2 border-b-2 border-main pb-2">
-                        Import setting{' '}
+                        Import setting
                     </div>
 
                     <div className="flex flex-row w-full items-center justify-between mb-1 h-[40px]">
@@ -487,12 +487,14 @@ const TrainingProgram = () => {
                     </button>
                 </div>
             </Modal>
-            <div className="w-full absolute flex justify-start items-center h-[60px] bg-main">
+            {/* absolute */}
+            <div className="w-full  flex  justify-start items-center h-[60px] bg-main">
                 <h4 className="text-white font-bold ml-[30px]">
                     Training Program
                 </h4>
             </div>
-            <div className="w-full absolute top-[70px] flex justify-center items-center flex-col h-auto">
+            {/* absolute */}
+            <div className="w-full  top-[70px]  flex justify-center items-center flex-col h-auto">
                 <div className="w-full flex flex-row justify-between items-center px-10">
                     <div className="w-full h-[50px] flex flex-row items-center gap-2">
                         <div className="w-full h-[50px] flex flex-row items-center gap-2">
@@ -553,9 +555,10 @@ const TrainingProgram = () => {
                 </div>
                 <div
                     style={{ maxHeight: `${tableHeight}px` }}
-                    className="scroll w-auto overflow-y-scroll rounded-lg bg-secondaryContainer text-base tracking-wide shadow-[0_20px_40px_0_rgba(0,0,0,0.16)]"
+                    className="training-program w-auto w-full scroll  overflow-y-scroll rounded-lg bg-secondaryContainer text-base tracking-wide shadow-[0_20px_40px_0_rgba(0,0,0,0.16)]"
                 >
-                    <table className="w-full table-fixed whitespace-nowrap h-auto">
+                    {/* table-fixed */}
+                    <table className="w-full   whitespace-nowrap h-auto">
                         <thead className="sticky top-0 z-[10]">
                             <tr className="roboto border-b bg-main text-base font-thin text-left text-white">
                                 <th className="px-4 py-3 w-[5%]">
@@ -664,8 +667,9 @@ const TrainingProgram = () => {
                 </div>
             </div>
             <div
-                className="w-full h-[40px] absolute flex flex-row justify-between"
-                style={{ top: `${topPosition}px` }}
+                // absolute
+                className="w-full h-[40px]  flex flex-row justify-between"
+                style={{ top: `${topPosition}px`, marginTop: '32px' }}
             >
                 <div></div>
                 <Pagination

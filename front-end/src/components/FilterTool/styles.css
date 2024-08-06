@@ -26,6 +26,7 @@
     line-height: 22px;
     color: #2d3748;
 }
+
 .from-time,
 .to-time {
     font-family: 'Inter', sans-serif;
@@ -69,7 +70,7 @@
     width: 391px;
     height: 28px;
     ;
-} 
+}
 
 /* Class location specific styles */
 .class-location {
@@ -115,7 +116,8 @@
     background: #f0f0f0;
 }
 
-.search-btn, .clear-btn {
+.search-btn,
+.clear-btn {
     /* background-color: #2d3748;
     color: #fff;
     font-size: 14px;
@@ -160,7 +162,8 @@ select:focus {
 
 .ant-modal-content {
     /* width: 700px !important; */
-    width: 100%;
+    /* width: 100%; */
+    width: max-content;
 }
 
 .ant-modal-body {
@@ -250,11 +253,13 @@ input[type="date"], select {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 } */
-input[type="date"], select {
-	width: 100%;
-	padding: 8px;
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px;
     background-color: #fff;
 }
+
 /* .flex {
 	display: flex;
 }

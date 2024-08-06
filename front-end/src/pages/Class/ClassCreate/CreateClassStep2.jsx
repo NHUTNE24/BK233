@@ -134,7 +134,7 @@ function CreateClassStep2() {
                 },
             })
             .then((response) => {
-                console.log('Class created successfully.', response.data);
+                // console.log('Class created successfully.', response.data);
                 handleNavigate();
             })
             .catch((error) => {

@@ -27,10 +27,11 @@ import axios from 'axios';
 import moment from 'moment';
 
 import './UserList.css';
-import TableCustom from '../../../components/Table';
+
 import AddUserForm from '../../../components/AddNewUser/AddNewUser';
-import ImportUsers from '../../../components/ImportUsers/ImportUsers'
+import ImportUsers from '../../../components/ImportUsers/ImportUsers';
 import ExportUsers from '../../../components/ExportUsers/ExportUsers';
+import TableCustom from '../../../components/TableCusTom';
 
 const { Option } = Select;
 
@@ -75,9 +76,9 @@ const UserList = () => {
         try {
             const response = await axios.get('http://localhost:8080/api/roles');
             if (response.data && Array.isArray(response.data)) {
-                const formattedRoles = response.data.map(role => ({
+                const formattedRoles = response.data.map((role) => ({
                     id: role.id,
-                    name: role.name
+                    name: role.name,
                 }));
                 setRoles(formattedRoles);
             }
@@ -173,7 +174,9 @@ const UserList = () => {
             const values = await form.validateFields();
             console.log('Form values:', values);
 
-            const roleResponse = await axios.get(`http://localhost:8080/api/roles/${values.roleId}`);
+            const roleResponse = await axios.get(
+                `http://localhost:8080/api/roles/${values.roleId}`
+            );
             const roleData = roleResponse.data;
             console.log('Role data:', roleData);
 
@@ -213,13 +216,13 @@ const UserList = () => {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    
+
     const deleteUser = async (userId) => {
         try {
             await axios.delete(`http://localhost:8080/api/users/${userId}`);
             message.success('User deleted successfully');
-            
-            const newUsers = users.filter(user => user.id !== userId);
+
+            const newUsers = users.filter((user) => user.id !== userId);
             setUsers(newUsers);
             setFilteredUsers(newUsers);
         } catch (error) {
@@ -283,11 +286,7 @@ const UserList = () => {
             dataIndex: 'gender',
             key: 'gender',
             render: (gender) =>
-                gender ? (
-                    <FaUser />
-                ) : (
-                    <FaUser style={{ color: 'red' }} />
-                ),
+                gender ? <FaUser /> : <FaUser style={{ color: 'red' }} />,
             sorter: (a, b) => a.gender - b.gender,
         },
         {
@@ -312,7 +311,7 @@ const UserList = () => {
                                 Edit User
                             </Menu.Item>
                             <Menu.Item onClick={() => deleteUser(record.id)}>
-                            Delete User
+                                Delete User
                             </Menu.Item>
                         </Menu>
                     }
@@ -468,10 +467,12 @@ const UserList = () => {
                     <Form.Item
                         label="Role"
                         name="roleId"
-                        rules={[{ required: true, message: 'Please select a role' }]}
+                        rules={[
+                            { required: true, message: 'Please select a role' },
+                        ]}
                     >
                         <Select placeholder="Select a role">
-                            {roles.map(role => (
+                            {roles.map((role) => (
                                 <Option key={role.id} value={role.id}>
                                     {role.name}
                                 </Option>

@@ -17,8 +17,10 @@ import {
 
 import './ClassList.scss';
 import FilterTool from '../../../components/FilterTool';
-import TableCustom from '../../../components/Table';
+
 import { basicAuth } from '../../../constants/user';
+import TableCustom from '../../../components/TableCusTom';
+
 // import { basicAuth } from '../../../constants/user';
 
 const apiBaseURL = 'http://localhost:8080/api/classes';
@@ -38,10 +40,18 @@ const ViewClass = () => {
 
     const fetchData = async () => {
         try {
+            setLoading(true);
             const response = await axios.get(apiBaseURL);
-            setClassInfo(response.data);
-            setFilteredClassInfo(response.data);
-            console.log(response.data);
+            const data = response.data.map((item) => {
+                return {
+                    ...item,
+                    key: item.id,
+                };
+            });
+
+            setClassInfo(data);
+            setFilteredClassInfo(data);
+            setLoading(false);
         } catch (error) {
             console.error('There was an error fetching the class list!', error);
         } finally {
@@ -339,7 +349,8 @@ const ViewClass = () => {
                     <TableCustom
                         dataSource={filteredClassInfo}
                         columns={columns}
-                        noPagination={false}
+                        pagination={true}
+                        loading={loading}
                     />
                 </div>
             </Space>

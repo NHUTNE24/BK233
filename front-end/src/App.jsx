@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 
-import HomePage from './pages/Home'
+import HomePage from './pages/Home';
 
 import HomeLayout from './layout/HomeLayout/HomeLayout';
 import ClassLayout from './layout/ClassLayout/ClassLayout';
@@ -30,9 +30,11 @@ import ViewSyllabus from 'src/pages/Syllabus/ViewSyllabus';
 import SyllabusDetail from 'src/pages/Syllabus/SyllabusDetail';
 import EditSyllabus from 'src/pages/Syllabus/EditSyllabus';
 import CreateSyllabus from 'src/pages/Syllabus/CreateSyllabus';
-{/* Testing components */}
-import TestingComponents from "./pages/TestingComponents";
-import SyllabusLayout from "./layout/SyllabusLayout/SyllabusLayout";
+{
+    /* Testing components */
+}
+import TestingComponents from './pages/TestingComponents';
+import SyllabusLayout from './layout/SyllabusLayout/SyllabusLayout';
 import UserLayout from './layout/UserLayout/UserLayout';
 import UserList from './pages/User/UserList/UserList';
 import RolePermission from './pages/User/RolePermission/RolePermission';
@@ -43,86 +45,129 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
-import Login from "./pages/Login";
-import LoginSuccess from "./pages/Login/LoginSuccess";
+import Login from './pages/Login';
+import LoginSuccess from './pages/Login/LoginSuccess';
 
 const App = () => {
-    return(
+    return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login" element={<Login />} />
-                        <Route path="/login-success" element={<LoginSuccess />} />
                         <Route
-                        path="/*"
-                        element={
-                            <ProtectedRoute>
-                            <HomeLayout />
-                            </ProtectedRoute>
-                        }
+                            path="/login-success"
+                            element={<LoginSuccess />}
+                        />
+                        <Route
+                            path="/*"
+                            element={
+                                <ProtectedRoute>
+                                    <HomeLayout />
+                                </ProtectedRoute>
+                            }
                         >
-                        <Route path='' element={<HomePage />}></Route>
-                        <Route path="class" element={<ClassLayout />}>
-                            <Route path="list" element={<ClassList />} />
-                            <Route path=":id" element={<ClassDetail />} />
-                            <Route path="create" element={<CreateClassLayout />}>
-                                <Route path="step1" element={<CreateClassStep1 />} />
+                            <Route path="" element={<HomePage />}></Route>
+                            <Route path="class" element={<ClassLayout />}>
+                                <Route path="list" element={<ClassList />} />
+                                <Route path=":id" element={<ClassDetail />} />
                                 <Route
-                                    path=":className/step2"
-                                    element={<CreateClassStep2 />}
+                                    path="create"
+                                    element={<CreateClassLayout />}
+                                >
+                                    <Route
+                                        path="step1"
+                                        element={<CreateClassStep1 />}
+                                    />
+                                    <Route
+                                        path=":className/step2"
+                                        element={<CreateClassStep2 />}
+                                    />
+                                    <Route
+                                        path=":className/step3"
+                                        element={<CreateClassStep3 />}
+                                    />
+                                </Route>
+                                <Route
+                                    path="update"
+                                    element={<ClassUpdateLayout />}
+                                >
+                                    <Route
+                                        path=":id"
+                                        element={<ClassUpdate />}
+                                    />
+                                    {/* <Route path=":classId/step2" element={<ClassUpdatePage2 />} /> */}
+                                </Route>
+                                <Route path="edit" />
+                            </Route>
+                            <Route path="program" element={<ProgramLayout />}>
+                                <Route
+                                    path="view-program/:trainingProgramCode/*"
+                                    element={<ProgramDetail />}
                                 />
                                 <Route
-                                    path=":className/step3"
-                                    element={<CreateClassStep3 />}
+                                    path="view-program"
+                                    element={<ProgramList />}
                                 />
-                            </Route>
-                            <Route path="update" element={<ClassUpdateLayout />}>
-                                <Route path=":id" element={<ClassUpdate />} />
-                                {/* <Route path=":classId/step2" element={<ClassUpdatePage2 />} /> */}
-                            </Route>
-                            <Route path="edit" />
-                        </Route>
-                        <Route path="program" element={<ProgramLayout />}>
-                            <Route
-                                path="view-program/:trainingProgramCode/*"
-                                element={<ProgramDetail />}
-                            />
-                            <Route path="view-program" element={<ProgramList />} />
 
-                            <Route path="create-program" element={<CreateProgramLayout/>}>
                                 <Route
-                                    path=""
-                                    element={<ProgramCreate.CreateTrainingProScreen1 />}
-                                />
-                                <Route
-                                    path=":programName"
-                                    element={<ProgramCreate.CreateTrainingSyllabus_add />}
-                                />
+                                    path="create-program"
+                                    element={<CreateProgramLayout />}
+                                >
+                                    <Route
+                                        path=""
+                                        element={
+                                            <ProgramCreate.CreateTrainingProScreen1 />
+                                        }
+                                    />
+                                    <Route
+                                        path=":programName"
+                                        element={
+                                            <ProgramCreate.CreateTrainingSyllabus_add />
+                                        }
+                                    />
+                                </Route>
                             </Route>
-                        </Route>
-                        {/* Syllabus routes */}
-                        {/* <Route path="syllabus" element={<SyllabusLayout/>}>
+                            {/* Syllabus routes */}
+                            {/* <Route path="syllabus" element={<SyllabusLayout/>}>
                         </Route> */}
-                        <Route path="syllabus" element={<ViewSyllabus />} />
-                        <Route path="syllabus/:id" element={<SyllabusDetail />} />
-                        <Route path="edit-syllabus/:id" element={<EditSyllabus />} />
-                        <Route path="create-syllabus" element={<CreateSyllabus />} />
-                        {/* EndSyllabus routes  */}
+                            <Route path="syllabus" element={<ViewSyllabus />} />
+                            <Route
+                                path="syllabus/:id"
+                                element={<SyllabusDetail />}
+                            />
+                            <Route
+                                path="edit-syllabus/:id"
+                                element={<EditSyllabus />}
+                            />
+                            <Route
+                                path="create-syllabus"
+                                element={<CreateSyllabus />}
+                            />
+                            {/* EndSyllabus routes  */}
 
-                        <Route path="testing" element={<TestingComponents />} />
-                        <Route path='user' element={<UserLayout/>}>
-                            <Route path='list' element={<UserList/>}/>
-                            <Route path='role' element={<RolePermission/>}/>
-                        </Route>
-                        <Route path='setting'>
-                            <Route path='calendar' element={< UserCalendar/>}/>
-                        </Route>
+                            <Route
+                                path="testing"
+                                element={<TestingComponents />}
+                            />
+                            <Route path="user" element={<UserLayout />}>
+                                <Route path="list" element={<UserList />} />
+                                <Route
+                                    path="role"
+                                    element={<RolePermission />}
+                                />
+                            </Route>
+                            <Route path="setting">
+                                <Route
+                                    path="calendar"
+                                    element={<UserCalendar />}
+                                />
+                            </Route>
                         </Route>
                     </Routes>
-            </BrowserRouter>
-      </PersistGate>
-    </Provider>
+                </BrowserRouter>
+            </PersistGate>
+        </Provider>
     );
 };
 
