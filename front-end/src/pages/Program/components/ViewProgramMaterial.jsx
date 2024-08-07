@@ -22,12 +22,10 @@ const ViewProgramMaterial = ({
     setIsOpen,
 }) => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
-    const username = import.meta.env.VITE_USERNAME;
-    const password = import.meta.env.VITE_PASSWORD;
-    const token = btoa(`${username}:${password}`);
     const currentUsername = useSelector((state) => state.auth?.username || '');
 
     const [UnitChapter, setUnitChapter] = useState(null);
+    const [trainingMaterialList, setTrainingMaterialList] = useState([]);
     const [toggleFetch, setToggleFetch] = useState(false);
     const toggle = () => {
         setToggleFetch((curr) => !curr);
@@ -37,19 +35,24 @@ const ViewProgramMaterial = ({
     const [processing, setProcessing] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`${baseUrl}/api/unit-chapters/${unitChapterId}`, {
-                headers: {
-                    Authorization: `Basic ${token}`,
-                },
-            })
-            .then((res) => {
-                setUnitChapter(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, [unitChapterId, toggleFetch]);
+        const fetchData = async () => {
+            try {
+                const resUC = await axios.get(
+                    `${baseUrl}/api/unit-chapters/${unitChapterId}`
+                );
+                setUnitChapter(resUC.data);
+
+                const resTM = await axios.get(
+                    `${baseUrl}/api/training-materials/by-chapter/${unitChapterId}`
+                );
+                setTrainingMaterialList(resTM.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [baseUrl, unitChapterId, toggleFetch]);
 
     const [form] = Form.useForm();
     const [isModalDelete, setIsModalDelete] = useState(false);
@@ -119,14 +122,6 @@ const ViewProgramMaterial = ({
             console.log(
                 `Successfully deleted training material ${currentMaterialId}`
             );
-
-            UnitChapter?.trainingMaterialId?.splice(
-                UnitChapter?.trainingMaterialId?.indexOf(currentMaterialId),
-                1
-            );
-            await axios.put(`${baseUrl}/api/unit-chapters/${unitChapterId}`, {
-                trainingMaterialId: UnitChapter?.trainingMaterialId,
-            });
 
             toggle();
             setIsModalDelete(false);
@@ -242,6 +237,7 @@ const ViewProgramMaterial = ({
         if (isFile && selectedFile) {
             const formData = new FormData();
             formData.append('file', selectedFile);
+            formData.append('userName', currentUsername);
 
             try {
                 const res = await axios.post(
@@ -267,50 +263,32 @@ const ViewProgramMaterial = ({
 
         const newMaterial = {
             name: material.name,
-            // fileName: isFile
-            //     ? material.fileName === ''
-            //         ? selectedFile?.name
-            //         : material.fileName
-            //     : '',
             createdBy: currentUsername,
             createdDate: new Date(),
             modifiedBy: currentUsername,
             modifiedDate: new Date(),
             unitChapterId: material.unitChapterId,
-            url: !isFile ? material.url : '',
+            url: isFile ? '' : material.url,
             file: isFile,
         };
         console.log(newMaterial);
         console.log(newTrainingMaterialId);
 
         try {
-            var res;
-
             if (isFile) {
-                res = await axios.put(
+                await axios.put(
                     `${baseUrl}/api/training-materials/${newTrainingMaterialId}`,
                     newMaterial
                 );
             } else {
-                res = await axios.post(
+                await axios.post(
                     `${baseUrl}/api/training-materials`,
                     newMaterial
                 );
             }
-            console.log('tm\n', res.data);
-            const id = res.data.trainingMaterialId;
-            UnitChapter.trainingMaterialId = UnitChapter?.trainingMaterialId
-                ? [...UnitChapter.trainingMaterialId, id]
-                : [id];
-            axios
-                .put(`${baseUrl}/api/unit-chapters/${material.unitChapterId}`, {
-                    trainingMaterialId: UnitChapter?.trainingMaterialId,
-                })
-                .then((res) => {
-                    console.log(res);
-                    toggle();
-                    setIsModalCreate(false);
-                });
+
+            toggle();
+            setIsModalCreate(false);
         } catch (err) {
             console.error(
                 'Error creating new material:',
@@ -324,11 +302,11 @@ const ViewProgramMaterial = ({
     return (
         <>
             <ModalCustom
-                width={704}
+                width={700}
                 isModalOpen={isOpen}
                 handleCancel={() => {
                     setIsOpen(false);
-                    // console.log(UnitChapter.id);
+                    toggle();
                 }}
                 modalTitle={'Day ' + day_no}
                 bodyContent={
@@ -347,21 +325,22 @@ const ViewProgramMaterial = ({
                             className="bg-grey rounded-[10px] px-[20px] py-[10px] text-[0.875rem]"
                         >
                             <h6 className="font-bold">{UnitChapter?.name}</h6>
-                            {UnitChapter?.trainingMaterialId?.map(
-                                (trainingMaterialId) => (
-                                    <MaterialTab
-                                        key={trainingMaterialId}
-                                        trainingMaterialId={trainingMaterialId}
-                                        handleDelete={() =>
-                                            handleDelete(trainingMaterialId)
-                                        }
-                                        handleEdit={() =>
-                                            handleEdit(trainingMaterialId)
-                                        }
-                                        toggleFetch={toggleFetch}
-                                    />
-                                )
-                            )}
+                            {trainingMaterialList?.map((TrainingMaterial) => (
+                                <MaterialTab
+                                    key={TrainingMaterial.trainingMaterialId}
+                                    TrainingMaterial={TrainingMaterial}
+                                    handleDelete={() =>
+                                        handleDelete(
+                                            TrainingMaterial.trainingMaterialId
+                                        )
+                                    }
+                                    handleEdit={() =>
+                                        handleEdit(
+                                            TrainingMaterial.trainingMaterialId
+                                        )
+                                    }
+                                />
+                            ))}
                         </div>
                         <div
                             id="view-material-footer"
@@ -425,8 +404,8 @@ const ViewProgramMaterial = ({
                 </Form.Item>
 
                 <Form.Item
-                    label="File Name"
-                    name="File Name"
+                    label="Type"
+                    name="Type"
                     labelCol={{
                         span: 4,
                     }}
@@ -434,26 +413,40 @@ const ViewProgramMaterial = ({
                         span: 20,
                     }}
                 >
-                    <p>{TrainingMaterial?.fileName}</p>
+                    <p>{TrainingMaterial?.file ? 'File' : 'Hyperlink'}</p>
                 </Form.Item>
 
-                <Form.Item
-                    rules={[{ required: !TrainingMaterial?.file }]}
-                    label="URL"
-                    name="URL"
-                    labelCol={{
-                        span: 4,
-                    }}
-                    wrapperCol={{
-                        span: 20,
-                    }}
-                    initialValue={TrainingMaterial?.url}
-                    value={material.url}
-                    onChange={handleChangeUrl}
-                >
-                    {/* <Input /> */}
-                    <Input disabled={TrainingMaterial?.file} />
-                </Form.Item>
+                {TrainingMaterial?.file ? (
+                    <Form.Item
+                        label="File Name"
+                        name="File Name"
+                        labelCol={{
+                            span: 4,
+                        }}
+                        wrapperCol={{
+                            span: 20,
+                        }}
+                    >
+                        <p>{TrainingMaterial?.fileName}</p>
+                    </Form.Item>
+                ) : (
+                    <Form.Item
+                        rules={[{ required: true }]}
+                        label="URL"
+                        name="URL"
+                        labelCol={{
+                            span: 4,
+                        }}
+                        wrapperCol={{
+                            span: 20,
+                        }}
+                        initialValue={TrainingMaterial?.url}
+                        value={material.url}
+                        onChange={handleChangeUrl}
+                    >
+                        <Input />
+                    </Form.Item>
+                )}
             </Modal>
             <Modal
                 className="material-create-modal"
@@ -529,6 +522,7 @@ const ViewProgramMaterial = ({
                                     '.mp3',
                                     '.mp4',
                                     '.svg',
+                                    '.zip',
                                 ]}
                                 style={{ display: 'none' }}
                                 onChange={(e) => {
@@ -585,35 +579,8 @@ const ViewProgramMaterial = ({
     );
 };
 
-const MaterialTab = ({
-    trainingMaterialId,
-    handleEdit,
-    handleDelete,
-    toggleFetch,
-}) => {
-    const [TrainingMaterial, setTrainingMaterial] = useState(null);
-
-    useEffect(() => {
-        axios
-            .get(`${baseUrl}/api/training-materials/${trainingMaterialId}`, {
-                headers: {
-                    Authorization: `Basic ${token}`,
-                },
-            })
-            .then((res) => {
-                setTrainingMaterial(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, [trainingMaterialId, toggleFetch]);
-
-    const handleClickMaterial = async (
-        trainingMaterialId,
-        file,
-        fileName,
-        url
-    ) => {
+const MaterialTab = ({ TrainingMaterial, handleEdit, handleDelete }) => {
+    const handleClickMaterial = async (file, fileName, url) => {
         if (file) {
             try {
                 const result = await axios.get(
@@ -648,7 +615,6 @@ const MaterialTab = ({
                 className="grow hover:text-main hover:font-bold cursor-pointer duration-300 truncate"
                 onClick={() =>
                     handleClickMaterial(
-                        TrainingMaterial?.trainingMaterialId,
                         TrainingMaterial?.file,
                         TrainingMaterial?.fileName,
                         TrainingMaterial?.url
@@ -691,10 +657,9 @@ ViewProgramMaterial.propTypes = {
 };
 
 MaterialTab.propTypes = {
-    trainingMaterialId: PropTypes.string.isRequired,
+    TrainingMaterial: PropTypes.object.isRequired,
     handleEdit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
-    toggleFetch: PropTypes.bool,
 };
 
 export default ViewProgramMaterial;
