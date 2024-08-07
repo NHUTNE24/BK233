@@ -481,7 +481,7 @@ const ViewProgramMaterial = ({
                     value={material.name}
                     onChange={handleChangeName}
                 >
-                    <Input />
+                    <Input placeholder={selectedFile?.name} />
                 </Form.Item>
 
                 {isFile ? (
@@ -531,6 +531,10 @@ const ViewProgramMaterial = ({
                                         ...material,
                                         fileName: e.target.files[0].name,
                                     });
+                                    if (!form.getFieldValue('Name'))
+                                        form.setFieldsValue({
+                                            Name: e.target.files[0].name,
+                                        });
                                 }}
                             />
                             <p>{selectedFile?.name}</p>
