@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://huy-nguyenngo13:Xw0h6ww3OjWCsUbS@fams.lglvdkk.mongodb.net/?retryWrites=true&w=majority&appName=fams
+      database: fams
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 860713489001-sorblkaslpt2l79hf3ghn31ukcp38l71.apps.googleusercontent.com
+            clientSecret: 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
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            client-name: Google
+          facebook:
+            clientId: 1023601369226468
+            clientSecret: 763e3d4d2916c22bcf1fc4e2263b848c
+            scope:
+              - email
+              - public_profile
+          github:
+            clientId: Iv23liCBPHkZ6jCn1bWS
+            clientSecret: 0a6472529eaff60319481f0c83fdd84277d48fc2
+            scope: user:email
+            redirect-uri: "{baseUrl}/login/oauth2/code/github"
+            authorization-grant-type: authorization_code
+            client-name: GitHub
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: id
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
