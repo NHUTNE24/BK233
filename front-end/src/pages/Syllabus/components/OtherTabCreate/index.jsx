@@ -12,8 +12,15 @@ OthersTabCreate.PropTypes = {
     dataSource: PropTypes.object,
 };
 
-function OthersTabCreate({ dataSource, outputStandardList, deliveryTypeList, form }) {
-    const syllabusDays = useSelector((state) => state.updateSyllabus.syllabusDays);
+function OthersTabCreate({
+    dataSource,
+    outputStandardList,
+    deliveryTypeList,
+    form,
+}) {
+    const syllabusDays = useSelector(
+        (state) => state.updateSyllabus.syllabusDays
+    );
 
     const data = useSelector((state) => state.updateSyllabus);
     const flattenUnitChapters = data.syllabusDay.reduce((acc, cur) => {
@@ -27,32 +34,58 @@ function OthersTabCreate({ dataSource, outputStandardList, deliveryTypeList, for
         return [...acc, ...chapters];
     }, []);
 
-    const totalDuration = flattenUnitChapters.reduce((acc, cur) => acc + cur.duration, 0);
+    const totalDuration = flattenUnitChapters.reduce(
+        (acc, cur) => acc + cur.duration,
+        0
+    );
 
-    const deliveryType = flattenUnitChapters.reduce((acc, cur) => [...acc, cur.deliveryTypeId], []);
+    const deliveryType = flattenUnitChapters.reduce(
+        (acc, cur) => [...acc, cur.deliveryTypeId],
+        []
+    );
 
-    const totalDurationPerDeliveryType = deliveryType.map((type) => {
+    const filterDeliveryType = [];
+
+    deliveryType.forEach((item) => {
+        if (!filterDeliveryType.includes(item)) {
+            filterDeliveryType.push(item);
+        }
+    });
+
+    const totalDurationPerDeliveryType = filterDeliveryType.map((type) => {
         return {
             name: deliveryTypeList.find((typ) => typ.id === type)?.name || null,
             duration: flattenUnitChapters.reduce((acc, cur) => {
-                return cur.deliveryTypeId === type ? acc + cur.duration : acc + 0;
+                return cur.deliveryTypeId === type
+                    ? acc + cur.duration
+                    : acc + 0;
             }, 0),
         };
     });
 
-    const percentDurationPerDeliveryType = totalDurationPerDeliveryType.map((type) => {
-        return {
-            ...type,
-            value: ((type.duration / totalDuration) * 100).toFixed(0),
-        };
-    });
+    const percentDurationPerDeliveryType = totalDurationPerDeliveryType.map(
+        (type) => {
+            return {
+                ...type,
+                value: ((type.duration / totalDuration) * 100).toFixed(0),
+            };
+        }
+    );
 
-    const headLegendList = percentDurationPerDeliveryType.slice(0, percentDurationPerDeliveryType.length - 1);
+    const headLegendList = percentDurationPerDeliveryType.slice(
+        0,
+        percentDurationPerDeliveryType.length - 1
+    );
 
-    const headTotalPercent = headLegendList.reduce((acc, cur) => acc + Number(cur.value), 0);
+    const headTotalPercent = headLegendList.reduce(
+        (acc, cur) => acc + Number(cur.value),
+        0
+    );
 
     if (percentDurationPerDeliveryType.length >= 1) {
-        percentDurationPerDeliveryType[percentDurationPerDeliveryType.length - 1].value = 100 - headTotalPercent;
+        percentDurationPerDeliveryType[
+            percentDurationPerDeliveryType.length - 1
+        ].value = 100 - headTotalPercent;
     }
 
     return (
@@ -68,7 +101,6 @@ function OthersTabCreate({ dataSource, outputStandardList, deliveryTypeList, for
                                     height="100%"
                                     data={percentDurationPerDeliveryType}
                                 />
-                                
                             </Col>
                             <Col span={14}>
                                 <AssessmentSchemeCreate />

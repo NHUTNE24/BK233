@@ -92,7 +92,7 @@ function UnitChapterCreate({
             </div>
             <div>
                 <Select
-                    style={{ flex: 1, margin: '0 8px', minWidth: '180px' }}
+                    style={{ flex: 1, margin: '0 8px', minWidth: '200px' }}
                     name="outputStandardName"
                     onChange={(value) =>
                         dispatch(
