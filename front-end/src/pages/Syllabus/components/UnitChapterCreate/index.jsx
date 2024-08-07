@@ -31,37 +31,62 @@ function UnitChapterCreate({
 }) {
     const dispatch = useDispatch();
 
-    const syllabusDays = useSelector((state) => state.updateSyllabus.syllabusDay);
+    const syllabusDays = useSelector(
+        (state) => state.updateSyllabus.syllabusDay
+    );
 
     // console.log('out: ', outputStandardList);
 
     // console.log('deliveryy', deliveryTypeList);
     return (
         <div className={styles.container}>
-            <div style={{ display: 'flex', alignItems: 'center', margin: '0 8px' }}>
-                <label
-                    style={{ marginRight: '16px' }}
-                    htmlFor="chapter-name"
-                >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    margin: '0 8px',
+                }}
+            >
+                <label style={{ marginRight: '16px' }} htmlFor="chapter-name">
                     Content
                 </label>
                 <div>
                     <Input
                         id="chapter-name"
                         onChange={(e) =>
-                            dispatch(changeChapterName({ indexDay, indexUnit, indexChapter, name: e.target.value }))
+                            dispatch(
+                                changeChapterName({
+                                    indexDay,
+                                    indexUnit,
+                                    indexChapter,
+                                    name: e.target.value,
+                                })
+                            )
                         }
-                        value={syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].name}
+                        value={
+                            syllabusDays[indexDay].syllabusUnits[indexUnit]
+                                .unitChapters[indexChapter].name
+                        }
                         name="chapterName"
                         placeholder="Chapter name"
                         className={
-                            !syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].name
+                            !syllabusDays[indexDay].syllabusUnits[indexUnit]
+                                .unitChapters[indexChapter].name
                                 ? styles['input-error']
                                 : styles['input-normal']
                         }
                     />
-                    {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].name && (
-                        <div style={{ color: 'red', fontSize: '12px', padding: '4px' }}>Chapter name is required!</div>
+                    {!syllabusDays[indexDay].syllabusUnits[indexUnit]
+                        .unitChapters[indexChapter].name && (
+                        <div
+                            style={{
+                                color: 'red',
+                                fontSize: '12px',
+                                padding: '4px',
+                            }}
+                        >
+                            Chapter name is required!
+                        </div>
                     )}
                 </div>
             </div>
@@ -70,36 +95,64 @@ function UnitChapterCreate({
                     style={{ flex: 1, margin: '0 8px', minWidth: '180px' }}
                     name="outputStandardName"
                     onChange={(value) =>
-                        dispatch(changeOutputStandard({ indexDay, indexUnit, indexChapter, outputStandard: value }))
+                        dispatch(
+                            changeOutputStandard({
+                                indexDay,
+                                indexUnit,
+                                indexChapter,
+                                outputStandard: value,
+                            })
+                        )
                     }
                     value={
                         outputStandardList.find(
                             (out) =>
                                 out.id ===
-                                syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
-                                    .outputStandardId,
-                        )?.code || null
+                                syllabusDays[indexDay].syllabusUnits[indexUnit]
+                                    .unitChapters[indexChapter].outputStandardId
+                        )?.name || null
                     }
                     placeholder="Output standard"
                     className={
-                        !syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].outputStandardId
+                        !syllabusDays[indexDay].syllabusUnits[indexUnit]
+                            .unitChapters[indexChapter].outputStandardId
                             ? styles['input-error']
                             : styles['input-normal']
                     }
                 >
                     {outputStandardList.length > 0 && (
                         <>
-                            <Select.Option value={outputStandardList[0].id}>Engineering Knowledge</Select.Option>
-                            <Select.Option value={outputStandardList[1].id}>Experimental Skills</Select.Option>
-                            <Select.Option value={outputStandardList[2].id}>Design Skills</Select.Option>
-                            <Select.Option value={outputStandardList[3].id}>Teamwork</Select.Option>
-                            <Select.Option value={outputStandardList[4].id}>Problem Solving</Select.Option>
+                            <Select.Option value={outputStandardList[0].id}>
+                                Engineering Knowledge
+                            </Select.Option>
+                            <Select.Option value={outputStandardList[1].id}>
+                                Experimental Skills
+                            </Select.Option>
+                            <Select.Option value={outputStandardList[2].id}>
+                                Design Skills
+                            </Select.Option>
+                            <Select.Option value={outputStandardList[3].id}>
+                                Teamwork
+                            </Select.Option>
+                            <Select.Option value={outputStandardList[4].id}>
+                                Problem Solving
+                            </Select.Option>
                         </>
                     )}
                 </Select>
 
-                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].outputStandardId && (
-                    <div style={{ color: 'red', fontSize: '12px', padding: '4px' }}>Output standard is required!</div>
+                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[
+                    indexChapter
+                ].outputStandardId && (
+                    <div
+                        style={{
+                            color: 'red',
+                            fontSize: '12px',
+                            padding: '4px',
+                        }}
+                    >
+                        Output standard is required!
+                    </div>
                 )}
             </div>
 
@@ -107,19 +160,40 @@ function UnitChapterCreate({
                 <InputNumber
                     style={{ flex: 1, margin: '0 8px', minWidth: '100px' }}
                     name="duration"
-                    value={syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].duration || ''}
+                    value={
+                        syllabusDays[indexDay].syllabusUnits[indexUnit]
+                            .unitChapters[indexChapter].duration || ''
+                    }
                     onChange={(value) =>
-                        dispatch(changeDuration({ indexDay, indexUnit, indexChapter, duration: value }))
+                        dispatch(
+                            changeDuration({
+                                indexDay,
+                                indexUnit,
+                                indexChapter,
+                                duration: value,
+                            })
+                        )
                     }
                     placeholder="Duration"
                     className={
-                        !syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].duration
+                        !syllabusDays[indexDay].syllabusUnits[indexUnit]
+                            .unitChapters[indexChapter].duration
                             ? styles['input-error']
                             : styles['input-normal']
                     }
                 />
-                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].duration && (
-                    <div style={{ color: 'red', fontSize: '12px', padding: '4px' }}>Duration is required!</div>
+                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[
+                    indexChapter
+                ].duration && (
+                    <div
+                        style={{
+                            color: 'red',
+                            fontSize: '12px',
+                            padding: '4px',
+                        }}
+                    >
+                        Duration is required!
+                    </div>
                 )}
             </div>
 
@@ -127,7 +201,14 @@ function UnitChapterCreate({
                 <Select
                     style={{ flex: 1, margin: '0 8px', minWidth: '200px' }}
                     onChange={(value) =>
-                        dispatch(changeDeliveryType({ indexDay, indexUnit, indexChapter, deliveryType: value }))
+                        dispatch(
+                            changeDeliveryType({
+                                indexDay,
+                                indexUnit,
+                                indexChapter,
+                                deliveryType: value,
+                            })
+                        )
                     }
                     name="deliveryType"
                     placeholder="Delivery type"
@@ -135,50 +216,111 @@ function UnitChapterCreate({
                         deliveryTypeList.find(
                             (typ) =>
                                 typ.id ===
-                                syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter]
-                                    .deliveryTypeId,
+                                syllabusDays[indexDay].syllabusUnits[indexUnit]
+                                    .unitChapters[indexChapter].deliveryTypeId
                         )?.name || null
                     }
                     className={
-                        !syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].deliveryTypeId
+                        !syllabusDays[indexDay].syllabusUnits[indexUnit]
+                            .unitChapters[indexChapter].deliveryTypeId
                             ? styles['input-error']
                             : styles['input-normal']
                     }
                 >
                     {deliveryTypeList.length > 0 && (
                         <>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Assignment/Lab').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) => deli.name === 'Assignment/Lab'
+                                    ).id
+                                }
+                            >
                                 Assignment/Lab
                             </Select.Option>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Concept/Lecture').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) =>
+                                            deli.name === 'Concept/Lecture'
+                                    ).id
+                                }
+                            >
                                 Concept/Lecture
                             </Select.Option>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Guide/Review').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) => deli.name === 'Guide/Review'
+                                    ).id
+                                }
+                            >
                                 Guide/Review
                             </Select.Option>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Test/Quiz').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) => deli.name === 'Test/Quiz'
+                                    ).id
+                                }
+                            >
                                 Test/Quiz
                             </Select.Option>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Exam').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) => deli.name === 'Exam'
+                                    ).id
+                                }
+                            >
                                 Exam
                             </Select.Option>
-                            <Select.Option value={deliveryTypeList.find((deli) => deli.name === 'Seminar/Workshop').id}>
+                            <Select.Option
+                                value={
+                                    deliveryTypeList.find(
+                                        (deli) =>
+                                            deli.name === 'Seminar/Workshop'
+                                    ).id
+                                }
+                            >
                                 Seminar/Workshop
                             </Select.Option>
                         </>
                     )}
                 </Select>
-                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].deliveryTypeId && (
-                    <div style={{ color: 'red', fontSize: '12px', padding: '4px' }}>Delivery type is required!</div>
+                {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[
+                    indexChapter
+                ].deliveryTypeId && (
+                    <div
+                        style={{
+                            color: 'red',
+                            fontSize: '12px',
+                            padding: '4px',
+                        }}
+                    >
+                        Delivery type is required!
+                    </div>
                 )}
             </div>
 
             <Switch
                 style={{ padding: '0 4px', margin: '6px 8px' }}
                 name="isOnline"
-                onChange={(value) => dispatch(changeMethod({ indexDay, indexUnit, indexChapter, isOnline: value }))}
+                onChange={(value) =>
+                    dispatch(
+                        changeMethod({
+                            indexDay,
+                            indexUnit,
+                            indexChapter,
+                            isOnline: value,
+                        })
+                    )
+                }
                 className="switch-custom"
-                defaultChecked={syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter].isOnline}
+                defaultChecked={
+                    syllabusDays[indexDay].syllabusUnits[indexUnit]
+                        .unitChapters[indexChapter].isOnline
+                }
                 checkedChildren="Online"
                 unCheckedChildren="Offline"
             />
@@ -219,7 +361,11 @@ function UnitChapterCreate({
                     >
                         Delete all content of the Chapter?
                     </p>
-                    onConfirm={() => dispatch(deleteChapter({ indexDay, indexUnit, indexChapter }))}
+                    onConfirm={() =>
+                        dispatch(
+                            deleteChapter({ indexDay, indexUnit, indexChapter })
+                        )
+                    }
                     onCancel={(e) => console.log(e)}
                     okText="Delete"
                     icon={null}
