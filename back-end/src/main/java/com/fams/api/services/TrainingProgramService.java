@@ -104,31 +104,35 @@ public class TrainingProgramService {
     }
 
     // Activate a program by ID
-    public TrainingProgram activateTrainingProgram(String trainingProgramCode) {
+    public TrainingProgram activateTrainingProgram(String trainingProgramCode, String username) {
         return trainingProgramRepository.findById(trainingProgramCode)
                 .map(trainingProgram -> {
                     trainingProgram.setStatus("Active");
+                    trainingProgram.setModifiedBy(username);
+                    trainingProgram.setModifiedDate(new Date());
                     return trainingProgramRepository.save(trainingProgram);
                 }).orElseThrow(() -> new RuntimeException("TrainingProgram not found with id " + trainingProgramCode));
     }
 
     // Deactivate a program by ID
-    public TrainingProgram deactivateTrainingProgram(String trainingProgramCode) {
+    public TrainingProgram deactivateTrainingProgram(String trainingProgramCode, String username) {
         return trainingProgramRepository.findById(trainingProgramCode)
                 .map(trainingProgram -> {
                     trainingProgram.setStatus("Inactive");
+                    trainingProgram.setModifiedBy(username);
+                    trainingProgram.setModifiedDate(new Date());
                     return trainingProgramRepository.save(trainingProgram);
                 }).orElseThrow(() -> new RuntimeException("TrainingProgram not found with id " + trainingProgramCode));
     }
 
     // Duplicate a training program by ID
-    public TrainingProgram duplicateTrainingProgram(String trainingProgramCode) {
+    public TrainingProgram duplicateTrainingProgram(String trainingProgramCode, String username) {
         return trainingProgramRepository.findById(trainingProgramCode)
                 .map(existingProgram -> {
                     TrainingProgram duplicatedProgram = new TrainingProgram();
-                    duplicatedProgram.setCreatedBy(existingProgram.getCreatedBy());
+                    duplicatedProgram.setCreatedBy(username);
                     duplicatedProgram.setCreatedDate(new Date());
-                    duplicatedProgram.setModifiedBy(existingProgram.getModifiedBy());
+                    duplicatedProgram.setModifiedBy(username);
                     duplicatedProgram.setModifiedDate(new Date());
                     duplicatedProgram.setDays(existingProgram.getDays());
                     duplicatedProgram.setHours(existingProgram.getHours());

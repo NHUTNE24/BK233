@@ -137,7 +137,7 @@ function ViewSyllabus() {
                     .scanning?.includes('syllabus-name');
                 const duplicateHandle = form.getFieldsValue().duplicateHandle;
                 const csvImportData = {
-                    username: 'Syllabus group',
+                    userName: 'Syllabus group',
                     syllabusDTOList: [...csvData],
                     scanCode: scanCode ? true : false,
                     scanName: scanName ? true : false,
@@ -148,6 +148,7 @@ function ViewSyllabus() {
                 try {
                     const fetchApi = async () => {
                         setImportLoading(true);
+                        console.log(csvImportData);
                         const response = await fetch(
                             'http://localhost:8080/api/syllabus/import',
                             {

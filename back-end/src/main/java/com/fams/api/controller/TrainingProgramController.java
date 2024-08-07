@@ -52,20 +52,20 @@ public class TrainingProgramController {
 
     // Activate a training program
     @PutMapping("/{trainingProgramCode}/activate")
-    public TrainingProgram activateTrainingProgram(@PathVariable String trainingProgramCode) {
-        return trainingProgramService.activateTrainingProgram(trainingProgramCode);
+    public TrainingProgram activateTrainingProgram(@PathVariable String trainingProgramCode, @RequestBody String username) {
+        return trainingProgramService.activateTrainingProgram(trainingProgramCode, username);
     }
 
     // Deactivate a training program
     @PutMapping("/{trainingProgramCode}/deactivate")
-    public TrainingProgram deactivateTrainingProgram(@PathVariable String trainingProgramCode) {
-        return trainingProgramService.deactivateTrainingProgram(trainingProgramCode);
+    public TrainingProgram deactivateTrainingProgram(@PathVariable String trainingProgramCode, @RequestBody String username) {
+        return trainingProgramService.deactivateTrainingProgram(trainingProgramCode, username);
     }
 
     // Duplicate a training program
     @PostMapping("/{trainingProgramCode}/duplicate")
-    public TrainingProgram duplicateTrainingProgram(@PathVariable String trainingProgramCode) {
-        return trainingProgramService.duplicateTrainingProgram(trainingProgramCode);
+    public TrainingProgram duplicateTrainingProgram(@PathVariable String trainingProgramCode, @RequestBody String username) {
+        return trainingProgramService.duplicateTrainingProgram(trainingProgramCode, username);
     }
 
     // Get all training materials of a training program
