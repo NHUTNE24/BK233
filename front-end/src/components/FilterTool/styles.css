@@ -160,10 +160,10 @@ select:focus {
     border-color: #2d3748;
 }  */
 
-.ant-modal-content {
+.class-filter-tool__modal .ant-modal-content {
     /* width: 700px !important; */
     /* width: 100%; */
-    /* width: max-content; */
+    width: max-content;
 }
 
 .ant-modal-body {
