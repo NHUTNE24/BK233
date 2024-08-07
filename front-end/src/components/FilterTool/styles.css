@@ -163,7 +163,7 @@ select:focus {
 .ant-modal-content {
     /* width: 700px !important; */
     /* width: 100%; */
-    width: max-content;
+    /* width: max-content; */
 }
 
 .ant-modal-body {
