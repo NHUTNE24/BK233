@@ -88,9 +88,13 @@ function CreateClassStep2() {
     const { className } = useParams();
 
     function handleChange(e) {
-        setUpdatedClass({
-            ...updatedClass,
-            [e.target.name]: e.target.value,
+        const { name, value } = e.target;
+        setUpdatedClass((prevClass) => {
+            const updated = { ...prevClass, [name]: value };
+            if (name === 'classCode') {
+                updated.classCode = `${location}_${value}`;
+            }
+            return updated;
         });
     }
 
@@ -101,35 +105,25 @@ function CreateClassStep2() {
         });
     };
 
+    const handleLocationChange = (value) => {
+        const selectedLocation = locationList.find(
+            (loc) => loc.value === value
+        );
+        const abbreviation = cityAbbreviation(selectedLocation.label);
+        setLocation(abbreviation);
+        setUpdatedClass((prevClass) => ({
+            ...prevClass,
+            locationId: value,
+            classCode: `${abbreviation}_${prevClass.classCode.split('_')[1] || ''}`,
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const classInfo = {
-            className: className,
-            classCode: location + '_' + updatedClass.classCode,
-            startTime: updatedClass.startTime,
-            endTime: updatedClass.endTime,
-            classAdminName: updatedClass.classAdminName,
-            fsuId: updatedClass.fsuId,
-            attendeeTypeId: updatedClass.attendeeTypeId,
-            plannedAttendee: updatedClass.plannedAttendee,
-            acceptedAttendee: updatedClass.acceptedAttendee,
-            actualAttendee: updatedClass.actualAttendee,
-            createdBy: updatedClass.createdBy,
-            createdDate: updatedClass.createdDate,
-            updatedBy: updatedClass.updatedBy,
-            updatedDate: updatedClass.updatedDate,
-            classStatus: updatedClass.classStatus,
-            duration: updatedClass.duration,
-            startDate: updatedClass.startDate,
-            endDate: updatedClass.endDate,
-            approvedBy: updatedClass.approvedBy,
-            approvedDate: updatedClass.approvedDate,
-            reviewBy: updatedClass.reviewBy,
-            reviewDate: updatedClass.reviewDate,
-            slotTime: updatedClass.slotTime,
-            locationId: updatedClass.locationId,
-            trainingProgramCode: updatedClass.trainingProgramCode,
-            adminId: updatedClass.adminId,
+            ...updatedClass,
+            className,
+            classCode: updatedClass.classCode,
         };
 
         axios
@@ -344,7 +338,6 @@ function CreateClassStep2() {
                         };
                     });
                     setAdminList(adminList);
-                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -377,7 +370,6 @@ function CreateClassStep2() {
                         };
                     });
                     setFsuList(FsuList);
-                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -388,7 +380,6 @@ function CreateClassStep2() {
         };
         fetchFsu();
     }, []);
-    // useEffect(() => { }, [updatedClass]);
 
     const [locationList, setLocationList] = useState([]);
     useEffect(() => {
@@ -412,7 +403,6 @@ function CreateClassStep2() {
                         };
                     });
                     setLocationList(locationList);
-                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -427,10 +417,11 @@ function CreateClassStep2() {
     function cityAbbreviation(cityName) {
         const abbreviations = {
             Hanoi: 'HN',
-            HaNoi: 'HN',
+            'Ha Noi': 'HN',
             'Ho Chi Minh City': 'HCM',
             Danang: 'DN',
-            DaNang: 'DN',
+            'Da Nang': 'DN',
+            HCM: 'HCM',
             // Add more cities and their official abbreviations here
         };
 
@@ -453,10 +444,10 @@ function CreateClassStep2() {
         const fetchLocation = async () => {
             try {
                 const response = await axios.get(
-                    `https://ipinfo.io/json?token=80bce4cbdbc51e`
+                    `http://localhost:8080/api/locations`
                 );
                 console.log(response.data);
-                setLocation(() => cityAbbreviation(response.data.city));
+                // setLocation(() => cityAbbreviation(response.data.city));
             } catch (err) {
                 setError(err);
             } finally {
@@ -492,7 +483,7 @@ function CreateClassStep2() {
                             className="text-main"
                             name="classCode"
                             type="text"
-                            value={updatedClass.classCode}
+                            value={updatedClass.classCode.split('_')[1] || ''}
                             onChange={handleChange}
                             placeholder="Type class code"
                         />
@@ -500,7 +491,6 @@ function CreateClassStep2() {
                     <div className="h-0.5 w-96 bg-primary"></div>
                     <div className="flex flex-row gap-5 items-center">
                         <div>
-                            {/* <span className="text-3xl font-bold">31</span> days <span>(91 days)</span> */}
                             <Input
                                 className="text-main"
                                 name="duration"
@@ -575,12 +565,7 @@ function CreateClassStep2() {
                                             </div>
                                             <Select
                                                 value={updatedClass.locationId}
-                                                onChange={(value) =>
-                                                    handleSelectChange(
-                                                        value,
-                                                        'locationId'
-                                                    )
-                                                }
+                                                onChange={handleLocationChange}
                                                 placeholder="select..."
                                                 options={locationList}
                                             />
@@ -609,16 +594,6 @@ function CreateClassStep2() {
                                                     )
                                                 }
                                                 placeholder="select..."
-                                                // options={[
-                                                // 	{
-                                                // 		value: '66a603cd999f1d9e86d1aad9',
-                                                // 		label: 'HuyNN13',
-                                                // 	},
-                                                // 	{
-                                                // 		value: '66a607ce999f1d9e86d1aade',
-                                                // 		label: 'HuyDT26',
-                                                // 	},
-                                                // ]}
                                                 options={adminList}
                                             />
                                         </div>

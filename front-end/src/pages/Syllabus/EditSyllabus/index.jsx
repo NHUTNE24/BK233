@@ -2,6 +2,7 @@ import {
     Alert,
     Button,
     Col,
+    Form,
     Input,
     message,
     Modal,
@@ -32,6 +33,7 @@ import {
     setSyllabusDays,
     setTechnicalRequirement,
     setTrainingDeliveryPrinciple,
+    updateBasicInfo,
     updateGeneralIsValid,
 } from '../../../store/syllabus/updateSyllabusSlice';
 import TabsCustom from '../components/TabsCustom';
@@ -39,10 +41,12 @@ import './EditSyllabus.scss';
 import styles from './style.module.scss';
 
 import { setSelectedKey } from '../../../store/app/siderBarSlice';
+import { formRules } from '../../../constants/formRules';
 EditSyllabus.propTypes = {};
 function EditSyllabus() {
     const { id } = useParams();
     const userInfo = useSelector((state) => state.auth);
+    const [basicInfoForm] = Form.useForm(); // Form instance for basic info
 
     const nameRef = useRef(null);
     const codeRef = useRef(null);
@@ -404,7 +408,7 @@ function EditSyllabus() {
                     />
                 </Spin>
             )}
-            <div className="create-syllabus">
+            <div className="create-syllabus update-syllabus">
                 <Space
                     direction="vertical"
                     size="middle"
@@ -420,16 +424,16 @@ function EditSyllabus() {
                         </Row>
                     </div>
 
-                    <div className="create-syllabus__basic-info">
+                    <div className="create-syllabus__basic-info update-syllabus__basic-info">
                         <Row
                             style={{
                                 width: '100%',
                                 display: 'flex',
-                                alignItems: 'start',
+                                alignItems: 'center',
                             }}
-                            gutter={30}
+                            gutter={20}
                         >
-                            <Col span={11}>
+                            <Col span={10}>
                                 <div className="syllabus-name">
                                     <Row
                                         // justify=""
@@ -441,11 +445,12 @@ function EditSyllabus() {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <Col span={7}>
+                                        <Col xl={10}>
                                             <div
-                                                style={{
-                                                    paddingBottom: '22px',
-                                                }}
+                                                // style={{
+                                                //     paddingBottom: '22px',
+                                                // }}
+                                                className="create-syllabus__basic-title"
                                             >
                                                 <label
                                                     className="label subtitle1"
@@ -466,7 +471,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={16}>
+                                        <Col sm={24} xl={14}>
                                             <div
                                                 ref={nameRef}
                                                 className="syllabus-name-wrapper"
@@ -506,14 +511,14 @@ function EditSyllabus() {
                                                             : 'input-error-text'
                                                     }
                                                 >
-                                                    Syllabus name is required!
+                                                    This field is required!
                                                 </div>
                                             </div>
                                         </Col>
                                     </Row>
                                 </div>
                             </Col>
-                            <Col span={5}>
+                            <Col span={7}>
                                 <div className="syllabus-code">
                                     <Row
                                         gutter={10}
@@ -521,19 +526,21 @@ function EditSyllabus() {
                                             width: '100%',
                                             display: 'flex',
                                             alignItems: 'center',
+                                            justifyContent: 'space-between',
                                         }}
                                     >
-                                        <Col span={6}>
+                                        <Col xl={8}>
                                             <div
-                                                style={{
-                                                    paddingBottom: '22px',
-                                                }}
+                                                // style={{
+                                                //     paddingBottom: '22px',
+                                                // }}
+                                                className="create-syllabus__basic-title"
                                             >
                                                 <label
                                                     className="label subtitle1"
                                                     htmlFor="syllabus-code"
                                                 >
-                                                    <div>
+                                                    <p>
                                                         Code
                                                         <span
                                                             style={{
@@ -544,11 +551,11 @@ function EditSyllabus() {
                                                         >
                                                             *
                                                         </span>
-                                                    </div>
+                                                    </p>
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={18}>
+                                        <Col xl={16}>
                                             <div
                                                 ref={codeRef}
                                                 className="syllabus-code-wrapper"
@@ -582,25 +589,29 @@ function EditSyllabus() {
                                                             : 'input-error-text'
                                                     }
                                                 >
-                                                    Syllabus code is required!
+                                                    This field is required!
                                                 </div>
                                             </div>
                                         </Col>
                                     </Row>
                                 </div>
                             </Col>
-                            <Col span={8}>
+                            <Col span={7}>
                                 <div className="syllabus-version">
                                     <Row
                                         align="middle"
                                         gutter={10}
-                                        style={{ width: '100%' }}
+                                        style={{
+                                            width: '100%',
+                                            justifyContent: 'space-between',
+                                        }}
                                     >
-                                        <Col span={5}>
+                                        <Col xl={8}>
                                             <div
-                                                style={{
-                                                    paddingBottom: '22px',
-                                                }}
+                                                // style={{
+                                                //     paddingBottom: '22px',
+                                                // }}
+                                                className="create-syllabus__basic-title"
                                             >
                                                 <label
                                                     className="label subtitle1"
@@ -621,7 +632,7 @@ function EditSyllabus() {
                                                 </label>
                                             </div>
                                         </Col>
-                                        <Col span={11}>
+                                        <Col xl={16}>
                                             <div
                                                 ref={versionRef}
                                                 className="syllabus-version-wrapper"
@@ -660,8 +671,7 @@ function EditSyllabus() {
                                                             : 'input-error-text'
                                                     }
                                                 >
-                                                    Syllabus version is
-                                                    required!
+                                                    This field is required!
                                                 </div>
                                             </div>
                                         </Col>

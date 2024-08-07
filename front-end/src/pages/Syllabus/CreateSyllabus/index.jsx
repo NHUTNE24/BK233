@@ -259,7 +259,6 @@ function CreateSyllabus() {
                     <Row gutter={50} align="top">
                         <Col sm={6}>
                             <h4 className="create-syllabus__title header-title mb-20">
-                                {' '}
                                 Create Syllabus
                             </h4>
                         </Col>

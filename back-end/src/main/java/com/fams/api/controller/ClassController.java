@@ -2,8 +2,7 @@ package com.fams.api.controller;
 
 import com.fams.api.dto.ClassDTO;
 import com.fams.api.dto.SyllabusDTO;
-
-import com.fams.api.dto.TrainingProgramDetailDTO;
+import com.fams.api.dto.TrainingProgramDetail;
 import com.fams.api.dto.TrainingProgramDto;
 import com.fams.api.entity.TrainingProgram;
 import com.fams.api.services.ClassService;
@@ -53,19 +52,19 @@ public class ClassController {
     }
 
     @GetMapping("/training-programs")
-    public ResponseEntity<List<TrainingProgramDetailDTO>> getTrainingProgramDetailList() {
-        List<TrainingProgramDetailDTO> trainingProgramDetailList  = classService.getTrainingProgramDetailList();
+    public ResponseEntity<List<TrainingProgramDetail>> getTrainingProgramDetailList() {
+        List<TrainingProgramDetail> trainingProgramDetailList  = classService.getTrainingProgramDetailList();
         return ResponseEntity.ok(trainingProgramDetailList);
     }
 
     @GetMapping("/training-programs/{id}")
-    public ResponseEntity<TrainingProgramDetailDTO> getTrainingProgramsDetailByClassId(@PathVariable String id) {
-        TrainingProgramDetailDTO trainingProgramDetail  = classService.getTrainingProgramDetailByClassId(id);
+    public ResponseEntity<TrainingProgramDetail> getTrainingProgramsDetailByClassId(@PathVariable String id) {
+        TrainingProgramDetail trainingProgramDetail  = classService.getTrainingProgramDetailByClassId(id);
         return ResponseEntity.ok(trainingProgramDetail);
     }
     @GetMapping("/{id}/training-programs")
-    public ResponseEntity<List<TrainingProgramDetailDTO>> getTrainingProgramDetailListByClassId(@PathVariable String id) {
-        List<TrainingProgramDetailDTO> trainingProgramDetailList = classService.getTrainingProgramDetailListByClassId(id);
+    public ResponseEntity<List<TrainingProgramDetail>> getTrainingProgramDetailListByClassId(@PathVariable String id) {
+        List<TrainingProgramDetail> trainingProgramDetailList = classService.getTrainingProgramDetailListByClassId(id);
         return ResponseEntity.ok(trainingProgramDetailList);
     }
 

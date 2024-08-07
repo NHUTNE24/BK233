@@ -23,7 +23,7 @@ import {
 } from 'react-icons/md';
 import './ClassList.scss';
 import FilterTool from '../../../components/FilterTool';
-import TableCustom from '../../Syllabus/components/TableCusTom';
+import TableCustom from '../../../components/Table';
 
 const apiBaseURL = 'http://localhost:8080/api/classes';
 
@@ -62,7 +62,6 @@ const ViewClass = () => {
         try {
             const response = await axios.get('http://localhost:8080/api/fsu');
             setFsus(response.data);
-            console.log('Fsus', response.data);
         } catch (error) {
             console.error('Error fetching FSU data', error);
         }
@@ -74,7 +73,6 @@ const ViewClass = () => {
                 'http://localhost:8080/api/locations'
             );
             setLocations(response.data);
-            console.log('Locations:', response.data);
         } catch (error) {
             console.error('Error fetching location data', error);
         }
@@ -86,7 +84,6 @@ const ViewClass = () => {
                 'http://localhost:8080/api/admins'
             );
             setTrainers(response.data);
-            console.log('Trainers:', response.data);
         } catch (error) {
             console.error('Error fetching trainer data', error);
         }
@@ -420,8 +417,7 @@ const ViewClass = () => {
                     <TableCustom
                         dataSource={filteredClassInfo}
                         columns={columns}
-                        pagination={false}
-                        loading={loading}
+                        noPagination={false}
                     />
                     {console.log('Table data:', filteredClassInfo)}
                 </div>

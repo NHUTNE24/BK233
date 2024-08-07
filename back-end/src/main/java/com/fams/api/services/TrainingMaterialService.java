@@ -15,9 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +43,7 @@ public class TrainingMaterialService {
         return trainingMaterialRepository.findAll();
     }
 
-    // Add a training material 
+    // Add a training material
     public TrainingMaterial addTrainingMaterial(MultipartFile file, String chapterId, String userName) {
         try {
             if (file.isEmpty()) {
@@ -73,16 +70,29 @@ public class TrainingMaterialService {
 
             // Save file metadata to database
             TrainingMaterial trainingMaterial = new TrainingMaterial();
+            System.out.println(trainingMaterial.getTrainingMaterialId());
             trainingMaterial.setFileName(filename);
             trainingMaterial.setCreatedBy(userName);
             trainingMaterial.setModifiedBy(userName);
-            trainingMaterial.setCreatedDate(LocalDateTime.now());
-            trainingMaterial.setModifiedDate(LocalDateTime.now());
+            trainingMaterial.setCreatedDate(new Date());
+            trainingMaterial.setModifiedDate(new Date());
             trainingMaterial.setName(file.getOriginalFilename());
             trainingMaterial.setUnitChapterId(chapterId);
-            trainingMaterial.setUrl("/api/files/download/" + filename); // Set download URL
+            trainingMaterial.setUrl("");
+            trainingMaterial.setFile(true);
 
             trainingMaterialRepository.save(trainingMaterial);
+
+            if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
+                UnitChapter unitChapter = unitChapterRepository.findById(trainingMaterial.getUnitChapterId())
+                        .orElseThrow(() -> new RuntimeException("Unit chapter not found"));
+                List<String> temp = unitChapter.getTrainingMaterialId();
+                if (temp != null) {
+                    temp.add(trainingMaterial.getTrainingMaterialId());
+                }
+                unitChapter.setTrainingMaterialId(temp);
+                unitChapterRepository.save(unitChapter);
+            }
 
             return trainingMaterial;
 
@@ -92,12 +102,30 @@ public class TrainingMaterialService {
     }
 
     public TrainingMaterial saveNonFileMaterial(TrainingMaterial trainingMaterial) {
-        if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
-            if (!unitChapterRepository.existsById(trainingMaterial.getUnitChapterId())) {
-                throw new RuntimeException("UnitChapter not found with id: " + trainingMaterial.getUnitChapterId());
+        try {
+            if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
+                if (!unitChapterRepository.existsById(trainingMaterial.getUnitChapterId())) {
+                    throw new RuntimeException("UnitChapter not found with id: " + trainingMaterial.getUnitChapterId());
+                }
             }
+
+            trainingMaterialRepository.save(trainingMaterial);
+
+            if (trainingMaterial.getUnitChapterId() != null && !trainingMaterial.getUnitChapterId().isEmpty()) {
+                UnitChapter unitChapter = unitChapterRepository.findById(trainingMaterial.getUnitChapterId())
+                        .orElseThrow(() -> new RuntimeException("Unit chapter not found"));
+                List<String> temp = unitChapter.getTrainingMaterialId();
+                if (temp != null) {
+                    temp.add(trainingMaterial.getTrainingMaterialId());
+                }
+                unitChapter.setTrainingMaterialId(temp);
+                unitChapterRepository.save(unitChapter);
+            }
+
+            return trainingMaterial;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to store non-file material.", e);
         }
-        return trainingMaterialRepository.save(trainingMaterial);
     }
 
     public Resource loadFileAsResource(String filename) {
@@ -161,6 +189,18 @@ public class TrainingMaterialService {
                     Files.delete(fileToDeletePath);
                 }
             }
+
+            trainingMaterial.setDeleted(true);
+
+            // Delete material from unit chapter's list of materials
+            UnitChapter unitChapter = unitChapterRepository.findById(trainingMaterial.getUnitChapterId())
+                    .orElseThrow(() -> new RuntimeException("Unit chapter not found"));
+            List<String> temp = unitChapter.getTrainingMaterialId();
+            if (temp != null) {
+                temp.remove(trainingMaterialId);
+            }
+            unitChapter.setTrainingMaterialId(temp);
+            unitChapterRepository.save(unitChapter);
 
             // Delete the metadata from the database
             trainingMaterialRepository.delete(trainingMaterial);

@@ -2,12 +2,13 @@ package com.fams.api.services;
 
 import com.fams.api.dto.ClassDTO;
 import com.fams.api.dto.SyllabusDTO;
-
-import com.fams.api.dto.TrainingProgramDetailDTO;
+import com.fams.api.dto.TrainingProgramDetail;
+import com.fams.api.dto.TrainingProgramDto;
 import com.fams.api.entity.Class;
 import com.fams.api.entity.*;
 import com.fams.api.mapper.ClassMapper;
 import com.fams.api.mapper.SyllabusMapper;
+import com.fams.api.mapper.TrainingProgramMapper;
 import com.fams.api.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -179,7 +180,7 @@ public class ClassService implements BaseServices<ClassDTO> {
         classRepository.deleteAll();
     }
 
-    public TrainingProgramDetailDTO getTrainingProgramDetailByClassId(String trainingProgramId) {
+    public TrainingProgramDetail getTrainingProgramDetailByClassId(String trainingProgramId) {
         Optional<TrainingProgram> optionalTrainingProgram = trainingProgramRepository.findById(trainingProgramId);
         if (optionalTrainingProgram.isPresent()) {
             TrainingProgram trainingProgram = optionalTrainingProgram.get();
@@ -188,7 +189,7 @@ public class ClassService implements BaseServices<ClassDTO> {
                     .map(SyllabusMapper.INSTANCE::toDTO)
                     .collect(Collectors.toList());
 
-            TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+            TrainingProgramDetail trainingProgramDetail = new TrainingProgramDetail();
             trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
             trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
             trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());
@@ -211,7 +212,7 @@ public class ClassService implements BaseServices<ClassDTO> {
         }
     }
 
-    public List<TrainingProgramDetailDTO> getTrainingProgramDetailList() {
+    public List<TrainingProgramDetail> getTrainingProgramDetailList() {
         List<TrainingProgram> trainingPrograms = trainingProgramRepository.findAll();
 
         return trainingPrograms.stream()
@@ -221,7 +222,7 @@ public class ClassService implements BaseServices<ClassDTO> {
                             .map(SyllabusMapper.INSTANCE::toDTO)
                             .collect(Collectors.toList());
 
-                    TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+                    TrainingProgramDetail trainingProgramDetail = new TrainingProgramDetail();
                     trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
                     trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
                     trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());
@@ -256,7 +257,7 @@ public class ClassService implements BaseServices<ClassDTO> {
                 .collect(Collectors.toList());
     }
 
-    public List<TrainingProgramDetailDTO> getTrainingProgramDetailListByClassId(String id) {
+    public List<TrainingProgramDetail> getTrainingProgramDetailListByClassId(String id) {
         Optional<Class> optionalClass = classRepository.findById(id);
         if (optionalClass.isPresent()) {
             Class classEntity = optionalClass.get();
@@ -268,7 +269,7 @@ public class ClassService implements BaseServices<ClassDTO> {
                                 .map(SyllabusMapper.INSTANCE::toDTO)
                                 .collect(Collectors.toList());
 
-                        TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+                        TrainingProgramDetail trainingProgramDetail = new TrainingProgramDetail();
                         trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
                         trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
                         trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());

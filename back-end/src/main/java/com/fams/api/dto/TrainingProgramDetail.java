@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class TrainingProgramDetailDTO {
+public class TrainingProgramDetail {
     private String trainingProgramCode;
     private String createdBy;
     private Date createdDate;
