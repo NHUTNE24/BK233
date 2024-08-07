@@ -40,7 +40,7 @@ public class Class {
     private String className;
     private int plannedAttendee;
     private String slotTime;
-    
+
     private String fsuId;
     private String locationId;
     private String attendeeTypeId;

@@ -10,7 +10,7 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-    AccordionDetails2
+    AccordionDetails2,
 } from '../ClassCreate/components/CustomAccordion';
 
 import BookIcon from '@mui/icons-material/Book';
@@ -37,24 +37,18 @@ const apiBaseURL = 'http://localhost:8080/api/classes';
 
 function ClassDetail() {
     const [showTimeFrame, setShowTimeFrame] = useState(true);
-    const [classInfo, setClassInfo] = useState({ adminName: [] });
+    const [classInfo, setClassInfo] = useState({});
     const { id } = useParams();
 
     const fetchData = async () => {
         try {
             const response = await axios.get(`${apiBaseURL}/${id}`, {
                 headers: {
-                    'Authorization': basicAuth
-                }
+                    Authorization: basicAuth,
+                },
             });
-
-            const data = response.data;
-            if (!Array.isArray(data.adminName)) {
-                data.adminName = data.adminName ? [data.adminName] : [];
-            }
-
-            console.log('Fetched data:', data); // Debug log
-            setClassInfo(data);
+            setClassInfo(response.data);
+            console.log(classInfo);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -62,16 +56,21 @@ function ClassDetail() {
 
     useEffect(() => {
         fetchData();
-    }, [id]);
+    }, []);
 
     return (
-        <div className='block'>
+        <div className="block">
             <section className="p-5 text-primary bg-main flex flex-row justify-between items-center">
                 <div className="flex flex-col gap-3">
                     <h4>Class</h4>
                     <div className="flex flex-row gap-5 items-center">
                         <h2>{classInfo?.className || 'Loading...'}</h2>
-                        <Chip1 text="Planning" closable={false} isActive={false} isRounded />
+                        <Chip1
+                            text="Planning"
+                            closable={false}
+                            isActive={false}
+                            isRounded
+                        />
                     </div>
                     <p className="subtitle1">
                         {classInfo?.classCode || 'Loading...'}
@@ -79,7 +78,10 @@ function ClassDetail() {
                     <div className="h-0.5 w-96 bg-primary"></div>
                     <div className="flex flex-row gap-5 items-center">
                         <div>
-                            <span className="text-3xl font-bold">{classInfo?.duration || '0'}</span> days
+                            <span className="text-3xl font-bold">
+                                {classInfo?.duration || '0'}
+                            </span>{' '}
+                            days
                         </div>
                         <div className="h-7 w-0.5 bg-primary"></div>
                         <div className="flex flex-row gap-2 items-center">
@@ -93,87 +95,113 @@ function ClassDetail() {
                 </div>
                 <MoreHorizIcon />
             </section>
-            <div className='p-5 flex flex-col gap-5'>
+            <div className="p-5 flex flex-col gap-5">
                 <section className="flex flex-row gap-5">
                     <div className="grid grid-cols-[1fr_2fr] gap-5">
-                        <div className='flex flex-col gap-5'>
+                        <div className="flex flex-col gap-5">
                             <Accordion>
                                 <AccordionSummary
                                     aria-controls="panel1-content"
                                     id="panel1-header"
                                 >
-                                    <div className='text-primary flex flex-row gap-2 items-center'>
+                                    <div className="text-primary flex flex-row gap-2 items-center">
                                         <CalendarTodayIcon />
-                                        <p className='subtitle2 !font-bold'>General</p>
+                                        <p className="subtitle2 !font-bold">
+                                            General
+                                        </p>
                                     </div>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <div className='flex flex-col gap-4'>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <div className='flex flex-row gap-2 items-center'>
+                                    <div className="flex flex-col gap-4">
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <div className="flex flex-row gap-2 items-center">
                                                 <AccessAlarmIcon />
-                                                <p className='subtitle2 !font-bold'>Class time</p>
+                                                <p className="subtitle2 !font-bold">
+                                                    Class time
+                                                </p>
                                             </div>
-                                            <div className='flex subtitle2 !font-normal flex-row items-center justify-between'>
-                                                {classInfo?.startTime || 'N/A'} - {classInfo?.endTime || 'N/A'}
+                                            <div className="flex subtitle2 !font-normal flex-row items-center justify-between">
+                                                {classInfo?.startTime || 'N/A'}{' '}
+                                                - {classInfo?.endTime || 'N/A'}
                                             </div>
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <div className='flex flex-row gap-2 items-center text-unmodified'>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <div className="flex flex-row gap-2 items-center text-unmodified">
                                                 <BusinessIcon />
-                                                <p className='subtitle2 !font-bold'>Location</p>
+                                                <p className="subtitle2 !font-bold">
+                                                    Location
+                                                </p>
                                             </div>
-                                            <div className='flex flex-col gap-2'>
-                                                <p className='text-sm'>{classInfo?.locationName || 'N/A'}</p>
+                                            <div className="flex flex-col gap-2">
+                                                <p className="text-sm">
+                                                    {classInfo?.locationName ||
+                                                        'N/A'}
+                                                </p>
                                             </div>
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <div className='flex flex-row gap-2 items-center text-unmodified'>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <div className="flex flex-row gap-2 items-center text-unmodified">
                                                 <RecordVoiceOverIcon />
-                                                <p className='subtitle2 !font-bold text-unmodified'>Trainers</p>
+                                                <p className="subtitle2 !font-bold text-unmodified">
+                                                    Trainers
+                                                </p>
                                             </div>
                                             {/* Add trainers information here */}
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <div className='flex flex-row gap-2 items-center'>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <div className="flex flex-row gap-2 items-center">
                                                 <AdminPanelSettingsIcon />
-                                                <p className='subtitle2 !font-bold'>Admin</p>
+                                                <p className="subtitle2 !font-bold">
+                                                    Admin
+                                                </p>
                                             </div>
-                                            <div className='flex flex-col gap-2'>
-                                                {Array.isArray(classInfo.adminName) && classInfo.adminName.length > 0 ? (
-                                                    classInfo.adminName.map((admin, index) => (
-                                                        <p key={index} className='text-sm'>{admin}</p>
-                                                    ))
-                                                ) : (
-                                                    <p className='text-sm'>N/A</p>
-                                                )}
+                                            <div className="flex flex-col gap-2">
+                                                <p className="text-sm">
+                                                    {classInfo.adminName}
+                                                </p>
                                             </div>
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <div className='flex flex-row gap-2 items-center'>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <div className="flex flex-row gap-2 items-center">
                                                 <StarsIcon />
-                                                <p className='subtitle2 !font-bold'>FSU</p>
+                                                <p className="subtitle2 !font-bold">
+                                                    FSU
+                                                </p>
                                             </div>
-                                            <div className='flex flex-col gap-2'>
-                                                <p className='text-sm'>{classInfo?.fsuName || 'N/A'}</p>
+                                            <div className="flex flex-col gap-2">
+                                                <p className="text-sm">
+                                                    {classInfo?.fsuName ||
+                                                        'N/A'}
+                                                </p>
                                             </div>
                                         </div>
                                         <Divider />
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <p className='subtitle2 !font-bold text-unmodified'>Created</p>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <p className="subtitle2 !font-bold text-unmodified">
+                                                Created
+                                            </p>
                                             {/* Add created information here */}
-																						<p className='text-sm'>{classInfo.createdBy || 'N/A'}</p>
+                                            <p className="text-sm">
+                                                {classInfo.createdBy || 'N/A'}
+                                            </p>
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <p className='subtitle2 !font-bold text-unmodified'>Reviewed</p>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <p className="subtitle2 !font-bold text-unmodified">
+                                                Reviewed
+                                            </p>
                                             {/* Add reviewed information here */}
-																						<p className='text-sm'>{classInfo.reviewBy|| 'N/A'}</p>
+                                            <p className="text-sm">
+                                                {classInfo.reviewBy || 'N/A'}
+                                            </p>
                                         </div>
-                                        <div className='grid grid-cols-[0.5fr_1fr] items-center gap-4'>
-                                            <p className='subtitle2 !font-bold text-unmodified'>Approved</p>
+                                        <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
+                                            <p className="subtitle2 !font-bold text-unmodified">
+                                                Approved
+                                            </p>
                                             {/* Add approved information here */}
-																						<p className='text-sm'>{classInfo.approvedBy || 'N/A'}</p>
-
+                                            <p className="text-sm">
+                                                {classInfo.approvedBy || 'N/A'}
+                                            </p>
                                         </div>
                                     </div>
                                 </AccordionDetails>
@@ -183,27 +211,45 @@ function ClassDetail() {
                                     aria-controls="panel2-content"
                                     id="panel2-header"
                                 >
-                                    <div className='text-primary flex flex-row gap-2 items-center'>
+                                    <div className="text-primary flex flex-row gap-2 items-center">
                                         <StarBorderPurple500Icon />
-                                        <div className='flex flex-row gap-5 items-center'>
-                                            <p className='subtitle2 !font-bold'>Attendee</p>
-                                            {classInfo?.attendeeTypeName || 'N/A'}
+                                        <div className="flex flex-row gap-5 items-center">
+                                            <p className="subtitle2 !font-bold">
+                                                Attendee
+                                            </p>
+                                            {classInfo.attendeeTypeName ||
+                                                'N/A'}
                                         </div>
                                     </div>
                                 </AccordionSummary>
                                 <AccordionDetails2>
-                                    <div className='grid grid-cols-3'>
-                                        <div className='bg-primary flex flex-col justify-center items-center gap-2 p-4 text-inputHiddenColor'>
-                                            <p className='subtitle2 !font-bold'>Planned</p>
-                                            <h3>{classInfo?.plannedAttendee || '0'}</h3>
+                                    <div className="grid grid-cols-3">
+                                        <div className="bg-primary flex flex-col justify-center items-center gap-2 p-4 text-inputHiddenColor">
+                                            <p className="subtitle2 !font-bold">
+                                                Planned
+                                            </p>
+                                            <h3>
+                                                {classInfo?.plannedAttendee ||
+                                                    '0'}
+                                            </h3>
                                         </div>
-                                        <div className='bg-[#285D9A] text-primary flex flex-col justify-center items-center gap-2 p-4 text-inputHiddenColor'>
-                                            <p className='subtitle2 !font-bold'>Accepted</p>
-                                            <h3>{classInfo?.acceptedAttendee || '0'}</h3>
+                                        <div className="bg-[#285D9A] text-primary flex flex-col justify-center items-center gap-2 p-4">
+                                            <p className="subtitle2 !font-bold">
+                                                Accepted
+                                            </p>
+                                            <h3>
+                                                {classInfo?.acceptedAttendee ||
+                                                    '0'}
+                                            </h3>
                                         </div>
-                                        <div className='bg-[#F1F1F1] flex flex-col justify-center items-center gap-2 p-4'>
-                                            <p className='subtitle2 !font-bold'>Actual</p>
-                                            <h3>{classInfo?.actualAttendee || '0'}</h3>
+                                        <div className="bg-[#F1F1F1] flex flex-col justify-center items-center gap-2 p-4">
+                                            <p className="subtitle2 !font-bold">
+                                                Actual
+                                            </p>
+                                            <h3>
+                                                {classInfo?.actualAttendee ||
+                                                    '0'}
+                                            </h3>
                                         </div>
                                     </div>
                                 </AccordionDetails2>
@@ -215,20 +261,35 @@ function ClassDetail() {
                                     aria-controls="panel3-content"
                                     id="panel3-header"
                                 >
-                                    <div className='text-primary flex flex-row gap-2 items-center'>
+                                    <div className="text-primary flex flex-row gap-2 items-center">
                                         <CalendarTodayIcon />
-                                        <p className='subtitle2 !font-bold'>Time frame</p>
-                                        {classInfo?.startDate || 'N/A'} - {classInfo?.endDate || 'N/A'}
+                                        <p className="subtitle2 !font-bold">
+                                            Time frame
+                                        </p>
+                                        {classInfo?.startDate || 'N/A'} -{' '}
+                                        {classInfo?.endDate || 'N/A'}
                                     </div>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     {showTimeFrame && (
-                                        <div className={`flex items-center gap-[20px]`}>
+                                        <div
+                                            className={`flex items-center gap-[20px]`}
+                                        >
                                             <div>
-                                                <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                                                <Calendar
+                                                    fullscreen={false}
+                                                    onPanelChange={
+                                                        onPanelChange
+                                                    }
+                                                />
                                             </div>
                                             <div>
-                                                <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+                                                <Calendar
+                                                    fullscreen={false}
+                                                    onPanelChange={
+                                                        onPanelChange
+                                                    }
+                                                />
                                             </div>
                                         </div>
                                     )}
@@ -240,7 +301,10 @@ function ClassDetail() {
                 <section>
                     <SyllabusTab
                         tabContent={[
-                            { key: 0, content: <ItemOne /> },
+                            {
+                                key: 0,
+                                content: <ItemOne id={id} />,
+                            },
                             { key: 1, content: 1 },
                             { key: 2, content: 2 },
                             { key: 3, content: 3 },

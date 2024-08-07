@@ -1,18 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
-import {
-    Space,
-    Input,
-    Button,
-    Dropdown,
-    Table,
-    Modal,
-    Tag,
-    message,
-} from 'antd';
+
+import { Space, Input, Button, Dropdown, Table, Modal, Tag } from 'antd';
+
 import { SearchOutlined } from '@ant-design/icons';
+
 import {
     MdOutlineAddCircleOutline,
     MdOutlineMoreHoriz,
@@ -21,8 +14,11 @@ import {
     MdOutlineSort,
     MdDownload,
 } from 'react-icons/md';
+
 import './ClassList.scss';
 import FilterTool from '../../../components/FilterTool';
+
+import { basicAuth } from '../../../constants/user';
 import TableCustom from '../../Syllabus/components/TableCusTom';
 
 const apiBaseURL = 'http://localhost:8080/api/classes';
@@ -36,72 +32,34 @@ const ViewClass = () => {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [filteredClassInfo, setFilteredClassInfo] = useState(classInfo);
 
-    // State để lưu dữ liệu FSU, location, và trainer
-    const [fsus, setFsus] = useState([]);
-    const [locations, setLocations] = useState([]);
-    const [trainers, setTrainers] = useState([]);
-
-    const fetchData = useCallback(async () => {
-        try {
-            const response = await axios.get(apiBaseURL);
-            if (response.data && Array.isArray(response.data)) {
-                setClassInfo(response.data);
-                setFilteredClassInfo(response.data);
-            } else {
-                console.error('Invalid data format', response.data);
-            }
-        } catch (error) {
-            console.error('There was an error fetching the class list!', error);
-            message.error('Error fetching class list');
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    const fetchFsus = useCallback(async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/fsu');
-            setFsus(response.data);
-            console.log('Fsus', response.data);
-        } catch (error) {
-            console.error('Error fetching FSU data', error);
-        }
-    }, []);
-
-    const fetchLocations = useCallback(async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/locations'
-            );
-            setLocations(response.data);
-            console.log('Locations:', response.data);
-        } catch (error) {
-            console.error('Error fetching location data', error);
-        }
-    }, []);
-
-    const fetchTrainers = useCallback(async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/api/admins'
-            );
-            setTrainers(response.data);
-            console.log('Trainers:', response.data);
-        } catch (error) {
-            console.error('Error fetching trainer data', error);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchData();
-        fetchFsus();
-        fetchLocations();
-        fetchTrainers();
-    }, [fetchData, fetchFsus, fetchLocations, fetchTrainers]);
-
     useEffect(() => {
         filterData(tags);
     }, [tags, classInfo]);
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get(apiBaseURL);
+            const data = response.data.map((item) => {
+                return {
+                    ...item,
+                    key: item.id,
+                };
+            });
+
+            setClassInfo(data);
+            setFilteredClassInfo(data);
+            setLoading(false);
+        } catch (error) {
+            console.error('There was an error fetching the class list!', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handlePressEnter = () => {
         const value = searchedText.trim();
@@ -117,7 +75,6 @@ const ViewClass = () => {
     };
 
     const filterData = (tags) => {
-        console.log('Current tags:', tags);
         if (tags.length === 0) {
             setFilteredClassInfo(classInfo);
         } else {
@@ -146,7 +103,6 @@ const ViewClass = () => {
                         item.fsuName.toLowerCase().includes(tag.toLowerCase())
                 );
             });
-            console.log('Filtered Data with Tags:', filteredData);
             setFilteredClassInfo(filteredData);
         }
     };
@@ -156,62 +112,13 @@ const ViewClass = () => {
     const handleOpenFilterModal = () => setIsFilterModalOpen(true);
     const handleFilterCancel = () => setIsFilterModalOpen(false);
 
-    const handleFilter = (values) => {
-        console.log('value:', values);
-        let filteredData = [...classInfo];
-
-        if (values.locations && values.locations.length > 0) {
-            filteredData = filteredData.filter((item) =>
-                values.locations.includes(item.locationName.toLowerCase())
-            );
-        }
-
-        if (values.fsu) {
-            filteredData = filteredData.filter(
-                (item) => item.fsuName === values.fsu
-            );
-        }
-
-        if (values.trainer) {
-            filteredData = filteredData.filter(
-                (item) => item.adminName === values.trainer
-            );
-        }
-
-        if (values.from) {
-            filteredData = filteredData.filter((item) =>
-                moment(item.createdDate).isSameOrAfter(values.from, 'day')
-            );
-        }
-
-        if (values.to) {
-            filteredData = filteredData.filter((item) =>
-                moment(item.createdDate).isSameOrBefore(values.to, 'day')
-            );
-        }
-
-        // Add more filter conditions as needed
-
-        setFilteredClassInfo(filteredData);
-        setIsFilterModalOpen(false);
-    };
-
     const onDelete = async (id) => {
         try {
             await axios.delete(`${apiBaseURL}/${id}`);
-            setClassInfo((prev) => prev.filter((item) => item.id !== id));
-            message.success('Class deleted successfully');
+            fetchData();
         } catch (error) {
             console.error('There was an error deleting the class!', error);
-            message.error('Error deleting class');
         }
-    };
-
-    const renderClass = (record) => {
-        if (!record || !record.id) {
-            return null; // hoặc hiển thị một thông báo lỗi
-        }
-        return <Link to={`/class/${record.id}`}>{record.className}</Link>;
     };
 
     const columns = [
@@ -220,7 +127,9 @@ const ViewClass = () => {
             dataIndex: 'className',
             sorter: (a, b) => a.className.localeCompare(b.className),
             sortIcon: () => <MdOutlineSort />,
-            render: (text, record) => renderClass(record),
+            render: (text, record) => {
+                return <Link to={`/class/${record.id}`}>{text}</Link>;
+            },
         },
         {
             title: 'Class Code',
@@ -231,7 +140,11 @@ const ViewClass = () => {
         {
             title: 'Created On',
             dataIndex: 'createdDate',
-            sorter: (a, b) => new Date(a.createdDate) - new Date(b.createdDate),
+            sorter: (a, b) => {
+                const dateA = new Date(a.createdDate);
+                const dateB = new Date(b.createdDate);
+                return dateA - dateB;
+            },
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -289,11 +202,7 @@ const ViewClass = () => {
             dataIndex: 'className',
             render: (text) => {
                 let items = ['Edit', 'Delete'];
-                const classRecord = classInfo.find(
-                    (item) => item.className === text
-                );
-                const id = classRecord ? classRecord.id : null;
-                if (!id) return null; // kiểm tra id trước khi render
+                const id = classInfo.find((item) => item.className === text).id;
                 return (
                     <Dropdown
                         menu={{ items }}
@@ -327,26 +236,48 @@ const ViewClass = () => {
     ];
 
     const handleExport = async () => {
+        // Handle export logic
+        const username = 'th186';
+        const password = 'th186';
+        const basicAuth = 'Basic ' + btoa(username + ':' + password);
         try {
-            const response = await axios.get(`${apiBaseURL}/export`, {
-                responseType: 'arraybuffer',
-            });
-            const data = new Uint8Array(response.data);
-            const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
-            const blob = new Blob([bom, data], {
-                type: 'text/csv;charset=utf-8;',
-            });
-            const href = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = href;
-            link.setAttribute('download', 'class-export.csv');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(href);
+            await axios
+                .get(`${apiBaseURL}/export`, {
+                    headers: {
+                        Authorization: basicAuth,
+                    },
+                    // 	headers: {
+                    // 		'Authorization': 'Basic ZGFuZ3RoYW5oYW5oMTg2OmRhbmd0aGFuaGFuaDE4Ng=='
+                    // },
+
+                    responseType: 'arraybuffer', // Use arraybuffer to process binary data
+                })
+                .then((response) => {
+                    // Create a Uint8Array from the response data
+                    const data = new Uint8Array(response.data);
+
+                    // Add BOM (Byte Order Mark) for UTF-8
+                    const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+                    const blob = new Blob([bom, data], {
+                        type: 'text/csv;charset=utf-8;',
+                    });
+
+                    // Create file link in browser's memory
+                    const href = URL.createObjectURL(blob);
+
+                    //create "a" html element with href to file & click it to download
+                    const link = document.createElement('a');
+                    link.href = href;
+                    link.setAttribute('download', 'class-export.csv');
+                    document.body.appendChild(link);
+                    link.click();
+
+                    //release memory
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(href);
+                });
         } catch (error) {
             console.error('There was an error exporting the class!', error);
-            message.error('Error exporting class');
         }
     };
 
@@ -405,12 +336,8 @@ const ViewClass = () => {
                         </Link>
                         <Button
                             icon={<MdDownload style={{ fontSize: '23px' }} />}
-                            style={{
-                                background: '#F6BE00',
-                                color: 'black',
-                                marginLeft: '6px',
-                            }}
-                            onClick={handleExport}
+                            style={{ background: '#F6BE00', color: 'black' }}
+                            onClick={() => handleExport()}
                         >
                             Export
                         </Button>
@@ -420,10 +347,9 @@ const ViewClass = () => {
                     <TableCustom
                         dataSource={filteredClassInfo}
                         columns={columns}
-                        pagination={false}
+                        pagination={true}
                         loading={loading}
                     />
-                    {console.log('Table data:', filteredClassInfo)}
                 </div>
             </Space>
 
@@ -432,12 +358,7 @@ const ViewClass = () => {
                 onCancel={handleFilterCancel}
                 footer={null}
             >
-                <FilterTool
-                    onFilter={handleFilter}
-                    fsus={fsus}
-                    locations={locations}
-                    trainers={trainers}
-                />
+                <FilterTool />
             </Modal>
         </div>
     );

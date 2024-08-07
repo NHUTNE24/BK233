@@ -1,9 +1,13 @@
 package com.fams.api.services;
 
 import com.fams.api.dto.ClassDTO;
+import com.fams.api.dto.SyllabusDTO;
+
+import com.fams.api.dto.TrainingProgramDetailDTO;
 import com.fams.api.entity.Class;
 import com.fams.api.entity.*;
 import com.fams.api.mapper.ClassMapper;
+import com.fams.api.mapper.SyllabusMapper;
 import com.fams.api.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,8 @@ public class ClassService implements BaseServices<ClassDTO> {
     private FsuRepository fsuRepository;
     private AttendeeTypeRepository attendeeTypeRepository;
     private AdminRepository adminRepository;
+    private TrainingProgramRepository trainingProgramRepository;
+    private SyllabusRepository syllabusRepository;
 
     @Override
     public ClassDTO create(ClassDTO classDTO) {
@@ -145,6 +151,7 @@ public class ClassService implements BaseServices<ClassDTO> {
             classEntity.setTrainingProgramCode(classDetails.getTrainingProgramCode());
             classEntity.setPlannedAttendee(classDetails.getPlannedAttendee());
             classEntity.setSlotTime(classDetails.getSlotTime());
+            classEntity.setTrainingProgramCode(classDetails.getTrainingProgramCode());
             Class updatedClass = classRepository.save(classEntity);
             ClassDTO updatedClassDTO = ClassMapper.INSTANCE.toDTO(updatedClass);
             String locationName = getLocationNameById(classEntity.getLocationId());
@@ -155,6 +162,7 @@ public class ClassService implements BaseServices<ClassDTO> {
             updatedClassDTO.setAdminName(adminName);
             String adminMail=getAdminEmailById(classEntity.getAdminId());
             updatedClassDTO.setAdminMail(adminMail);
+
 
             return updatedClassDTO;
         }
@@ -170,4 +178,136 @@ public class ClassService implements BaseServices<ClassDTO> {
     public void deleteAll() {
         classRepository.deleteAll();
     }
+
+    public TrainingProgramDetailDTO getTrainingProgramDetailByClassId(String trainingProgramId) {
+        Optional<TrainingProgram> optionalTrainingProgram = trainingProgramRepository.findById(trainingProgramId);
+        if (optionalTrainingProgram.isPresent()) {
+            TrainingProgram trainingProgram = optionalTrainingProgram.get();
+            List<Syllabus> syllabusList = syllabusRepository.findAllByIdIn(trainingProgram.getSyllabusId());
+            List<SyllabusDTO> syllabusDTOList = syllabusList.stream()
+                    .map(SyllabusMapper.INSTANCE::toDTO)
+                    .collect(Collectors.toList());
+
+            TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+            trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
+            trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
+            trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());
+            trainingProgramDetail.setModifiedBy(trainingProgram.getModifiedBy());
+            trainingProgramDetail.setModifiedDate(trainingProgram.getModifiedDate());
+            trainingProgramDetail.setDays(trainingProgram.getDays());
+            trainingProgramDetail.setHours(trainingProgram.getHours());
+            trainingProgramDetail.setName(trainingProgram.getName());
+            trainingProgramDetail.setStatus(trainingProgram.getStatus());
+            trainingProgramDetail.setUserId(trainingProgram.getUserId());
+            trainingProgramDetail.setTechnicalCodeId(trainingProgram.getTechnicalCodeId());
+            trainingProgramDetail.setTechnicalGroupId(trainingProgram.getTechnicalGroupId());
+            trainingProgramDetail.setModuleId(trainingProgram.getModuleId());
+            trainingProgramDetail.setSyllabusId(trainingProgram.getSyllabusId());
+            trainingProgramDetail.setSyllabi(syllabusDTOList);
+
+            return trainingProgramDetail;
+        } else {
+            throw new RuntimeException("Training Program not found with id " + trainingProgramId);
+        }
+    }
+
+    public List<TrainingProgramDetailDTO> getTrainingProgramDetailList() {
+        List<TrainingProgram> trainingPrograms = trainingProgramRepository.findAll();
+
+        return trainingPrograms.stream()
+                .map(trainingProgram -> {
+                    List<Syllabus> syllabusList = syllabusRepository.findAllByIdIn(trainingProgram.getSyllabusId());
+                    List<SyllabusDTO> syllabusDTOList = syllabusList.stream()
+                            .map(SyllabusMapper.INSTANCE::toDTO)
+                            .collect(Collectors.toList());
+
+                    TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+                    trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
+                    trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
+                    trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());
+                    trainingProgramDetail.setModifiedBy(trainingProgram.getModifiedBy());
+                    trainingProgramDetail.setModifiedDate(trainingProgram.getModifiedDate());
+                    trainingProgramDetail.setDays(trainingProgram.getDays());
+                    trainingProgramDetail.setHours(trainingProgram.getHours());
+                    trainingProgramDetail.setName(trainingProgram.getName());
+                    trainingProgramDetail.setStatus(trainingProgram.getStatus());
+                    trainingProgramDetail.setUserId(trainingProgram.getUserId());
+                    trainingProgramDetail.setTechnicalCodeId(trainingProgram.getTechnicalCodeId());
+                    trainingProgramDetail.setTechnicalGroupId(trainingProgram.getTechnicalGroupId());
+                    trainingProgramDetail.setModuleId(trainingProgram.getModuleId());
+                    trainingProgramDetail.setSyllabusId(trainingProgram.getSyllabusId());
+                    trainingProgramDetail.setSyllabi(syllabusDTOList);
+                    return trainingProgramDetail;
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Phương thức để tìm tất cả ClassDTO với các trường cần thiết để xuất dữ liệu
+    public List<ClassDTO> findAllForExport() {
+        return classRepository.findAll().stream()
+                .map(classEntity -> {
+                    ClassDTO classDTO = ClassMapper.INSTANCE.toDTO(classEntity);
+                    classDTO.setLocationName(getLocationNameById(classDTO.getLocationId()));
+                    classDTO.setFsuName(getFsuNameById(classDTO.getFsuId()));
+                    classDTO.setAttendeeTypeName(getAttendeeNameById(classDTO.getAttendeeTypeId()));
+                    classDTO.setAdminName(getAdminNameById(classDTO.getAdminId()));
+                    return classDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<TrainingProgramDetailDTO> getTrainingProgramDetailListByClassId(String id) {
+        Optional<Class> optionalClass = classRepository.findById(id);
+        if (optionalClass.isPresent()) {
+            Class classEntity = optionalClass.get();
+            List<TrainingProgram> trainingPrograms = trainingProgramRepository.findAllByTrainingProgramCodeIn(classEntity.getTrainingProgramCode());
+            return trainingPrograms.stream()
+                    .map(trainingProgram -> {
+                        List<Syllabus> syllabusList = syllabusRepository.findAllByIdIn(trainingProgram.getSyllabusId());
+                        List<SyllabusDTO> syllabusDTOList = syllabusList.stream()
+                                .map(SyllabusMapper.INSTANCE::toDTO)
+                                .collect(Collectors.toList());
+
+                        TrainingProgramDetailDTO trainingProgramDetail = new TrainingProgramDetailDTO();
+                        trainingProgramDetail.setTrainingProgramCode(trainingProgram.getTrainingProgramCode());
+                        trainingProgramDetail.setCreatedBy(trainingProgram.getCreatedBy());
+                        trainingProgramDetail.setCreatedDate(trainingProgram.getCreatedDate());
+                        trainingProgramDetail.setModifiedBy(trainingProgram.getModifiedBy());
+                        trainingProgramDetail.setModifiedDate(trainingProgram.getModifiedDate());
+                        trainingProgramDetail.setDays(trainingProgram.getDays());
+                        trainingProgramDetail.setHours(trainingProgram.getHours());
+                        trainingProgramDetail.setName(trainingProgram.getName());
+                        trainingProgramDetail.setStatus(trainingProgram.getStatus());
+                        trainingProgramDetail.setUserId(trainingProgram.getUserId());
+                        trainingProgramDetail.setTechnicalCodeId(trainingProgram.getTechnicalCodeId());
+                        trainingProgramDetail.setTechnicalGroupId(trainingProgram.getTechnicalGroupId());
+                        trainingProgramDetail.setModuleId(trainingProgram.getModuleId());
+                        trainingProgramDetail.setSyllabusId(trainingProgram.getSyllabusId());
+                        trainingProgramDetail.setSyllabi(syllabusDTOList);
+                        return trainingProgramDetail;
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            throw new RuntimeException("Class not found with id " + id);
+        }
+    }
+
+    // public ClassDTO updateTrainingProgramCodes(String classId, List<String> newTrainingProgramCodes) {
+    //     Class classEntity = classRepository.findById(classId).orElseThrow(() -> new RuntimeException("Class not found with id " + classId));
+
+    //     classEntity.setTrainingProgramCode(newTrainingProgramCodes);
+    //     Class updatedClass = classRepository.save(classEntity);
+
+    //     ClassDTO updatedClassDTO = ClassMapper.INSTANCE.toDTO(updatedClass);
+    //     String locationName = getLocationNameById(updatedClass.getLocationId());
+    //     updatedClassDTO.setLocationName(locationName);
+    //     String fsuName = getFsuNameById(updatedClass.getFsuId());
+    //     updatedClassDTO.setFsuName(fsuName);
+    //     String adminName = getAdminNameById(updatedClass.getAdminId());
+    //     updatedClassDTO.setAdminName(adminName);
+    //     String adminMail = getAdminEmailById(updatedClass.getAdminId());
+    //     updatedClassDTO.setAdminMail(adminMail);
+
+    //     return updatedClassDTO;
+    // }
 }

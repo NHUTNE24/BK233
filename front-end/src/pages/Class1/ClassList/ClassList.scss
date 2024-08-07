@@ -1,0 +1,110 @@
+.view-class {
+  &__header {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  &__tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 38px;
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .input__placeholder--black input::placeholder {
+      color: black;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .input-wrapper {
+      border: 1px solid #8B8B8B;
+      border-radius: 8px;
+      transition: all 0.1s;
+    }
+
+    .input-wrapper:focus-within {
+      border: 2px solid black;
+    }
+  }
+
+  .filter-button {
+    background-color: #2b3445;
+    border: none;
+    border-radius: 8px 0px 0px 0px;
+    color: white;
+    font-size: 16px;
+    width: 85px;
+    height: 32px;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    opacity: 1;
+    /* Adjust this if needed */
+  }
+
+  .attendee-tag {
+    font-family: Inter;
+    font-size: 12px;
+    text-align: center;
+    opacity: 1;
+  }
+
+  .attendee-tag.fresher {
+    background-color: #FF7568;
+    color: white;
+    width: 70px;
+    height: 30px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+  }
+
+  .attendee-tag.intern {
+    background-color: #2D3748;
+    color: white;
+    width: 70px;
+    height: 30px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+  }
+
+  .attendee-tag.online-fee-fresher {
+    background-color: #2F903F;
+    color: white;
+    width: 135px;
+    height: 30px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+  }
+
+  .attendee-tag.offline-fee-fresher {
+    background-color: #D45B13;
+    color: white;
+    width: 135px;
+    height: 30px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+  }
+
+
+  .filter-button:hover,
+  .filter-button:focus {
+    background-color: #1f2630;
+    color: white;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+}
