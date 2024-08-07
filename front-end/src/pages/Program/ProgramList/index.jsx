@@ -558,7 +558,7 @@ const TrainingProgram = () => {
                     className="training-program w-auto w-full scroll  overflow-y-scroll rounded-lg bg-secondaryContainer text-base tracking-wide shadow-[0_20px_40px_0_rgba(0,0,0,0.16)]"
                 >
                     {/* table-fixed */}
-                    <table className="w-full   whitespace-nowrap h-auto">
+                    <table className="w-full table-fixed whitespace-nowrap h-auto">
                         <thead className="sticky top-0 z-[10]">
                             <tr className="roboto border-b bg-main text-base font-thin text-left text-white">
                                 <th className="px-4 py-3 w-[5%]">

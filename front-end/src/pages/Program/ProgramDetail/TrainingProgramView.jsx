@@ -1,23 +1,29 @@
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { SyllabusCard2 } from 'src/components';
-import { useEffect, useState } from 'react';
+
+import { ProgramDetailContext } from './ProgramDetailContext';
 
 const TrainingProgramView = ({ TrainingProgram, setDestination }) => {
     const trainingProgramCode = TrainingProgram?.trainingProgramCode;
     const [syllabusList, setSyllabusList] = useState([]);
+    const { setLoading } = useContext(ProgramDetailContext);
 
     useEffect(() => {
         const baseUrl = import.meta.env.VITE_BASE_URL;
         const username = import.meta.env.VITE_USERNAME;
         const password = import.meta.env.VITE_PASSWORD;
         const token = btoa(`${username}:${password}`);
+        
+        setLoading(true);
 
         const fetchSyllabus = async () => {
             if (TrainingProgram?.syllabusId) {
                 setSyllabusList([]);
+                let syllabusList = [];
                 for (const syllabusId of TrainingProgram.syllabusId) {
                     try {
                         const res = await axios.get(
@@ -29,16 +35,18 @@ const TrainingProgramView = ({ TrainingProgram, setDestination }) => {
                             }
                         );
                         console.log(res.data);
-                        setSyllabusList((prevList) => [...prevList, res.data.syllabus]);
+                        syllabusList = [...syllabusList, res.data.syllabus];
                     } catch (err) {
                         console.error(err);
                     }
                 }
+                setSyllabusList(syllabusList);
+                setLoading(false);
             }
         };
-
+        
         fetchSyllabus();
-    }, [TrainingProgram]);
+    }, []);
 
     useEffect(() => {
         setDestination(`/program/view-program/${trainingProgramCode}`);

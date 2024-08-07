@@ -23,12 +23,15 @@ const TrainingProgramDetail = ({ TrainingProgram, setDestination }) => {
     const { setUnitChapters } = useContext(ProgramDetailContext);
     const { setOutputStandards } = useContext(ProgramDetailContext);
     const { setDeliveryTypes } = useContext(ProgramDetailContext);
+    const { setLoading } = useContext(ProgramDetailContext);
 
     useEffect(() => {
         const baseUrl = import.meta.env.VITE_BASE_URL;
         const username = import.meta.env.VITE_USERNAME;
         const password = import.meta.env.VITE_PASSWORD;
         const token = btoa(`${username}:${password}`);
+
+        setLoading(true);
 
         axios
             .get(`${baseUrl}/api/syllabus/${syllabusId}`, {
@@ -51,9 +54,12 @@ const TrainingProgramDetail = ({ TrainingProgram, setDestination }) => {
                 setRoundedCorners(
                     new Array(res.data.syllabusDays?.length).fill(true)
                 );
+
+                setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
+                setLoading(false);
             });
     }, [syllabusId]);
 

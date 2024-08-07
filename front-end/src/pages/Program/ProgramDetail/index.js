@@ -1,8 +1,8 @@
 import './TrainingProgramDetail.css';
 
-import TrainingProgramDetailLayout from './TrainingProgramDetailLayout';
 import TrainingProgramDetail from './TrainingProgramDetail';
 import TrainingProgramView from './TrainingProgramView';
+import ProgramDetail from './ProgramDetail';
 
-export default TrainingProgramDetailLayout;
+export default ProgramDetail;
 export { TrainingProgramDetail, TrainingProgramView };

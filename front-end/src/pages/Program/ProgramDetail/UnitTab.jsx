@@ -26,7 +26,7 @@ const UnitTab = ({ index, day_no, SyllabusUnit, maxIdx }) => {
                 <label className="p-[20px] relative cursor-pointer">
                     <h6>{SyllabusUnit?.name}</h6>
                     <p className="font-normal">
-                        <em>{SyllabusUnit?.duration}hrs</em>
+                        <em>{(SyllabusUnit?.duration / 60).toFixed(2)} hrs</em>
                     </p>
                 </label>
             ),
@@ -48,8 +48,8 @@ const UnitTab = ({ index, day_no, SyllabusUnit, maxIdx }) => {
         },
     ];
 
-    console.log(index)
-    console.log(maxIdx)
+    console.log(index);
+    console.log(maxIdx);
 
     return (
         <div

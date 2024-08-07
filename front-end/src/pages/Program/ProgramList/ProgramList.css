@@ -2,10 +2,6 @@
     height: 50px !important;
 } */
 
-.training-program::-webkit-scrollbar {
-    display: none;
-}
-
 .table-cell:hover {
     text-overflow: clip;
     white-space: normal;
