@@ -22,16 +22,16 @@ import EditModal from './EditModal';
 const ManageTrainingProgramMenu = ({
     fontSize = '3rem',
     color = '#FFFFFF',
-    setEditing = () => { }, // tell parent that the edit modal is open
+    setEditing = () => {}, // tell parent that the edit modal is open
     isProgramList,
     trainingProgramCode,
     status,
     handleSuccess,
     handleError,
-    handleEditAdditional = () => { },
-    handleDuplicateAdditional = () => { },
-    handleChangeStatusAdditional = () => { },
-    handleDeleteAdditional = () => { },
+    handleEditAdditional = () => {},
+    handleDuplicateAdditional = () => {},
+    handleChangeStatusAdditional = () => {},
+    handleDeleteAdditional = () => {},
 }) => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const username = import.meta.env.VITE_USERNAME;
@@ -161,16 +161,12 @@ const ManageTrainingProgramMenu = ({
                 ? `${baseUrl}/api/training-programs/${trainingProgramCode}/deactivate`
                 : `${baseUrl}/api/training-programs/${trainingProgramCode}/activate`;
         try {
-            await axios.put(
-                url,
-                currentUsername,
-                {
-                    headers: {
-                        Authorization: `Basic ${token}`,
-                        'Content-Type': 'text/plain',
-                    },
-                }
-            );
+            await axios.put(url, currentUsername, {
+                headers: {
+                    Authorization: `Basic ${token}`,
+                    'Content-Type': 'text/plain',
+                },
+            });
             handleChangeStatusAdditional(trainingProgramCode, status);
             handleSuccess(
                 `Program ${status === 'Active' ? 'deactivated' : 'activated'} successfully!`
@@ -190,7 +186,6 @@ const ManageTrainingProgramMenu = ({
                 {
                     headers: {
                         Authorization: `Basic ${token}`,
-                        
                     },
                 }
             );
@@ -205,9 +200,7 @@ const ManageTrainingProgramMenu = ({
         try {
             const res = await axios.post(
                 `${baseUrl}/api/training-programs/${trainingProgramCode}/duplicate`,
-
                 currentUsername,
-
                 {
                     headers: {
                         Authorization: `Basic ${token}`,

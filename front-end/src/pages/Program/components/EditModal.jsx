@@ -65,22 +65,6 @@ const EditModal = ({
         }));
     };
 
-    const handleDaysChange = (e) => {
-        const days = e.target.value;
-        setSubmitedProgram((prevDetails) => ({
-            ...prevDetails,
-            days: days,
-        }));
-    };
-
-    const handleHoursChange = (e) => {
-        const hours = e.target.value;
-        setSubmitedProgram((prevDetails) => ({
-            ...prevDetails,
-            hours: hours,
-        }));
-    };
-
     const handleDateChange = (date) => {
         const validDate = dayjs(date);
         setSubmitedProgram((prev) => ({
@@ -146,30 +130,7 @@ const EditModal = ({
                         handleChange={handleNameChange}
                     />
                 </div>
-                <div className="flex pr-10 pl-5 flex-row w-full items-center justify-between mb-4">
-                    <label className="text-2xl text-main font-semibold">
-                        Days
-                    </label>
-                    <Inputs.InputNormal
-                        hasSuffix={false}
-                        hasPrefix={false}
-                        placeholder={updatedProgram?.days || 0}
-                        value={updatedProgram?.days || 0}
-                        handleChange={handleDaysChange}
-                    />
-                </div>
-                <div className="flex pr-10 pl-5 flex-row w-full items-center justify-between mb-4">
-                    <label className="text-2xl text-main font-semibold">
-                        Hours
-                    </label>
-                    <Inputs.InputNormal
-                        hasSuffix={false}
-                        hasPrefix={false}
-                        placeholder={updatedProgram?.hours || 0}
-                        value={updatedProgram?.hours || 0}
-                        handleChange={handleHoursChange}
-                    />
-                </div>
+                
                 <div className="flex pr-10 pl-5 flex-row w-full items-center justify-between mb-4">
                     <label className="text-2xl text-main font-semibold">
                         Status

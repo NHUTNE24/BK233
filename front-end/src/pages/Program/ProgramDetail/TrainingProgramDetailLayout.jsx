@@ -1,15 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import { Spin } from 'antd';
 import TrainingProgramDetailHeader from './TrainingProgramDetailHeader';
 import TrainingProgramDetailDuration from './TrainingProgramDetailDuration';
 import TrainingProgramView from './TrainingProgramView';
 import TrainingProgramDetail from './TrainingProgramDetail';
 import ProgramComponents from '../components';
 
-import { ProgramDetailProvider } from './ProgramDetailContext';
+import { ProgramDetailContext } from './ProgramDetailContext';
 
 const TrainingProgramDetailLayout = () => {
     const { trainingProgramCode } = useParams();
@@ -20,6 +21,8 @@ const TrainingProgramDetailLayout = () => {
     const [modalStatus, setModalStatus] = useState('');
     const [modalMessage, setModalMessage] = useState('');
     const [destination, setDestination] = useState(window.location.pathname);
+
+    const { loading, setLoading } = useContext(ProgramDetailContext);
 
     const [toggleFetch, setToggleFetch] = useState(false);
     const toggle = () => setToggleFetch((curr) => !curr);
@@ -76,80 +79,85 @@ const TrainingProgramDetailLayout = () => {
         const password = import.meta.env.VITE_PASSWORD;
         const token = btoa(`${username}:${password}`);
 
+        setLoading(true);
+
         axios
             .get(`${baseUrl}/api/training-programs/${trainingProgramCode}`, {
                 headers: {
                     Authorization: `Basic ${token}`,
-                    
                 },
             })
             .then((res) => {
                 setTrainingProgram(res.data);
+                setLoading(false);
             })
             .catch((err) => {
                 handleError(err, 'getting');
+                setLoading(false);
             });
     }, [trainingProgramCode, toggleFetch, handleError]);
 
     if (!TrainingProgram) {
         return <div></div>;
     }
-    console.log("fs",TrainingProgram)
+    console.log('fs', TrainingProgram);
+    console.log(loading);
 
     return (
-        <div id="training-program-detail-layout">
-            <ProgramComponents.NotificationModal
-                modalMessage={modalMessage}
-                status={modalStatus}
-                destinationUrl={`${destination}`}
-                onClose={handleCloseModal}
-                isOpen={modalIsOpen}
-            />
-            <header>
-                <TrainingProgramDetailHeader
-                    hasMenu
-                    name={TrainingProgram?.name}
-                    status={TrainingProgram?.status}
-                    trainingProgramCode={trainingProgramCode}
-                    handleSuccess={handleSuccess}
-                    handleError={handleError}
-                    handleDuplicateAdditional={handleDuplicateAdditional}
-                    handleDeleteAdditional={handleDeleteAdditional}
+        <>
+            {loading ? <Spin size="large" fullscreen /> : ''}
+            <div id="training-program-detail-layout">
+                <ProgramComponents.NotificationModal
+                    modalMessage={modalMessage}
+                    status={modalStatus}
+                    destinationUrl={`${destination}`}
+                    onClose={handleCloseModal}
+                    isOpen={modalIsOpen}
                 />
-            </header>
-            <section>
-                <TrainingProgramDetailDuration
-                    days={TrainingProgram?.days}
-                    hours={TrainingProgram?.hours}
-                    modified_on={new Date(
-                        TrainingProgram?.modifiedDate
-                    ).toLocaleDateString('en-gb')}
-                    modified_by={TrainingProgram?.modifiedBy}
-                />
-            </section>
-            <Routes>
-                <Route
-                    path={`/:syllabusId`}
-                    element={
-                        <ProgramDetailProvider>
+                <header>
+                    <TrainingProgramDetailHeader
+                        hasMenu
+                        name={TrainingProgram?.name}
+                        status={TrainingProgram?.status}
+                        trainingProgramCode={trainingProgramCode}
+                        handleSuccess={handleSuccess}
+                        handleError={handleError}
+                        handleDuplicateAdditional={handleDuplicateAdditional}
+                        handleDeleteAdditional={handleDeleteAdditional}
+                    />
+                </header>
+                <section>
+                    <TrainingProgramDetailDuration
+                        days={TrainingProgram?.days}
+                        hours={TrainingProgram?.hours}
+                        modified_on={new Date(
+                            TrainingProgram?.modifiedDate
+                        ).toLocaleDateString('en-gb')}
+                        modified_by={TrainingProgram?.modifiedBy}
+                    />
+                </section>
+                <Routes>
+                    <Route
+                        path={`/:syllabusId`}
+                        element={
                             <TrainingProgramDetail
                                 TrainingProgram={TrainingProgram}
                                 setDestination={setDestination}
                             />
-                        </ProgramDetailProvider>
-                    }
-                />
-                <Route
-                    path="/"
-                    element={
-                        <TrainingProgramView
-                            TrainingProgram={TrainingProgram}
-                            setDestination={setDestination}
-                        />
-                    }
-                />
-            </Routes>
-        </div>
+                        }
+                    />
+                    <Route
+                        path="/"
+                        element={
+                            <TrainingProgramView
+                                TrainingProgram={TrainingProgram}
+                                setDestination={setDestination}
+                            />
+                        }
+                    />
+                </Routes>
+            </div>
+        </>
     );
 };
 

@@ -11,6 +11,7 @@ export const ProgramDetailProvider = ({ children }) => {
     const [unitChapters, setUnitChapters] = useState([[]]);
     const [outputStandards, setOutputStandards] = useState([]);
     const [deliveryTypes, setDeliveryTypes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     return (
         <ProgramDetailContext.Provider
@@ -29,6 +30,8 @@ export const ProgramDetailProvider = ({ children }) => {
                 setOutputStandards,
                 deliveryTypes,
                 setDeliveryTypes,
+                loading,
+                setLoading,
             }}
         >
             {children}
