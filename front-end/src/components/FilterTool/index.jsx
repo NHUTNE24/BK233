@@ -12,7 +12,7 @@ const FilterTool = ({ onFilter, fsus, locations, trainers }) => {
     };
 
     return (
-        <div>
+        <div className="class-filter-tool__body">
             <form
                 name="filter"
                 onSubmit={onFinish}

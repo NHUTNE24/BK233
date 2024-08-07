@@ -427,6 +427,7 @@ const ViewClass = () => {
                 open={isFilterModalOpen}
                 onCancel={handleFilterCancel}
                 footer={null}
+                className='class-filter-tool__modal'
             >
                 <FilterTool
                     onFilter={handleFilter}
