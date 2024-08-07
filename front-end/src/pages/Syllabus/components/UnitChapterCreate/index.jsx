@@ -160,6 +160,7 @@ function UnitChapterCreate({
                 <InputNumber
                     style={{ flex: 1, margin: '0 8px', minWidth: '100px' }}
                     name="duration"
+                    min={0}
                     value={
                         syllabusDays[indexDay].syllabusUnits[indexUnit]
                             .unitChapters[indexChapter].duration || ''
