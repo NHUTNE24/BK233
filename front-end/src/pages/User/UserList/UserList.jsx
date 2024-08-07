@@ -27,11 +27,10 @@ import axios from 'axios';
 import moment from 'moment';
 
 import './UserList.css';
-
+import TableCustom from '../../../components/Table';
 import AddUserForm from '../../../components/AddNewUser/AddNewUser';
-import ImportUsers from '../../../components/ImportUsers/ImportUsers';
+import ImportUsers from '../../../components/ImportUsers/ImportUsers'
 import ExportUsers from '../../../components/ExportUsers/ExportUsers';
-import TableCustom from '../../../components/TableCusTom';
 
 const { Option } = Select;
 
@@ -76,9 +75,9 @@ const UserList = () => {
         try {
             const response = await axios.get('http://localhost:8080/api/roles');
             if (response.data && Array.isArray(response.data)) {
-                const formattedRoles = response.data.map((role) => ({
+                const formattedRoles = response.data.map(role => ({
                     id: role.id,
-                    name: role.name,
+                    name: role.name
                 }));
                 setRoles(formattedRoles);
             }
@@ -174,9 +173,7 @@ const UserList = () => {
             const values = await form.validateFields();
             console.log('Form values:', values);
 
-            const roleResponse = await axios.get(
-                `http://localhost:8080/api/roles/${values.roleId}`
-            );
+            const roleResponse = await axios.get(`http://localhost:8080/api/roles/${values.roleId}`);
             const roleData = roleResponse.data;
             console.log('Role data:', roleData);
 
@@ -222,7 +219,7 @@ const UserList = () => {
             await axios.delete(`http://localhost:8080/api/users/${userId}`);
             message.success('User deleted successfully');
 
-            const newUsers = users.filter((user) => user.id !== userId);
+            const newUsers = users.filter(user => user.id !== userId);
             setUsers(newUsers);
             setFilteredUsers(newUsers);
         } catch (error) {
@@ -286,7 +283,11 @@ const UserList = () => {
             dataIndex: 'gender',
             key: 'gender',
             render: (gender) =>
-                gender ? <FaUser /> : <FaUser style={{ color: 'red' }} />,
+                gender ? (
+                    <FaUser />
+                ) : (
+                    <FaUser style={{ color: 'red' }} />
+                ),
             sorter: (a, b) => a.gender - b.gender,
         },
         {
@@ -299,6 +300,15 @@ const UserList = () => {
             dataIndex: 'roleName',
             key: 'roleName',
             sorter: (a, b) => a.roleName.localeCompare(b.roleName),
+            render: (roleName) => {
+                const backgroundColor = roleName != 'Super admin' ? roleName != 'Class admin' ? roleName != 'Trainer' ? 'wheat' : 'aqua' : 'chartreuse ' : ' pink';
+                return (
+                    <div style={{ backgroundColor, borderRadius: 12, padding: 6, width: 100, display: 'flex', justifyContent: 'center' }}>
+                        {roleName}
+                    </div>
+                );
+            },
+
         },
         {
             title: 'Actions',
@@ -342,10 +352,7 @@ const UserList = () => {
                         <span className="bold">Type</span>
                         <Col span={24}>
                             <Checkbox.Group
-                                options={[
-                                    { label: 'Admin', value: 'Admin' },
-                                    { label: 'Trainer', value: 'Trainer' },
-                                ]}
+                                options={roles.map(role => ({ label: role.name, value: role.name }))}
                                 value={filterRole}
                                 onChange={handleTypeChange}
                             />
@@ -421,7 +428,8 @@ const UserList = () => {
                                 content={filterContent}
                                 trigger="click"
                                 overlayStyle={{
-                                    width: '500px',
+                                    width: '600px',
+                                    height: 'fit-content',
                                 }}
                             >
                                 <Button
@@ -462,17 +470,16 @@ const UserList = () => {
                         style={{ color: 'white', fontSize: 40 }}
                     />
                 }
+                className='edit-user-modal'
             >
                 <Form form={form} layout="vertical">
                     <Form.Item
                         label="Role"
                         name="roleId"
-                        rules={[
-                            { required: true, message: 'Please select a role' },
-                        ]}
+                        rules={[{ required: true, message: 'Please select a role' }]}
                     >
                         <Select placeholder="Select a role">
-                            {roles.map((role) => (
+                            {roles.map(role => (
                                 <Option key={role.id} value={role.id}>
                                     {role.name}
                                 </Option>

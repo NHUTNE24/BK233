@@ -26,7 +26,7 @@ public class UserService implements BaseServices<UserModel> {
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new IllegalStateException("No user with id" + id + " found");
+            throw new IllegalStateException("No user with id " + id + " found");
         }
     }
 
@@ -50,7 +50,7 @@ public class UserService implements BaseServices<UserModel> {
             user = userRepository.save(user);
             return user;
         } else {
-            throw new IllegalStateException("No user with id" + changedUser.getId() + " found");
+            throw new IllegalStateException("No user with id " + changedUser.getId() + " found");
         }
     }
 
@@ -62,14 +62,11 @@ public class UserService implements BaseServices<UserModel> {
         userRepository.deleteAll();
     }
 
-    @Autowired
-    private UserRepository repo;
-    
     public Optional<UserModel> findByEmail(String email){
-        return repo.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
-    public void save(UserModel user){
-        repo.save(user);
+    public UserModel save(UserModel user){
+        return userRepository.save(user);
     }
 }

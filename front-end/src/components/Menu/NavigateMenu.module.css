@@ -41,11 +41,6 @@
 }
 
 .menu-item:hover {
-  background-color: #41a3ff !important;
-  color: #fff !important;
-}
-
-.menu-item-selected {
   background-color: #ECF8FF !important;
-  color: #fff !important;
+  color: #000000 !important;
 }

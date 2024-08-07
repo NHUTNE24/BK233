@@ -153,7 +153,7 @@ const App = () => {
                             <Route path="user" element={<UserLayout />}>
                                 <Route path="list" element={<UserList />} />
                                 <Route
-                                    path="role"
+                                    path="permission"
                                     element={<RolePermission />}
                                 />
                             </Route>
