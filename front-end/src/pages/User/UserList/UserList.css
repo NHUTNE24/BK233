@@ -50,7 +50,11 @@
 .ant-table-wrapper .ant-table-column-sorter {
   display: none !important;
 }
-  /* .ant-checkbox+span {
-    font-size: 1.25rem; 
-    line-height: 1.75rem; 
-  } */
+
+.edit-user-modal .ant-modal-content{
+  padding: 0;
+  width: 50vh;
+}
+.edit-user-modal .ant-modal-body{
+  padding: 20px 24px;
+}

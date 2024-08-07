@@ -26,8 +26,8 @@ const items: MenuItem[] = [
     label: 'Syllabus',
     icon: <IoBookOutline />,
     children: [
-      { key: '/syllabus', label: <Link to="/syllabus">View syllabus</Link>, className: styles['menu-item'] },
-      { key: '/create-syllabus', label: <Link to="/create-syllabus">Create syllabus</Link>, className: styles['menu-item'] },
+      { key: '2', label: <Link to="/syllabus">View syllabus</Link>, className: styles['menu-item'] },
+      { key: '3', label: <Link to="/create-syllabus">Create syllabus</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -62,7 +62,7 @@ const items: MenuItem[] = [
     icon: <FaUserGroup />,
     children: [
       { key: '9', label: <Link to="/user/list">User List</Link>, className: styles['menu-item'] },
-      { key: '10', label: <Link to="/user/role">User permission</Link>, className: styles['menu-item'] },
+      { key: '10', label: <Link to="/user/permission">User permission</Link>, className: styles['menu-item'] },
 
     ],
     className: styles['menu-item'],
@@ -95,23 +95,23 @@ const NavigateMenu: React.FC = () => {
         return '2';
       case '/create-syllabus':
         return '3';
-      case '/view-program':
+      case '/program/view-program':
         return '4';
-      case '/create-program':
+      case '/program/create-program':
         return '5';
-      case '/view-class':
+      case '/class/list':
         return '6';
-      case '/create-class':
+      case '/class/create/step1':
         return '7';
       case '/training-calendar':
         return '8';
-      case '/user-list':
+      case '/user/list':
         return '9';
-      case '/user-permission':
+      case '/user/permission':
         return '10';
       case '/learning-materials':
         return '11';
-      case '/calendar':
+      case '/setting/calendar':
         return '12';
       default:
         return '1';
@@ -120,18 +120,19 @@ const NavigateMenu: React.FC = () => {
   const getDefaultOpenKeys = () => {
     switch (location.pathname) {
       case '/syllabus':
-      case '/syllabus':
+      case '/create-syllabus':
         return ['sub1'];
-      case '/view-program':
-      case '/create-program':
+      case '/program/view-program':
+      case '/program/create-program':
         return ['sub2'];
-      case '/view-class':
-      case '/create-class':
+      case '/class/list':
+      case '/class/create/step1':
+      case '/class/create/step2':
         return ['sub3'];
-      case '/user-list':
-      case '/user-permission':
+      case '/user/list':
+      case '/user/permission':
         return ['sub4'];
-      case '/calendar':
+      case '/setting/calendar':
         return ['sub5'];
       default:
         return [];

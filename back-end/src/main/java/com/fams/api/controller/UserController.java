@@ -67,4 +67,14 @@ public class UserController {
             return new ResponseEntity<>("User hasn't been delete.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    // @PreAuthorize("hasRole('Admin') and hasAuthority('CREATE_USER')")
+    @PostMapping("/register")
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel user) {
+        try {
+            UserModel createdUser = userService.create(user);
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

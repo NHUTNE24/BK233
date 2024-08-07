@@ -72,10 +72,12 @@
   justify-content: center;
   margin-top: 16px;
 }
-
-/* .ant-modal-content{
-  padding:0  !important;
+.add-user-modal{
+  padding:0  ;
 }
-.ant-modal-body{
-  padding: 20px !important;
-} */
+.add-user-modal .ant-modal-content{
+  padding: 0;
+}
+.add-user-modal .ant-modal-body{
+  padding: 20px 24px;
+}

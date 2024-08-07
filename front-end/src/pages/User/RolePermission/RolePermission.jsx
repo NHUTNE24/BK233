@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Select, Button, Space, message, Layout, Input } from 'antd';
+import { Table, Select, Button, Space, message, Input } from 'antd';
 import axios from 'axios';
 import './RolePermission.css';
 import TableCustom from '../../../components/Table/index';
 
 const { Option } = Select;
-const { Content } = Layout;
 
 const RolePermission = () => {
     const [permissions, setPermissions] = useState([]);
@@ -14,11 +13,13 @@ const RolePermission = () => {
     const [isClick, setIsClick] = useState(false);
     const [editingRole, setEditingRole] = useState([]);
     const [newRole, setNewRole] = useState(null);
+    const [F5, setF5] = useState(false);
+
 
     useEffect(() => {
         fetchRoles();
         fetchPermissions();
-    }, []);
+    }, [F5]);
 
     const fetchRoles = async () => {
         setLoading(true);
@@ -96,6 +97,11 @@ const RolePermission = () => {
             return;
         }
 
+        const invalidRoles = editingRole.filter(role => !role.name);
+        if (invalidRoles.length > 0) {
+            message.error('Role name cannot be null');
+            return;
+        }
         setLoading(true);
 
         try {
@@ -126,7 +132,7 @@ const RolePermission = () => {
             setIsClick(false);
         } catch (error) {
             console.error('Error updating roles:', error);
-            console.error('Error response:', error.response?.data);  
+            console.error('Error response:', error.response?.data);
             message.error('Failed to update roles');
         } finally {
             setLoading(false);
@@ -163,6 +169,7 @@ const RolePermission = () => {
         } finally {
             setLoading(false);
             setIsClick(false);
+            setF5(true);
         }
     };
 
@@ -339,11 +346,26 @@ const RolePermission = () => {
                         onClick={() =>
                             setNewRole({
                                 name: 'New Role',
-                                syllabusPermission: "66a1015f77601f133cafe707",
-                                trainingProgramPermission: "66a1015f77601f133cafe707",
-                                classPermission: "66a1015f77601f133cafe707",
-                                learningMaterialPermission: "66a1015f77601f133cafe707",
-                                userPermission: "66a1015f77601f133cafe707",
+                                syllabusPermission: {
+                                    "id": "66a84d08d8a6414438bca2a1",
+                                    "name": "Access denied"
+                                },
+                                trainingProgramPermission: {
+                                    "id": "66a84d08d8a6414438bca2a1",
+                                    "name": "Access denied"
+                                },
+                                classPermission: {
+                                    "id": "66a84d08d8a6414438bca2a1",
+                                    "name": "Access denied"
+                                },
+                                learningMaterialPermission: {
+                                    "id": "66a84d08d8a6414438bca2a1",
+                                    "name": "Access denied"
+                                },
+                                userPermission: {
+                                    "id": "66a84d08d8a6414438bca2a1",
+                                    "name": "Access denied"
+                                },
                                 "_class": "com.fams.api.entity.Role",
                             })
                         }

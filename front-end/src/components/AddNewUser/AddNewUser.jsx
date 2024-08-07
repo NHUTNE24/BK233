@@ -166,13 +166,6 @@ const AddUserForm = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Address" name="address">
-                <Input placeholder="Address" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
               <Form.Item label="Date of Birth" name="dob" rules={[{ required: true, message: 'Please select date of birth' }]}>
                 <DatePicker
                   style={{ width: "100%" }}
@@ -180,6 +173,9 @@ const AddUserForm = () => {
                 />
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={16}>
+            
             <Col span={12}>
               <Form.Item label="Gender" name="gender" rules={[{ required: true, message: 'Please select gender' }]}>
                 <Radio.Group>
