@@ -1,16 +1,13 @@
 .container {
   background-color: #EDF2F7;
-  /* height: calc(100vh - 70px - 39px); */
+  height: calc(100vh - 70px);
   padding: 20px 0;
   transition: width 0.2s;
-  /* margin-top: 79px; */
-  /* z-index: 998; */
-  /* position: sticky; */
-  /*   
+  z-index: 998;
+  position: sticky;
   top: 70px;
   left: 0;
-  overflow-y: auto; */
-  height: 100%;
+  overflow-y: auto;
 }
 
 .container-expanded {
@@ -41,6 +38,11 @@
 }
 
 .menu-item:hover {
+  background-color: #41a3ff !important;
+  color: #fff !important;
+}
+
+.menu-item-selected {
   background-color: #ECF8FF !important;
-  color: #000000 !important;
+  color: #fff !important;
 }
