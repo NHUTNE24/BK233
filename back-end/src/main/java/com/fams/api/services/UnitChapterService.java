@@ -98,15 +98,7 @@ public class UnitChapterService {
 
         try {
             return unitChapterRepository.findById(unitChapterId).map(unitChapter -> {
-                List<TrainingMaterial> trainingMaterialList = new ArrayList<>();
-                if (unitChapter.getTrainingMaterialId() == null)
-                    unitChapter.setTrainingMaterialId(Collections.emptyList());
-                for (String trainingMaterialId : unitChapter.getTrainingMaterialId())
-                    try {
-                        trainingMaterialList.add(trainingMaterialRepository.findById(trainingMaterialId).orElseThrow(() -> new RuntimeException("Id not found" + trainingMaterialId)));
-                    } catch (RuntimeException e) {
-                        System.out.println(e.getMessage());
-                    }
+                List<TrainingMaterial> trainingMaterialList = trainingMaterialRepository.findByUnitChapterId(unitChapterId);
 
                 Map<String, Object> result = new HashMap<>();
                 result.put("name", unitChapter.getName());
