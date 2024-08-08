@@ -35,6 +35,7 @@ function ViewSyllabus() {
     const navigate = useNavigate();
     const [importLoading, setImportLoading] = useState(false);
     const [sorter, setSorter] = useState({ sortBy: null, order: null });
+    const userInfo = useSelector((state) => state.auth);
 
     const {
         data: tableData,
@@ -61,7 +62,7 @@ function ViewSyllabus() {
     const handlePageChange = (page, pageSize) => {
         dispatch(setCurrentPage(page));
         dispatch(setPageSize(pageSize));
-        dispatch(fetchSyllabusData({ page, pageSize }));
+        // dispatch(fetchSyllabusData({ page, pageSize }));
     };
 
     // Block input type in pagination
@@ -123,7 +124,6 @@ function ViewSyllabus() {
     const handleFormSubmit = () => {
         form.validateFields()
             .then((values) => {
-                // console.log(csvData);
                 if (csvData.length === 0) {
                     message.error('Please upload CSV file before import!');
                     return;
@@ -137,7 +137,7 @@ function ViewSyllabus() {
                     .scanning?.includes('syllabus-name');
                 const duplicateHandle = form.getFieldsValue().duplicateHandle;
                 const csvImportData = {
-                    userName: 'Syllabus group',
+                    userName: userInfo.username,
                     syllabusDTOList: [...csvData],
                     scanCode: scanCode ? true : false,
                     scanName: scanName ? true : false,
@@ -148,7 +148,7 @@ function ViewSyllabus() {
                 try {
                     const fetchApi = async () => {
                         setImportLoading(true);
-                        console.log(csvImportData);
+
                         const response = await fetch(
                             'http://localhost:8080/api/syllabus/import',
                             {

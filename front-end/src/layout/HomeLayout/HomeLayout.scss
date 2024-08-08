@@ -19,5 +19,13 @@
     }
   }
 
+  .btn-logout {
+    transition: all 0.5s;
+
+    &:hover {
+      color: red;
+      font-weight: 600;
+    }
+  }
 
 }

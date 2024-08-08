@@ -144,7 +144,8 @@ public class SyllabusDetailService {
                     syllabus -> LocalDate.parse(syllabus.getCreatedDate(), dateFormat),
                     Comparator.nullsLast(Comparator.naturalOrder())
             );
-            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(vietnameseCollator::compare));
+
             case "days" -> comparator = Comparator.comparing(Syllabus::getDays, Comparator.nullsLast(Comparator.naturalOrder()));
             case "status" -> comparator = Comparator.comparing(Syllabus::getStatus, Comparator.nullsLast(Comparator.naturalOrder()));
 //            default -> comparator = Comparator.comparing(Syllabus::getTopicName); // Default sort
@@ -654,7 +655,7 @@ public class SyllabusDetailService {
                     syllabus -> LocalDate.parse(syllabus.getCreatedDate(), dateFormat),
                     Comparator.nullsLast(Comparator.naturalOrder())
             );
-            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(Comparator.naturalOrder()));
+            case "createdBy" -> comparator = Comparator.comparing(Syllabus::getCreatedBy, Comparator.nullsLast(vietnameseCollator::compare));
             case "days" -> comparator = Comparator.comparing(Syllabus::getDays, Comparator.nullsLast(Comparator.naturalOrder()));
             case "status" -> comparator = Comparator.comparing(Syllabus::getStatus, Comparator.nullsLast(Comparator.naturalOrder()));
             default -> comparator = Comparator.comparing(Syllabus::getId, Comparator.reverseOrder()); // Default sort by ID descending

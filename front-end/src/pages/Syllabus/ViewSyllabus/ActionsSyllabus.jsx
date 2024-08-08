@@ -36,16 +36,9 @@ export const actions = [
 ];
 
 export const renderActions = (_, record) => {
-    // console.log(record);
     let items = actions.map((item, index) => ({
         key: index,
-        label: (
-            <ActionDropdown
-                actions={item}
-                key={index}
-                id={record.id}
-            />
-        ),
+        label: <ActionDropdown actions={item} key={index} id={record.id} />,
     }));
     return (
         <>

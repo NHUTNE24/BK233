@@ -6,16 +6,27 @@ import { IoMdRemoveCircleOutline } from 'react-icons/io';
 import { MdOutlineWarningAmber } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoAddCircleOutline } from 'react-icons/io5';
-import { addUnit, deleteDay } from '../../../../store/syllabus/updateSyllabusSlice';
+import {
+    addUnit,
+    deleteDay,
+} from '../../../../store/syllabus/updateSyllabusSlice';
 
 SyllabusDayCreate.propTypes = {
     indexDay: PropTypes.number.isRequired,
 };
 
-function SyllabusDayCreate({ indexDay, dayInfo, dataSource, outputStandardList, deliveryTypeList }) {
+function SyllabusDayCreate({
+    indexDay,
+    dayInfo,
+    dataSource,
+    outputStandardList,
+    deliveryTypeList,
+}) {
     const dispatch = useDispatch();
 
-    const syllabusDays = useSelector((state) => state.updateSyllabus.syllabusDay);
+    const syllabusDays = useSelector(
+        (state) => state.updateSyllabus.syllabusDay
+    );
 
     return (
         <div className={styles.container}>
@@ -27,14 +38,25 @@ function SyllabusDayCreate({ indexDay, dayInfo, dataSource, outputStandardList, 
                         key: '1',
                         label: (
                             <div className={styles['day-header']}>
-                                <p className={styles['day-no']}>{`Day ${indexDay + 1}`}</p>
+                                <p
+                                    className={styles['day-no']}
+                                >{`Day ${indexDay + 1}`}</p>
                                 <div className={styles['delete-day-btn']}>
                                     <Popconfirm
                                         title={
-                                            <div style={{ display: 'flex', borderBottom: '1px solid #E2E8F0' }}>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    borderBottom:
+                                                        '1px solid #E2E8F0',
+                                                }}
+                                            >
                                                 <MdOutlineWarningAmber
                                                     size={20}
-                                                    style={{ color: 'red', marginRight: '12px' }}
+                                                    style={{
+                                                        color: 'red',
+                                                        marginRight: '12px',
+                                                    }}
                                                 />
                                                 <p
                                                     style={{
@@ -60,12 +82,17 @@ function SyllabusDayCreate({ indexDay, dayInfo, dataSource, outputStandardList, 
                                                 Delete all content of the Day?
                                             </p>
                                         }
-                                        onConfirm={() => dispatch(deleteDay({ indexDay }))}
-                                        onCancel={(e) => console.log(e)}
+                                        onConfirm={() =>
+                                            dispatch(deleteDay({ indexDay }))
+                                        }
+                                        // onCancel={}
                                         okText="Delete"
                                         icon={null}
                                         cancelButtonProps={{
-                                            style: { border: 'none', backgroundColor: 'transparent' },
+                                            style: {
+                                                border: 'none',
+                                                backgroundColor: 'transparent',
+                                            },
                                         }}
                                         okButtonProps={{
                                             style: {
@@ -75,9 +102,18 @@ function SyllabusDayCreate({ indexDay, dayInfo, dataSource, outputStandardList, 
                                                 padding: '15px 25px',
                                             },
                                         }}
-                                        cancelText=<p style={{ color: 'red', textDecoration: 'underline' }}>Cancel</p>
+                                        cancelText=<p
+                                            style={{
+                                                color: 'red',
+                                                textDecoration: 'underline',
+                                            }}
+                                        >
+                                            Cancel
+                                        </p>
                                     >
-                                        <IoMdRemoveCircleOutline style={{ cursor: 'pointer' }} />
+                                        <IoMdRemoveCircleOutline
+                                            style={{ cursor: 'pointer' }}
+                                        />
                                     </Popconfirm>
                                 </div>
                             </div>
@@ -85,27 +121,46 @@ function SyllabusDayCreate({ indexDay, dayInfo, dataSource, outputStandardList, 
                         children: (
                             <div className={styles['day-body']}>
                                 {syllabusDays[indexDay].syllabusUnits &&
-                                    syllabusDays[indexDay].syllabusUnits.map((unit, idx) => (
-                                        <div key={idx}>
-                                            <UnitCreate
-                                                unitInfo={unit}
-                                                indexDay={indexDay}
-                                                indexUnit={idx}
-                                                dataSource={dataSource}
-                                                deliveryTypeList={deliveryTypeList}
-                                                outputStandardList={outputStandardList}
-                                            />
-                                            {idx !== syllabusDays[indexDay].syllabusUnits.length - 1 && (
-                                                <div className={styles.separate}></div>
-                                            )}
-                                        </div>
-                                    ))}
+                                    syllabusDays[indexDay].syllabusUnits.map(
+                                        (unit, idx) => (
+                                            <div key={idx}>
+                                                <UnitCreate
+                                                    unitInfo={unit}
+                                                    indexDay={indexDay}
+                                                    indexUnit={idx}
+                                                    dataSource={dataSource}
+                                                    deliveryTypeList={
+                                                        deliveryTypeList
+                                                    }
+                                                    outputStandardList={
+                                                        outputStandardList
+                                                    }
+                                                />
+                                                {idx !==
+                                                    syllabusDays[indexDay]
+                                                        .syllabusUnits.length -
+                                                        1 && (
+                                                    <div
+                                                        className={
+                                                            styles.separate
+                                                        }
+                                                    ></div>
+                                                )}
+                                            </div>
+                                        )
+                                    )}
 
                                 <div className={styles['add-unit-btn']}>
                                     <Button
-                                        style={{ backgroundColor: '#474747', color: 'white', fontWeight: 700 }}
+                                        style={{
+                                            backgroundColor: '#474747',
+                                            color: 'white',
+                                            fontWeight: 700,
+                                        }}
                                         icon={<IoAddCircleOutline size={20} />}
-                                        onClick={() => dispatch(addUnit({ indexDay }))}
+                                        onClick={() =>
+                                            dispatch(addUnit({ indexDay }))
+                                        }
                                     >
                                         Add unit
                                     </Button>

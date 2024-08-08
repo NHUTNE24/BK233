@@ -81,14 +81,13 @@ function CreateSyllabus() {
 
     useEffect(() => {
         if (createSyllabus.isAssessmentSchemaValid.status === false) {
-            // console.log(createSyllabus.isAssessmentSchemaValid);
             const errorSection = [
                 ...createSyllabus.isAssessmentSchemaValid.errorSection,
             ];
             const tags = document.querySelectorAll(
                 '.others-tab-create .validation-rules.active'
             );
-            // console.log(tag);
+
             if (tags.length > 0) {
                 tags.forEach((item) => {
                     item.classList.remove('active');
@@ -104,7 +103,7 @@ function CreateSyllabus() {
             const tags = document.querySelectorAll(
                 '.others-tab-create .validation-rules.active'
             );
-            // console.log(tag);
+
             if (tags.length > 0) {
                 tags.forEach((item) => {
                     item.classList.remove('active');
@@ -181,12 +180,11 @@ function CreateSyllabus() {
                 }
             })
             .catch((errorInfo) => {
-                console.log(errorInfo);
                 if (errorInfo.errorFields) {
                     const firstErrorField = errorInfo.errorFields[0];
                     if (firstErrorField) {
                         message.error('Basic infomation must be filled!');
-                        // console.log(firstErrorField);
+
                         basicInfoForm.scrollToField(firstErrorField.name[0], {
                             behavior: 'smooth',
                             block: 'center',
