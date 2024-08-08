@@ -27,7 +27,10 @@ function CreateClassStep1() {
                     value={className}
                     onChange={(e) => setClassName(e.target.value)}
                 />
-                <ButtonComponent onClick={handleNavigate} text="Create" />
+                <ButtonComponent
+                    onClick={handleNavigate}
+                    text="Create"
+                />
             </div>
         </div>
     );

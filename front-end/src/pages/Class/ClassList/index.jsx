@@ -24,6 +24,7 @@ import {
 import './ClassList.scss';
 import FilterTool from '../../../components/FilterTool';
 import TableCustom from '../../Syllabus/components/TableCusTom';
+import ButtonComponent from '../../../components/Button/Button';
 
 const apiBaseURL = 'http://localhost:8080/api/classes';
 
@@ -367,7 +368,7 @@ const ViewClass = () => {
                                 <SearchOutlined
                                     style={{
                                         fontSize: '18px',
-                                        marginRight: '5px',
+                                        marginRight: '6px',
                                     }}
                                     onClick={handlePressEnter}
                                 />
@@ -378,41 +379,28 @@ const ViewClass = () => {
                             onChange={(e) => setSearchedText(e.target.value)}
                             onPressEnter={handlePressEnter}
                         />
-                        <Button
-                            className="filter-button"
-                            icon={<MdOutlineSort />}
+                        <ButtonComponent
+                            text="Filter"
+                            isButtonWithIcon
+                            icon={<MdOutlineSort className='text-xl'/>}
                             onClick={handleOpenFilterModal}
-                        >
-                            Filter
-                        </Button>
+                        />
                     </div>
-                    <div>
+                    <div className='flex flex-row gap-2'>
                         <Link to={'/class/create/step1'}>
-                            <Button
-                                icon={
-                                    <MdOutlineAddCircleOutline
-                                        style={{ fontSize: '23px' }}
-                                    />
-                                }
-                                style={{
-                                    background: 'var(--primary-color)',
-                                    color: 'white',
-                                }}
-                            >
-                                Add New
-                            </Button>
+                            <ButtonComponent
+                                text="Add new"
+                                isButtonWithIcon
+                                icon={<MdOutlineAddCircleOutline className='text-xl'/>}
+                            />
                         </Link>
-                        <Button
-                            icon={<MdDownload style={{ fontSize: '23px' }} />}
-                            style={{
-                                background: '#F6BE00',
-                                color: 'black',
-                                marginLeft: '6px',
-                            }}
+                        <ButtonComponent
+                            text="Export"
+                            isButtonWithIcon
+                            isBgOrange
+                            icon={<MdDownload className='text-xl'/>}
                             onClick={handleExport}
-                        >
-                            Export
-                        </Button>
+                        />
                     </div>
                 </div>
                 <div className="view-class__table">
