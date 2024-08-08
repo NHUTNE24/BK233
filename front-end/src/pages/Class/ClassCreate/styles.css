@@ -27,10 +27,10 @@
 .ant-tabs-nav {
   @apply !mb-0;
 }
-
+/* 
 .ant-tabs-tab {
   @apply !bg-box !text-main !rounded-t-2xl !rounded-b-none !py-2 !px-5 !m-0;
-}
+} */
 
 .ant-tabs-tab-active {
   @apply !bg-main !text-primary;
