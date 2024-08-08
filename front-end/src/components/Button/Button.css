@@ -1,12 +1,13 @@
 .class-btn-isIconOnly {
-  @apply !px-6;
+  @apply  !px-6;
 }
 
 .class-btn-isButtonWithIcon {
   @apply h-9 text-sm font-bold bg-main text-primary border-none rounded-lg;
 }
+
 .class-btn-isButtonWithIcon:hover {
-  @apply !bg-[#5B6372] !text-primary transition-all !duration-[75ms];
+  @apply  !bg-[#5B6372] !text-primary transition-all !duration-[75ms];
 }
 
 .class-btn-isGhost {
@@ -14,7 +15,7 @@
 }
 
 .class-btn-isGhost:hover {
-  @apply !bg-[#5B6372] border !text-primary transition-all !duration-[75ms];
+  @apply  !bg-[#5B6372] border !text-primary transition-all !duration-[75ms];
 }
 
 .class-btn-default {
@@ -22,5 +23,5 @@
 }
 
 .class-btn-default:hover {
-  @apply !bg-[#5B6372] border-none !text-primary transition-all !duration-[75ms];
+  @apply  !bg-[#5B6372] border-none !text-primary transition-all !duration-[75ms];
 }

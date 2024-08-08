@@ -27,10 +27,11 @@ import axios from 'axios';
 import moment from 'moment';
 
 import './UserList.css';
-import TableCustom from '../../../components/Table';
+
 import AddUserForm from '../../../components/AddNewUser/AddNewUser';
-import ImportUsers from '../../../components/ImportUsers/ImportUsers'
+import ImportUsers from '../../../components/ImportUsers/ImportUsers';
 import ExportUsers from '../../../components/ExportUsers/ExportUsers';
+import TableCustom from '../../Syllabus/components/TableCusTom';
 
 const { Option } = Select;
 
@@ -61,8 +62,12 @@ const UserList = () => {
     const fetchUsers = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/users');
-            setUsers(response.data);
-            setFilteredUsers(response.data);
+            const usersWithIndex = response.data.map((user, index) => ({
+                ...user,
+                index: index + 1,
+            }));
+            setUsers(usersWithIndex);
+            setFilteredUsers(usersWithIndex);
         } catch (error) {
             console.error('There was an error fetching the users!', error);
             message.error('There was an error fetching the users!');
@@ -75,9 +80,9 @@ const UserList = () => {
         try {
             const response = await axios.get('http://localhost:8080/api/roles');
             if (response.data && Array.isArray(response.data)) {
-                const formattedRoles = response.data.map(role => ({
+                const formattedRoles = response.data.map((role) => ({
                     id: role.id,
-                    name: role.name
+                    name: role.name,
                 }));
                 setRoles(formattedRoles);
             }
@@ -91,7 +96,7 @@ const UserList = () => {
     };
 
     const handleDateChange = (date, dateString) => {
-        setFilterDOB(date ? date.format('DD/MM/YYYY') : null);
+        setFilterDOB(date ? date.format('YYYY/MM/DD') : null);
     };
 
     const handleTypeChange = (checkedValues) => {
@@ -122,7 +127,7 @@ const UserList = () => {
         if (filterDOB) {
             filtered = filtered.filter((user) =>
                 moment(user.dob, 'YYYY-MM-DD').isSame(
-                    moment(filterDOB, 'DD/MM/YYYY')
+                    moment(filterDOB, 'YYYY/MM/DD')
                 )
             );
         }
@@ -171,11 +176,10 @@ const UserList = () => {
     const handleOk = async () => {
         try {
             const values = await form.validateFields();
-            console.log('Form values:', values);
-
-            const roleResponse = await axios.get(`http://localhost:8080/api/roles/${values.roleId}`);
+            const roleResponse = await axios.get(
+                `http://localhost:8080/api/roles/${values.roleId}`
+            );
             const roleData = roleResponse.data;
-            console.log('Role data:', roleData);
 
             const updatedUser = {
                 ...editingUser,
@@ -187,19 +191,17 @@ const UserList = () => {
                 status: values.status,
             };
 
-            console.log('Updated user data:', updatedUser);
-
             const response = await axios.put(
                 `http://localhost:8080/api/users/${editingUser.id}`,
                 updatedUser
             );
 
-            console.log('Response from server:', response);
-
             message.success('User updated successfully');
 
             const newUsers = users.map((user) =>
-                user.id === editingUser.id ? response.data : user
+                user.id === editingUser.id
+                    ? { ...response.data, index: user.index }
+                    : user
             );
             setUsers(newUsers);
             applyFilters();
@@ -219,7 +221,12 @@ const UserList = () => {
             await axios.delete(`http://localhost:8080/api/users/${userId}`);
             message.success('User deleted successfully');
 
-            const newUsers = users.filter(user => user.id !== userId);
+            let newUsers = users.filter((user) => user.id !== userId);
+            newUsers = newUsers.map((user, index) => ({
+                ...user,
+                index: index + 1,
+            }));
+
             setUsers(newUsers);
             setFilteredUsers(newUsers);
         } catch (error) {
@@ -236,9 +243,9 @@ const UserList = () => {
                     <MdSort />
                 </div>
             ),
-            dataIndex: 'id',
-            key: 'id',
-            sorter: (a, b) => parseInt(a.id) - parseInt(b.id),
+            dataIndex: 'index',
+            key: 'index',
+            sorter: (a, b) => a.index - b.index,
         },
         {
             title: (
@@ -283,11 +290,7 @@ const UserList = () => {
             dataIndex: 'gender',
             key: 'gender',
             render: (gender) =>
-                gender ? (
-                    <FaUser />
-                ) : (
-                    <FaUser style={{ color: 'red' }} />
-                ),
+                gender ? <FaUser /> : <FaUser style={{ color: 'red' }} />,
             sorter: (a, b) => a.gender - b.gender,
         },
         {
@@ -301,14 +304,29 @@ const UserList = () => {
             key: 'roleName',
             sorter: (a, b) => a.roleName.localeCompare(b.roleName),
             render: (roleName) => {
-                const backgroundColor = roleName != 'Super admin' ? roleName != 'Class admin' ? roleName != 'Trainer' ? 'wheat' : 'aqua' : 'chartreuse ' : ' pink';
+                const backgroundColor =
+                    roleName !== 'Super admin'
+                        ? roleName !== 'Class admin'
+                            ? roleName !== 'Trainer'
+                                ? 'wheat'
+                                : 'aqua'
+                            : 'chartreuse '
+                        : ' pink';
                 return (
-                    <div style={{ backgroundColor, borderRadius: 12, padding: 6, width: 100, display: 'flex', justifyContent: 'center' }}>
+                    <div
+                        style={{
+                            backgroundColor,
+                            borderRadius: 12,
+                            padding: 6,
+                            width: 100,
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
                         {roleName}
                     </div>
                 );
             },
-
         },
         {
             title: 'Actions',
@@ -340,9 +358,9 @@ const UserList = () => {
                     <span className="bold">Date of Birth</span>
                     <Col span={30}>
                         <DatePicker
-                            format="DD/MM/YYYY"
+                            format="YYYY/MM/DD"
                             onChange={handleDateChange}
-                            placeholder="DD/MM/YYYY"
+                            placeholder="YYYY/MM/DD"
                             className="w-[30vh] "
                         />
                     </Col>
@@ -352,7 +370,10 @@ const UserList = () => {
                         <span className="bold">Type</span>
                         <Col span={24}>
                             <Checkbox.Group
-                                options={roles.map(role => ({ label: role.name, value: role.name }))}
+                                options={roles.map((role) => ({
+                                    label: role.name,
+                                    value: role.name,
+                                }))}
                                 value={filterRole}
                                 onChange={handleTypeChange}
                             />
@@ -455,7 +476,7 @@ const UserList = () => {
                     columns={columns}
                     rowKey="id"
                     loading={loading}
-                    noPagination={false}
+                    pagination={true}
                     sortIcon={<MdSort />}
                 />
             </div>
@@ -470,16 +491,18 @@ const UserList = () => {
                         style={{ color: 'white', fontSize: 40 }}
                     />
                 }
-                className='edit-user-modal'
+                className="edit-user-modal"
             >
                 <Form form={form} layout="vertical">
                     <Form.Item
                         label="Role"
                         name="roleId"
-                        rules={[{ required: true, message: 'Please select a role' }]}
+                        rules={[
+                            { required: true, message: 'Please select a role' },
+                        ]}
                     >
                         <Select placeholder="Select a role">
-                            {roles.map(role => (
+                            {roles.map((role) => (
                                 <Option key={role.id} value={role.id}>
                                     {role.name}
                                 </Option>
@@ -508,7 +531,7 @@ const UserList = () => {
                             },
                         ]}
                     >
-                        <DatePicker format="DD/MM/YYYY" />
+                        <DatePicker format="YYYY/MM/DD" />
                     </Form.Item>
                     <Form.Item
                         name="gender"

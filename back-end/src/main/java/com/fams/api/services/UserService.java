@@ -18,6 +18,9 @@ public class UserService implements BaseServices<UserModel> {
     private UserRepository userRepository;
 
     public UserModel create(UserModel user) {
+        if (emailOrUsernameExists(user)) {
+            throw new IllegalStateException("Email or Username already exists");
+        }
         return userRepository.save(user);
     }
 
@@ -37,18 +40,25 @@ public class UserService implements BaseServices<UserModel> {
     public UserModel update(UserModel changedUser) {
         Optional<UserModel> optionalUser = userRepository.findById(changedUser.getId());
         if (optionalUser.isPresent()) {
-            UserModel user = optionalUser.get();
-            user.setFullname(changedUser.getFullname());
-            user.setEmail(changedUser.getEmail());
-            user.setUsername(changedUser.getUsername());
-            user.setPhone(changedUser.getPhone());
-            user.setDob(changedUser.getDob());
-            user.setGender(changedUser.isGender());
-            user.setStatus(changedUser.isStatus());
-            user.setUrlAvatar(changedUser.getUrlAvatar());
-            user.setRole(changedUser.getRole());
-            user = userRepository.save(user);
-            return user;
+            UserModel existingUser = optionalUser.get();
+            
+            if (!existingUser.getEmail().equals(changedUser.getEmail()) || !existingUser.getUsername().equals(changedUser.getUsername())) {
+                if (emailOrUsernameExists(changedUser)) {
+                    throw new IllegalStateException("Email or Username already exists");
+                }
+            }
+
+            existingUser.setFullname(changedUser.getFullname());
+            existingUser.setEmail(changedUser.getEmail());
+            existingUser.setUsername(changedUser.getUsername());
+            existingUser.setPhone(changedUser.getPhone());
+            existingUser.setDob(changedUser.getDob());
+            existingUser.setGender(changedUser.isGender());
+            existingUser.setStatus(changedUser.isStatus());
+            existingUser.setUrlAvatar(changedUser.getUrlAvatar());
+            existingUser.setRole(changedUser.getRole());
+            existingUser = userRepository.save(existingUser);
+            return existingUser;
         } else {
             throw new IllegalStateException("No user with id " + changedUser.getId() + " found");
         }
@@ -68,5 +78,9 @@ public class UserService implements BaseServices<UserModel> {
 
     public UserModel save(UserModel user){
         return userRepository.save(user);
+    }
+
+    private boolean emailOrUsernameExists(UserModel user) {
+        return userRepository.findByEmail(user.getEmail()).isPresent() || userRepository.findByUsername(user.getUsername()).isPresent();
     }
 }

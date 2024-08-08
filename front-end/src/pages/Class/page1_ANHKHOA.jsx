@@ -3,13 +3,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import getGMT7Date from '../../../utils/getGMT7Date';
-import { formatDate } from '../../../helpers/daytimeFormat';
 import { MdEdit } from 'react-icons/md';
 import { Accordion2, AccordionDetails3 } from './components/CustomAccordion';
 import { Calendar } from 'antd';
 import Divider from '@mui/material/Divider';
 import { MdOutlineWarning } from 'react-icons/md';
-import { useSelector } from 'react-redux';
 
 import Chip1 from '../../../components/Chips/Chip1';
 
@@ -36,7 +34,8 @@ import BusinessIcon from '@mui/icons-material/Business';
 import StarsIcon from '@mui/icons-material/Stars';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import { MdArrowBack } from 'react-icons/md';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ButtonComponent from '../../../components/Button/Button';
 import { basicAuth } from '../../../constants/user';
 import URL from '../../../constants/url';
@@ -46,14 +45,12 @@ const onPanelChange = (value, mode) => {
     console.log(value.format('YYYY-MM-DD'), mode);
 };
 
-function CreateClassStep2() {
-    const username = useSelector((state) => state.auth?.username || '');
-    const date = formatDate(getGMT7Date().toISOString());
+function ClassUpdate() {
     const [showTimeFrame, setShowTimeFrame] = useState(true);
     const [updatedClass, setUpdatedClass] = useState({
-        createdBy: username,
+        createdBy: 'ThanhHuy',
         createdDate: getGMT7Date(),
-        updatedBy: username,
+        updatedBy: 'ThanhHuy',
         updatedDate: getGMT7Date(),
         classStatus: 'Planning',
         classCode: '',
@@ -83,21 +80,40 @@ function CreateClassStep2() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const { id } = useParams();
+
+    const fetchData = async () => {
+        try {
+            let response = await axios.get(`${apiBaseURL}/${id}`, {
+                headers: {
+                    Authorization: basicAuth,
+                },
+            });
+            const parts = response.data.classCode.split('_');
+            setLocation(parts[0]);
+            setUpdatedClass({
+                ...response.data,
+                classCode: parts[1],
+            });
+            console.log(updatedClass);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const navigate = useNavigate();
     const handleNavigate = () => {
         navigate(`/class/list`);
     };
 
-    const { className } = useParams();
-
     function handleChange(e) {
-        const { name, value } = e.target;
-        setUpdatedClass((prevClass) => {
-            const updated = { ...prevClass, [name]: value };
-            if (name === 'classCode') {
-                updated.classCode = `${location}_${value}`;
-            }
-            return updated;
+        setUpdatedClass({
+            ...updatedClass,
+            [e.target.name]: e.target.value,
         });
     }
 
@@ -108,29 +124,39 @@ function CreateClassStep2() {
         });
     };
 
-    const handleLocationChange = (value) => {
-        const selectedLocation = locationList.find(
-            (loc) => loc.value === value
-        );
-        const abbreviation = cityAbbreviation(selectedLocation.label);
-        setLocation(abbreviation);
-        setUpdatedClass((prevClass) => ({
-            ...prevClass,
-            locationId: value,
-            classCode: `${abbreviation}_${prevClass.classCode.split('_')[1] || ''}`,
-        }));
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const classInfo = {
-            ...updatedClass,
-            className,
-            classCode: updatedClass.classCode,
+            className: updatedClass.className,
+            classCode: location + '_' + updatedClass.classCode,
+            startTime: updatedClass.startTime,
+            endTime: updatedClass.endTime,
+            classAdminName: updatedClass.classAdminName,
+            fsuId: updatedClass.fsuId,
+            attendeeTypeId: updatedClass.attendeeTypeId,
+            plannedAttendee: updatedClass.plannedAttendee,
+            acceptedAttendee: updatedClass.acceptedAttendee,
+            actualAttendee: updatedClass.actualAttendee,
+            createdBy: updatedClass.createdBy,
+            createdDate: updatedClass.createdDate,
+            updatedBy: updatedClass.updatedBy,
+            updatedDate: updatedClass.updatedDate,
+            classStatus: updatedClass.classStatus,
+            duration: updatedClass.duration,
+            startDate: updatedClass.startDate,
+            endDate: updatedClass.endDate,
+            approvedBy: updatedClass.approvedBy,
+            approvedDate: updatedClass.approvedDate,
+            reviewBy: updatedClass.reviewBy,
+            reviewDate: updatedClass.reviewDate,
+            slotTime: updatedClass.slotTime,
+            locationId: updatedClass.locationId,
+            trainingProgramCode: updatedClass.trainingProgramCode,
+            adminId: updatedClass.adminId,
         };
 
         axios
-            .post(URL.LOCAL_API_CLASS, classInfo, {
+            .put(`${URL.LOCAL_API_CLASS}/${id}`, classInfo, {
                 headers: {
                     Authorization: basicAuth,
                 },
@@ -199,6 +225,7 @@ function CreateClassStep2() {
                     });
             };
             fetchProgramList();
+            () => setSelectedTrainingProgram(updatedClass.trainingProgramCode);
         }, []);
 
         return (
@@ -341,6 +368,7 @@ function CreateClassStep2() {
                         };
                     });
                     setAdminList(adminList);
+                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -352,7 +380,7 @@ function CreateClassStep2() {
         fetchAdmin();
     }, []);
 
-    useEffect(() => {}, [updatedClass]);
+    // useEffect(() => {}, [updatedClass]);
 
     const [FsuList, setFsuList] = useState([]);
     useEffect(() => {
@@ -373,6 +401,7 @@ function CreateClassStep2() {
                         };
                     });
                     setFsuList(FsuList);
+                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -383,6 +412,7 @@ function CreateClassStep2() {
         };
         fetchFsu();
     }, []);
+    // useEffect(() => { }, [updatedClass]);
 
     const [locationList, setLocationList] = useState([]);
     useEffect(() => {
@@ -406,6 +436,7 @@ function CreateClassStep2() {
                         };
                     });
                     setLocationList(locationList);
+                    // handleNavigate();
                 })
                 .catch((error) => {
                     console.error(
@@ -417,14 +448,32 @@ function CreateClassStep2() {
         fetchLocation();
     }, []);
 
+    const getLabelFromValue = (value) => {
+        const selectedOption = locationList.find(
+            (option) => option.value === value
+        );
+        return selectedOption ? selectedOption.label : '';
+    };
+
+    const onChangeHandler = (selectedOption) => {
+        const value = selectedOption?.value;
+        const label = getLabelFromValue(value);
+
+        if (value) {
+            handleSelectChange(value, 'locationId');
+            setLocation(label); // Pass label to setLocation
+        } else {
+            console.error('Selected value is undefined');
+        }
+    };
+
     function cityAbbreviation(cityName) {
         const abbreviations = {
             Hanoi: 'HN',
-            'Ha Noi': 'HN',
+            HaNoi: 'HN',
             'Ho Chi Minh City': 'HCM',
             Danang: 'DN',
-            'Da Nang': 'DN',
-            HCM: 'HCM',
+            DaNang: 'DN',
             // Add more cities and their official abbreviations here
         };
 
@@ -446,11 +495,11 @@ function CreateClassStep2() {
     useEffect(() => {
         const fetchLocation = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost:8080/api/locations`
-                );
-                console.log(response.data);
-                // setLocation(() => cityAbbreviation(response.data.city));
+                // const response = await axios.get(
+                //     `https://ipinfo.io/json?token=80bce4cbdbc51e`
+                // );
+                // console.log(response.data);
+                // setLocation(() => cityAbbreviation(updatedClass.classCode));
             } catch (err) {
                 setError(err);
             } finally {
@@ -458,7 +507,7 @@ function CreateClassStep2() {
             }
         };
         fetchLocation();
-    }, []);
+    }, [updatedClass]);
 
     useEffect(() => {
         console.log(location);
@@ -473,7 +522,7 @@ function CreateClassStep2() {
                 <div className="flex flex-col gap-3">
                     <h4>Class</h4>
                     <div className="flex flex-row gap-5 items-center">
-                        <h2>{className}</h2>
+                        <h2>{updatedClass.className}</h2>
                         <Chip1
                             text="Planning"
                             closable={false}
@@ -486,7 +535,7 @@ function CreateClassStep2() {
                             className="text-main"
                             name="classCode"
                             type="text"
-                            value={updatedClass.classCode.split('_')[1] || ''}
+                            value={updatedClass.classCode}
                             onChange={handleChange}
                             placeholder="Type class code"
                         />
@@ -494,6 +543,7 @@ function CreateClassStep2() {
                     <div className="h-0.5 w-96 bg-primary"></div>
                     <div className="flex flex-row gap-5 items-center">
                         <div>
+                            {/* <span className="text-3xl font-bold">31</span> days <span>(91 days)</span> */}
                             <Input
                                 className="text-main"
                                 name="duration"
@@ -568,7 +618,19 @@ function CreateClassStep2() {
                                             </div>
                                             <Select
                                                 value={updatedClass.locationId}
-                                                onChange={handleLocationChange}
+                                                onChange={(value) => {
+                                                    handleSelectChange(
+                                                        value,
+                                                        'locationId'
+                                                    );
+                                                    setLocation(() =>
+                                                        cityAbbreviation(
+                                                            getLabelFromValue(
+                                                                value
+                                                            )
+                                                        )
+                                                    );
+                                                }}
                                                 placeholder="select..."
                                                 options={locationList}
                                             />
@@ -597,6 +659,16 @@ function CreateClassStep2() {
                                                     )
                                                 }
                                                 placeholder="select..."
+                                                // options={[
+                                                // 	{
+                                                // 		value: '66a603cd999f1d9e86d1aad9',
+                                                // 		label: 'HuyNN13',
+                                                // 	},
+                                                // 	{
+                                                // 		value: '66a607ce999f1d9e86d1aade',
+                                                // 		label: 'HuyDT26',
+                                                // 	},
+                                                // ]}
                                                 options={adminList}
                                             />
                                         </div>
@@ -625,9 +697,6 @@ function CreateClassStep2() {
                                         <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
                                             <p className="subtitle2 !font-bold text-unmodified">
                                                 Created
-                                            </p>
-                                            <p className="subtitle2 text-unmodified">
-                                                {date} by {username}
                                             </p>
                                         </div>
                                         <div className="grid grid-cols-[0.5fr_1fr] items-center gap-4">
@@ -809,34 +878,32 @@ function CreateClassStep2() {
                     <NewTabs />
                 </section>
                 <section className="flex flex-row justify-between">
-                    {/* <Button
+                    <Button
                         className="border border-main text-main rounded-xl"
                         icon={<ArrowBackIcon />}
-                        onClick={handleNavigate}
                     >
                         Back
-                    </Button> */}
-                    <ButtonComponent
-                        isButtonWithIcon
-                        icon={<MdArrowBack className="text-xl" />}
-                        iconPosition="start"
-                        text="Back"
-                        onClick={handleNavigate}
-                    />
+                    </Button>
                     <div className="flex flex-row gap-10">
                         <div className="flex flex-row gap-2">
                             <ButtonComponent
-                                isGhost
-                                isDanger
+                                className="bg-alert text-primary rounded-xl"
                                 text="Cancel"
                                 onClick={handleNavigate}
                             />
                             <ButtonComponent
                                 htmlType="submit"
                                 className="bg-box text-main rounded-xl"
-                                text={'Save'}
+                                text={'Save as draft'}
                             />
                         </div>
+                        <ButtonComponent
+                            isDisabled={true}
+                            text={'Next'}
+                            className="border border-main text-main rounded-xl"
+                            iconPosition="end"
+                            icon={<ArrowForwardIcon />}
+                        />
                     </div>
                 </section>
             </div>
@@ -844,4 +911,4 @@ function CreateClassStep2() {
     );
 }
 
-export default CreateClassStep2;
+export default ClassUpdate;

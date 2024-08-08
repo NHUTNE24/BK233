@@ -34,7 +34,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import StarsIcon from '@mui/icons-material/Stars';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack } from 'react-icons/md';
 import ButtonComponent from '../../../components/Button/Button';
 import { basicAuth } from '../../../constants/user';
 import URL from '../../../constants/url';
@@ -83,14 +83,16 @@ function ClassUpdate() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`${apiBaseURL}/${id}`, {
+            let response = await axios.get(`${apiBaseURL}/${id}`, {
                 headers: {
                     Authorization: basicAuth,
                 },
             });
+            const parts = response.data.classCode.split('_');
+            setLocation(parts[0]);
             setUpdatedClass({
                 ...response.data,
-                classCode: response.data.classCode.split('_')[1],
+                classCode: parts[1],
             });
             console.log(updatedClass);
         } catch (error) {
@@ -445,6 +447,25 @@ function ClassUpdate() {
         fetchLocation();
     }, []);
 
+    const getLabelFromValue = (value) => {
+        const selectedOption = locationList.find(
+            (option) => option.value === value
+        );
+        return selectedOption ? selectedOption.label : '';
+    };
+
+    const onChangeHandler = (selectedOption) => {
+        const value = selectedOption?.value;
+        const label = getLabelFromValue(value);
+
+        if (value) {
+            handleSelectChange(value, 'locationId');
+            setLocation(label); // Pass label to setLocation
+        } else {
+            console.error('Selected value is undefined');
+        }
+    };
+
     function cityAbbreviation(cityName) {
         const abbreviations = {
             Hanoi: 'HN',
@@ -473,11 +494,11 @@ function ClassUpdate() {
     useEffect(() => {
         const fetchLocation = async () => {
             try {
-                const response = await axios.get(
-                    `https://ipinfo.io/json?token=80bce4cbdbc51e`
-                );
-                console.log(response.data);
-                setLocation(() => cityAbbreviation(response.data.city));
+                // const response = await axios.get(
+                //     `https://ipinfo.io/json?token=80bce4cbdbc51e`
+                // );
+                // console.log(response.data);
+                // setLocation(() => cityAbbreviation(updatedClass.classCode));
             } catch (err) {
                 setError(err);
             } finally {
@@ -485,7 +506,7 @@ function ClassUpdate() {
             }
         };
         fetchLocation();
-    }, []);
+    }, [updatedClass]);
 
     useEffect(() => {
         console.log(location);
@@ -596,12 +617,19 @@ function ClassUpdate() {
                                             </div>
                                             <Select
                                                 value={updatedClass.locationId}
-                                                onChange={(value) =>
+                                                onChange={(value) => {
                                                     handleSelectChange(
                                                         value,
                                                         'locationId'
-                                                    )
-                                                }
+                                                    );
+                                                    setLocation(() =>
+                                                        cityAbbreviation(
+                                                            getLabelFromValue(
+                                                                value
+                                                            )
+                                                        )
+                                                    );
+                                                }}
                                                 placeholder="select..."
                                                 options={locationList}
                                             />
@@ -849,16 +877,23 @@ function ClassUpdate() {
                     <NewTabs />
                 </section>
                 <section className="flex flex-row justify-between">
-                <ButtonComponent
+                    {/* <Button
+                        className="border border-main text-main rounded-xl"
+                        icon={<ArrowBackIcon />}
+                        onClick={handleNavigate}
+                    >
+                        Back
+                    </Button> */}
+                    <ButtonComponent
                         isButtonWithIcon
-                        icon={<MdArrowBack className='text-xl' />}
+                        icon={<MdArrowBack className="text-xl" />}
                         iconPosition="start"
                         text="Back"
                         onClick={handleNavigate}
                     />
                     <div className="flex flex-row gap-10">
                         <div className="flex flex-row gap-2">
-                        <ButtonComponent
+                            <ButtonComponent
                                 isGhost
                                 isDanger
                                 text="Cancel"

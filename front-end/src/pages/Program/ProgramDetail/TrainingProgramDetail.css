@@ -1,11 +1,11 @@
-::-webkit-scrollbar {
+.training-program::-webkit-scrollbar {
     display: none;
 }
 
 #training-program-detail-header,
-#training-program-detail-duration > *,
-#training-program-view > *,
-#training-program-detail > * {
+#training-program-detail-duration>*,
+#training-program-view>*,
+#training-program-detail>* {
     padding-left: 30px;
     padding-right: 25px;
     letter-spacing: 0.0625rem;

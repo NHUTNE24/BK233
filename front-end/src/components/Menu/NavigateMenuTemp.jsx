@@ -14,6 +14,7 @@ import type { MenuProps } from 'antd';
 import { Button, Menu, Layout } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './NavigateMenu.module.css';
+import { useSelector } from 'react-redux';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Sider } = Layout;
@@ -75,32 +76,63 @@ const items: MenuItem[] = [
 
 const NavigateMenu: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey, setSelectedKey] = useState('1');
   const location = useLocation();
-
-  const validPaths = {
-    '/': '1',
-    '/syllabus': '2',
-    '/create-syllabus': '3',
-    '/program/view-program': '4',
-    '/program/create-program': '5',
-    '/class/list': '6',
-    '/class/create/step1': '7',
-    '/training-calendar': '8',
-    '/user/list': '9',
-    '/user/permission': '10',
-    '/learning-materials': '11',
-    '/setting/calendar': '12',
-  };
-
-  useEffect(() => {
-    if (validPaths[location.pathname]) {
-      setSelectedKey(validPaths[location.pathname]);
-    }
-  }, [location.pathname]);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  const getDefaultSelectedKey = () => {
+    switch (location.pathname) {
+      case '/':
+        return '1';
+      case '/syllabus':
+        return '2';
+      case '/create-syllabus':
+        return '3';
+      case '/program/view-program':
+        return '4';
+      case '/program/create-program':
+        return '5';
+      case '/class/list':
+        return '6';
+      case '/class/create/step1':
+        return '7';
+      case '/training-calendar':
+        return '8';
+      case '/user/list':
+        return '9';
+      case '/user/permission':
+        return '10';
+      case '/learning-materials':
+        return '11';
+      case '/setting/calendar':
+        return '12';
+      default:
+        return '1';
+    }
+  };
+
+  const getDefaultOpenKeys = () => {
+    switch (location.pathname) {
+      case '/syllabus':
+      case '/create-syllabus':
+        return ['sub1'];
+      case '/program/view-program':
+      case '/program/create-program':
+        return ['sub2'];
+      case '/class/list':
+      case '/class/create/step1':
+      case '/class/create/step2':
+        return ['sub3'];
+      case '/user/list':
+      case '/user/permission':
+        return ['sub4'];
+      case '/setting/calendar':
+        return ['sub5'];
+      default:
+        return [];
+    }
   };
 
   return (
@@ -119,9 +151,10 @@ const NavigateMenu: React.FC = () => {
       >
         {collapsed ? <MenuOutlined style={{ color: 'black' }} /> : <CloseOutlined style={{ color: 'black' }} />}
       </Button>
+
       <Menu
-        selectedKeys={[selectedKey]}
-        defaultOpenKeys={Object.keys(validPaths).filter(path => location.pathname.startsWith(path))}
+        selectedKeys={[getDefaultSelectedKey()]}
+        // openKeys={getDefaultOpenKeys()}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}

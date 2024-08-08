@@ -12,12 +12,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -27,22 +27,24 @@ public class SecurityConfig {
     private String frontendUrl;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationFailureHandler customAuthenticationFailureHandler) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth
-                        .requestMatchers("/api/**").permitAll()
-                        .anyRequest().authenticated();
+                            .requestMatchers("/login", "/oauth2/**", "/api/**").permitAll()
+                            .anyRequest().authenticated();
                 })
-                .oauth2Login(oath2 -> {
-                    oath2.loginPage("/login").permitAll();
-                    oath2.successHandler(oAuth2LoginSuccessHandler);
+                .oauth2Login(oauth2 -> {
+                    oauth2.loginPage("/login").permitAll();
+
+                    oauth2.successHandler(oAuth2LoginSuccessHandler);
+                    oauth2.failureHandler(customAuthenticationFailureHandler);
                 })
                 .build();
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -55,5 +57,10 @@ public class SecurityConfig {
         return urlBasedCorsConfigurationSource;
     }
 
+    @Bean
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return (request, response, exception) -> {
+            response.sendRedirect("http://localhost:5173/login");
+        };
+    }
 }
-

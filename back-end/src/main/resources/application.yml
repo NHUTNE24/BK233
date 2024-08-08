@@ -22,18 +22,13 @@ spring:
             scope:
               - email
               - public_profile
-          github:
-            clientId: Iv23liCBPHkZ6jCn1bWS
-            clientSecret: 0a6472529eaff60319481f0c83fdd84277d48fc2
-            scope: user:email
-            redirect-uri: "{baseUrl}/login/oauth2/code/github"
-            authorization-grant-type: authorization_code
-            client-name: GitHub
+            client-name: Facebook
+            provider: facebook
         provider:
-          github:
-            authorization-uri: https://github.com/login/oauth/authorize
-            token-uri: https://github.com/login/oauth/access_token
-            user-info-uri: https://api.github.com/user
+          facebook:
+            authorization-uri: https://www.facebook.com/v12.0/dialog/oauth
+            token-uri: https://graph.facebook.com/v12.0/oauth/access_token
+            user-info-uri: https://graph.facebook.com/v12.0/me?fields=id,name,email,picture
             user-name-attribute: id
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/auth

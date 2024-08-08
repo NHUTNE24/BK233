@@ -105,7 +105,7 @@ function General({
                             color: 'red',
                             fontStyle: 'italic',
                             fontSize: '12px',
-                            marginLeft: '128px',
+                            marginLeft: '140px',
                             padding: '2px',
                         }}
                     >

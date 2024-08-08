@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Select, Button, Space, message, Input } from 'antd';
+import { Select, Button, Space, message, Input } from 'antd';
 import axios from 'axios';
 import './RolePermission.css';
-import TableCustom from '../../../components/Table/index';
+import TableCustom from '../../Syllabus/components/TableCusTom';
 
 const { Option } = Select;
 
@@ -14,7 +14,6 @@ const RolePermission = () => {
     const [editingRole, setEditingRole] = useState([]);
     const [newRole, setNewRole] = useState(null);
     const [F5, setF5] = useState(false);
-
 
     useEffect(() => {
         fetchRoles();
@@ -46,7 +45,9 @@ const RolePermission = () => {
 
     const fetchPermissions = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/permissions');
+            const response = await axios.get(
+                'http://localhost:8080/api/permissions'
+            );
             const data = response.data.map((item) => ({
                 id: item.id,
                 name: item.name,
@@ -97,7 +98,7 @@ const RolePermission = () => {
             return;
         }
 
-        const invalidRoles = editingRole.filter(role => !role.name);
+        const invalidRoles = editingRole.filter((role) => !role.name);
         if (invalidRoles.length > 0) {
             message.error('Role name cannot be null');
             return;
@@ -110,12 +111,19 @@ const RolePermission = () => {
                     const updatedRole = {
                         id: role.id,
                         name: role.name,
-                        syllabusPermission: getPermissionById(role.syllabusPermission),
-                        trainingProgramPermission: getPermissionById(role.trainingProgramPermission),
-                        classPermission: getPermissionById(role.classPermission),
-                        learningMaterialPermission: getPermissionById(role.learningMaterialPermission),
+                        syllabusPermission: getPermissionById(
+                            role.syllabusPermission
+                        ),
+                        trainingProgramPermission: getPermissionById(
+                            role.trainingProgramPermission
+                        ),
+                        classPermission: getPermissionById(
+                            role.classPermission
+                        ),
+                        learningMaterialPermission: getPermissionById(
+                            role.learningMaterialPermission
+                        ),
                         userPermission: getPermissionById(role.userPermission),
-
                     };
 
                     console.log('Updating role with ID:', role.id);
@@ -139,7 +147,6 @@ const RolePermission = () => {
         }
     };
 
-
     const handleAddNewRole = async () => {
         if (!newRole) {
             message.warning('Please fill in the new role details');
@@ -154,7 +161,7 @@ const RolePermission = () => {
                 classPermission: newRole.classPermission,
                 learningMaterialPermission: newRole.learningMaterialPermission,
                 userPermission: newRole.userPermission,
-                "_class": "com.fams.api.entity.Role"
+                _class: 'com.fams.api.entity.Role',
             };
             const response = await axios.post(
                 'http://localhost:8080/api/roles',
@@ -203,7 +210,9 @@ const RolePermission = () => {
                     style={{ width: 130 }}
                 >
                     {permissions.map((perm) => (
-                        <Option key={perm.id} value={perm.id}>{perm.name}</Option>
+                        <Option key={perm.id} value={perm.id}>
+                            {perm.name}
+                        </Option>
                     ))}
                 </Select>
             ),
@@ -217,12 +226,18 @@ const RolePermission = () => {
                 <Select
                     defaultValue={text}
                     onChange={(value) =>
-                        handleChange(value, record.id, 'trainingProgramPermission')
+                        handleChange(
+                            value,
+                            record.id,
+                            'trainingProgramPermission'
+                        )
                     }
                     style={{ width: 130 }}
                 >
                     {permissions.map((perm) => (
-                        <Option key={perm.id} value={perm.id}>{perm.name}</Option>
+                        <Option key={perm.id} value={perm.id}>
+                            {perm.name}
+                        </Option>
                     ))}
                 </Select>
             ),
@@ -241,7 +256,9 @@ const RolePermission = () => {
                     style={{ width: 130 }}
                 >
                     {permissions.map((perm) => (
-                        <Option key={perm.id} value={perm.id}>{perm.name}</Option>
+                        <Option key={perm.id} value={perm.id}>
+                            {perm.name}
+                        </Option>
                     ))}
                 </Select>
             ),
@@ -255,12 +272,18 @@ const RolePermission = () => {
                 <Select
                     defaultValue={text}
                     onChange={(value) =>
-                        handleChange(value, record.id, 'learningMaterialPermission')
+                        handleChange(
+                            value,
+                            record.id,
+                            'learningMaterialPermission'
+                        )
                     }
                     style={{ width: 130 }}
                 >
                     {permissions.map((perm) => (
-                        <Option key={perm.id} value={perm.id}>{perm.name}</Option>
+                        <Option key={perm.id} value={perm.id}>
+                            {perm.name}
+                        </Option>
                     ))}
                 </Select>
             ),
@@ -273,11 +296,15 @@ const RolePermission = () => {
             render: (text, record) => (
                 <Select
                     defaultValue={text}
-                    onChange={(value) => handleChange(value, record.id, 'userPermission')}
+                    onChange={(value) =>
+                        handleChange(value, record.id, 'userPermission')
+                    }
                     style={{ width: 130 }}
                 >
                     {permissions.map((perm) => (
-                        <Option key={perm.id} value={perm.id}>{perm.name}</Option>
+                        <Option key={perm.id} value={perm.id}>
+                            {perm.name}
+                        </Option>
                     ))}
                 </Select>
             ),
@@ -347,34 +374,34 @@ const RolePermission = () => {
                             setNewRole({
                                 name: 'New Role',
                                 syllabusPermission: {
-                                    "id": "66a84d08d8a6414438bca2a1",
-                                    "name": "Access denied"
+                                    id: '66a84d08d8a6414438bca2a1',
+                                    name: 'Access denied',
                                 },
                                 trainingProgramPermission: {
-                                    "id": "66a84d08d8a6414438bca2a1",
-                                    "name": "Access denied"
+                                    id: '66a84d08d8a6414438bca2a1',
+                                    name: 'Access denied',
                                 },
                                 classPermission: {
-                                    "id": "66a84d08d8a6414438bca2a1",
-                                    "name": "Access denied"
+                                    id: '66a84d08d8a6414438bca2a1',
+                                    name: 'Access denied',
                                 },
                                 learningMaterialPermission: {
-                                    "id": "66a84d08d8a6414438bca2a1",
-                                    "name": "Access denied"
+                                    id: '66a84d08d8a6414438bca2a1',
+                                    name: 'Access denied',
                                 },
                                 userPermission: {
-                                    "id": "66a84d08d8a6414438bca2a1",
-                                    "name": "Access denied"
+                                    id: '66a84d08d8a6414438bca2a1',
+                                    name: 'Access denied',
                                 },
-                                "_class": "com.fams.api.entity.Role",
+                                _class: 'com.fams.api.entity.Role',
                             })
                         }
                         style={{
                             display: isClick
                                 ? 'none'
                                 : newRole
-                                    ? 'none'
-                                    : 'block',
+                                  ? 'none'
+                                  : 'block',
                             background: '#2D3748',
                             color: 'white',
                             fontWeight: 'bold',
@@ -389,8 +416,8 @@ const RolePermission = () => {
                             display: isClick
                                 ? 'none'
                                 : newRole
-                                    ? 'none'
-                                    : 'block',
+                                  ? 'none'
+                                  : 'block',
                             background: '#2D3748',
                             color: 'white',
                             fontWeight: 'bold',
@@ -401,12 +428,10 @@ const RolePermission = () => {
                 </div>
                 <TableCustom
                     dataSource={
-                        newRole
-                            ? [...roles, { ...newRole, id: 'new' }]
-                            : roles
+                        newRole ? [...roles, { ...newRole, id: 'new' }] : roles
                     }
                     columns={isClick ? columns : columns1}
-                    noPagination={false}
+                    pagination={true}
                     rowKey="id"
                     loading={loading}
                 />
@@ -421,15 +446,13 @@ const RolePermission = () => {
                                         ? 'none'
                                         : 'block'
                                     : newRole
-                                        ? 'block'
-                                        : 'none',
+                                      ? 'block'
+                                      : 'none',
                                 fontWeight: 'bold',
                             }}
                             danger
                         >
-                            <span
-                                style={{ borderBottom: '1.5px solid ' }}
-                            >
+                            <span style={{ borderBottom: '1.5px solid ' }}>
                                 Cancel
                             </span>
                         </Button>
@@ -457,8 +480,8 @@ const RolePermission = () => {
                                 display: isClick
                                     ? 'none'
                                     : newRole
-                                        ? 'block'
-                                        : 'none',
+                                      ? 'block'
+                                      : 'none',
                             }}
                         >
                             Save New Role

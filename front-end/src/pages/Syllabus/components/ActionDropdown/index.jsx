@@ -24,6 +24,7 @@ function ActionDropdown(props) {
             switch (actions.action) {
                 case 'Add':
                     navigate('/program/create-program');
+
                     return;
                 case 'Edit':
                     navigate(`/edit-syllabus/${id}`);

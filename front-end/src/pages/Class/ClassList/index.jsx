@@ -250,7 +250,7 @@ const ViewClass = () => {
             title: 'Attendee',
             dataIndex: 'attendeeTypeName',
             sorter: (a, b) =>
-                a.attendeeTypeName.localeCompare(b.attendeeTypeName),
+                a.attendeeTypeName?.localeCompare(b.attendeeTypeName),
             render: (text) => {
                 let className = 'attendee-tag';
                 switch (text?.toLowerCase()) {
@@ -282,7 +282,7 @@ const ViewClass = () => {
         {
             title: 'FSU',
             dataIndex: 'fsuName',
-            sorter: (a, b) => a.fsuName.localeCompare(b.fsuName),
+            sorter: (a, b) => a.fsuName?.localeCompare(b.fsuName),
             sortIcon: () => <MdOutlineSort />,
         },
         {
@@ -382,23 +382,25 @@ const ViewClass = () => {
                         <ButtonComponent
                             text="Filter"
                             isButtonWithIcon
-                            icon={<MdOutlineSort className='text-xl'/>}
+                            icon={<MdOutlineSort className="text-xl" />}
                             onClick={handleOpenFilterModal}
                         />
                     </div>
-                    <div className='flex flex-row gap-2'>
+                    <div className="flex flex-row gap-2">
                         <Link to={'/class/create/step1'}>
                             <ButtonComponent
                                 text="Add new"
                                 isButtonWithIcon
-                                icon={<MdOutlineAddCircleOutline className='text-xl'/>}
+                                icon={
+                                    <MdOutlineAddCircleOutline className="text-xl" />
+                                }
                             />
                         </Link>
                         <ButtonComponent
                             text="Export"
                             isButtonWithIcon
                             isBgOrange
-                            icon={<MdDownload className='text-xl'/>}
+                            icon={<MdDownload className="text-xl" />}
                             onClick={handleExport}
                         />
                     </div>
@@ -418,7 +420,7 @@ const ViewClass = () => {
                 open={isFilterModalOpen}
                 onCancel={handleFilterCancel}
                 footer={null}
-                className='class-filter-tool__modal'
+                className="class-filter-tool__modal"
             >
                 <FilterTool
                     onFilter={handleFilter}
