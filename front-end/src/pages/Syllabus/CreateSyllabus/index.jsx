@@ -9,7 +9,7 @@ import {
     Spin,
     message,
 } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TabsCustom from '../components/TabsCustom';
 import { formRules } from '../../../constants/formRules';
 import './CreateSyllabus.scss';
@@ -19,6 +19,7 @@ import {
     resetState,
     setStatus,
     updateBasicInfo,
+    updateGeneralIsValid,
 } from '../../../store/syllabus/updateSyllabusSlice';
 import SliderCustom from '../components/SliderCustom';
 import { setSelectedKey } from '../../../store/app/siderBarSlice';
@@ -32,6 +33,12 @@ function CreateSyllabus() {
     const dispatch = useDispatch();
     const createSyllabus = useSelector((state) => state.updateSyllabus);
     const navigate = useNavigate();
+    const attendeeNumberRef = useRef(null);
+    const technicalRef = useRef(null);
+    const courseRef = useRef(null);
+    const levelRef = useRef(null);
+
+    const data = useSelector((state) => state.updateSyllabus);
 
     const [outputStandardList, setOutputStandardList] = useState([]);
     const [deliveryTypeList, setDeliveryTypeList] = useState([]);
@@ -81,14 +88,13 @@ function CreateSyllabus() {
 
     useEffect(() => {
         if (createSyllabus.isAssessmentSchemaValid.status === false) {
-            // console.log(createSyllabus.isAssessmentSchemaValid);
             const errorSection = [
                 ...createSyllabus.isAssessmentSchemaValid.errorSection,
             ];
             const tags = document.querySelectorAll(
                 '.others-tab-create .validation-rules.active'
             );
-            // console.log(tag);
+
             if (tags.length > 0) {
                 tags.forEach((item) => {
                     item.classList.remove('active');
@@ -104,7 +110,7 @@ function CreateSyllabus() {
             const tags = document.querySelectorAll(
                 '.others-tab-create .validation-rules.active'
             );
-            // console.log(tag);
+
             if (tags.length > 0) {
                 tags.forEach((item) => {
                     item.classList.remove('active');
@@ -131,6 +137,68 @@ function CreateSyllabus() {
             .then((values) => {
                 if (!createSyllabus.isGeneralValid.status) {
                     message.error('General tab must be filled!');
+                    if (!data.isGeneralValid.status) {
+                        message.error('General tab must be filled!');
+                        if (!data.general.level) {
+                            const newGeneralIsValid = {
+                                status: false,
+                                errorSection: [
+                                    ...data.isGeneralValid.errorSection,
+                                    'level',
+                                ],
+                            };
+                            dispatch(updateGeneralIsValid(newGeneralIsValid));
+                            levelRef.current.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'end',
+                            });
+                        } else if (!data.general.attendeeNumber) {
+                            const newGeneralIsValid = {
+                                status: false,
+                                errorSection: [
+                                    ...data.isGeneralValid.errorSection,
+                                    'attendee-number',
+                                ],
+                            };
+                            attendeeNumberRef.current.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                            });
+
+                            dispatch(updateGeneralIsValid(newGeneralIsValid));
+                        } else if (
+                            !data.general.technicalContent ||
+                            data.general.technicalContent === '<p><br></p>'
+                        ) {
+                            const newGeneralIsValid = {
+                                status: false,
+                                errorSection: [
+                                    ...data.isGeneralValid.errorSection,
+                                    'technical',
+                                ],
+                            };
+                            technicalRef.current.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                            });
+
+                            dispatch(updateGeneralIsValid(newGeneralIsValid));
+                        } else {
+                            const newGeneralIsValid = {
+                                status: false,
+                                errorSection: [
+                                    ...data.isGeneralValid.errorSection,
+                                    'course-objective',
+                                ],
+                            };
+                            courseRef.current.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                            });
+
+                            dispatch(updateGeneralIsValid(newGeneralIsValid));
+                        }
+                    }
                     return;
                 }
                 if (!createSyllabus.isSyllabusDaysValid) {
@@ -181,12 +249,11 @@ function CreateSyllabus() {
                 }
             })
             .catch((errorInfo) => {
-                console.log(errorInfo);
                 if (errorInfo.errorFields) {
                     const firstErrorField = errorInfo.errorFields[0];
                     if (firstErrorField) {
                         message.error('Basic infomation must be filled!');
-                        // console.log(firstErrorField);
+
                         basicInfoForm.scrollToField(firstErrorField.name[0], {
                             behavior: 'smooth',
                             block: 'center',
@@ -322,7 +389,11 @@ function CreateSyllabus() {
                 <div className="create-syllabus__body">
                     <TabsCustom
                         dataSource={null}
+                        technicalRef={technicalRef}
+                        attendeeNumberRef={attendeeNumberRef}
+                        courseRef={courseRef}
                         deliveryTypeList={deliveryTypeList}
+                        levelRef={levelRef}
                         outputStandardList={outputStandardList}
                         activeTab={activeTab}
                         onTabChange={handleTabChange}

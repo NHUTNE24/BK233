@@ -23,7 +23,7 @@ import {
 } from 'react-icons/md';
 import './ClassList.scss';
 import FilterTool from '../../../components/FilterTool';
-import TableCustom from '../../../components/Table';
+import TableCustom from '../../Syllabus/components/TableCusTom';
 
 const apiBaseURL = 'http://localhost:8080/api/classes';
 
@@ -43,6 +43,7 @@ const ViewClass = () => {
 
     const fetchData = useCallback(async () => {
         try {
+            setLoading(true);
             const response = await axios.get(apiBaseURL);
             if (response.data && Array.isArray(response.data)) {
                 setClassInfo(response.data);
@@ -50,6 +51,7 @@ const ViewClass = () => {
             } else {
                 console.error('Invalid data format', response.data);
             }
+            setLoading(false);
         } catch (error) {
             console.error('There was an error fetching the class list!', error);
             message.error('Error fetching class list');
@@ -417,7 +419,8 @@ const ViewClass = () => {
                     <TableCustom
                         dataSource={filteredClassInfo}
                         columns={columns}
-                        noPagination={false}
+                        pagination={true}
+                        loading={loading}
                     />
                     {console.log('Table data:', filteredClassInfo)}
                 </div>

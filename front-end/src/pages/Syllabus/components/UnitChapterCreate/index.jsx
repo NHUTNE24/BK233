@@ -92,7 +92,7 @@ function UnitChapterCreate({
             </div>
             <div>
                 <Select
-                    style={{ flex: 1, margin: '0 8px', minWidth: '200px' }}
+                    style={{ flex: 1, margin: '0 8px', minWidth: '180px' }}
                     name="outputStandardName"
                     onChange={(value) =>
                         dispatch(
@@ -160,7 +160,6 @@ function UnitChapterCreate({
                 <InputNumber
                     style={{ flex: 1, margin: '0 8px', minWidth: '100px' }}
                     name="duration"
-                    min={0}
                     value={
                         syllabusDays[indexDay].syllabusUnits[indexUnit]
                             .unitChapters[indexChapter].duration || ''

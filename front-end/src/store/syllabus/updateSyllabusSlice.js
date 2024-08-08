@@ -83,7 +83,8 @@ const updateSyllabusSlice = createSlice({
                 state.general.technicalContent !== '<p><br></p>' &&
                 state.general.courseContent &&
                 state.general.courseContent !== '<p><br></p>' &&
-                state.general.attendeeNumber
+                state.general.attendeeNumber &&
+                state.general.level
             ) {
                 state.isGeneralValid.status = true;
             } else {
@@ -147,12 +148,17 @@ const updateSyllabusSlice = createSlice({
                 state.general.technicalContent !== '<p><br></p>' &&
                 state.general.courseContent &&
                 state.general.courseContent !== '<p><br></p>' &&
-                state.general.attendeeNumber
+                state.general.attendeeNumber &&
+                state.general.level
             ) {
                 state.isGeneralValid.status = true;
             } else {
                 state.isGeneralValid.status = false;
             }
+            state.isGeneralValid.errorSection =
+                state.isGeneralValid.errorSection.filter(
+                    (item) => item !== 'level'
+                );
         },
 
         setTrainingDeliveryPrinciple: (state, action) => {
@@ -178,7 +184,8 @@ const updateSyllabusSlice = createSlice({
                 state.general.technicalContent !== '<p><br></p>' &&
                 state.general.courseContent &&
                 state.general.courseContent !== '<p><br></p>' &&
-                state.general.attendeeNumber
+                state.general.attendeeNumber &&
+                state.general.level
             ) {
                 state.isGeneralValid.status = true;
             } else {
@@ -199,7 +206,8 @@ const updateSyllabusSlice = createSlice({
                 state.general.technicalContent !== '<p><br></p>' &&
                 state.general.courseContent &&
                 state.general.courseContent !== '<p><br></p>' &&
-                state.general.attendeeNumber
+                state.general.attendeeNumber &&
+                state.general.level
             ) {
                 state.isGeneralValid.status = true;
             } else {

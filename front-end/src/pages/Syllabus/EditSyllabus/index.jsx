@@ -50,6 +50,7 @@ function EditSyllabus() {
 
     const nameRef = useRef(null);
     const codeRef = useRef(null);
+    const levelRef = useRef(null);
     const versionRef = useRef(null);
     const attendeeNumberRef = useRef(null);
     const technicalRef = useRef(null);
@@ -302,7 +303,21 @@ function EditSyllabus() {
 
         if (!data.isGeneralValid.status) {
             message.error('General tab must be filled!');
-            if (!data.general.attendeeNumber) {
+
+            if (!data.general.level) {
+                const newGeneralIsValid = {
+                    status: false,
+                    errorSection: [
+                        ...data.isGeneralValid.errorSection,
+                        'level',
+                    ],
+                };
+                dispatch(updateGeneralIsValid(newGeneralIsValid));
+                levelRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end',
+                });
+            } else if (!data.general.attendeeNumber) {
                 const newGeneralIsValid = {
                     status: false,
                     errorSection: [
@@ -690,6 +705,7 @@ function EditSyllabus() {
                             attendeeNumberRef={attendeeNumberRef}
                             technicalRef={technicalRef}
                             courseRef={courseRef}
+                            levelRef={levelRef}
                         />
                     </div>
 

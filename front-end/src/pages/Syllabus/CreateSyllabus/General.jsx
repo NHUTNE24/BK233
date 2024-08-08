@@ -16,6 +16,7 @@ function General({
     form,
     attendeeNumberRef,
     technicalRef,
+    levelRef,
 }) {
     const data = useSelector((state) => state.updateSyllabus);
 
@@ -32,12 +33,16 @@ function General({
     return (
         <>
             <div className="general-tab-create">
-                <div style={{ paddingTop: '12px' }}>
+                <div ref={levelRef} style={{ paddingTop: '12px' }}>
                     <label style={{ marginRight: '89px', marginLeft: '8px' }}>
                         Level <span style={{ color: 'red' }}>*</span>
                     </label>
                     <Select
-                        // className="custom-select-one"
+                        className={
+                            data.isGeneralValid.errorSection.includes('level')
+                                ? 'input-error'
+                                : 'input-normal'
+                        }
                         style={{ minWidth: '200px' }}
                         value={data.general.level}
                         onChange={(e) => dispatch(setLevel({ level: e }))}
@@ -49,6 +54,19 @@ function General({
                         <Select.Option value="Advanced">Advanced</Select.Option>
                     </Select>
                 </div>
+                {data.isGeneralValid.errorSection.includes('level') && (
+                    <p
+                        style={{
+                            color: 'red',
+                            fontStyle: 'italic',
+                            fontSize: '12px',
+                            marginLeft: '148px',
+                            padding: '2px',
+                        }}
+                    >
+                        Level is required!
+                    </p>
+                )}
 
                 <div
                     ref={attendeeNumberRef}

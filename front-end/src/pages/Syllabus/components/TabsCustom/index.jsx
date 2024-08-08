@@ -10,12 +10,25 @@ import OthersTabCreate from '../OtherTabCreate';
 import OutlineTabCreate from '../OutlineTabCreate';
 import General from '../../CreateSyllabus/General';
 import { useEffect, useState } from 'react';
-function TabsCustom({ dataSource,courseRef, outputStandardList, activeTab, onTabChange, onFormChange, form, attendeeNumberRef, technicalRef }) {
+function TabsCustom({
+    dataSource,
+    courseRef,
+    levelRef,
+    outputStandardList,
+    activeTab,
+    onTabChange,
+    onFormChange,
+    form,
+    attendeeNumberRef,
+    technicalRef,
+}) {
     const dispatch = useDispatch();
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/syllabus/${dataSource.syllabus.id}`);
+            const response = await axios.get(
+                `http://localhost:8080/syllabus/${dataSource.syllabus.id}`
+            );
             const data = response.data;
             dispatch(setData(data));
         } catch (err) {
@@ -28,7 +41,9 @@ function TabsCustom({ dataSource,courseRef, outputStandardList, activeTab, onTab
     useEffect(() => {
         const fetchDeliveryType = async () => {
             try {
-                const result = await axios.get('http://localhost:8080/api/delivery-type');
+                const result = await axios.get(
+                    'http://localhost:8080/api/delivery-type'
+                );
 
                 if (result.status === 200) {
                     setDeliveryTypeList(result.data);
@@ -52,6 +67,7 @@ function TabsCustom({ dataSource,courseRef, outputStandardList, activeTab, onTab
                     attendeeNumberRef={attendeeNumberRef}
                     technicalRef={technicalRef}
                     courseRef={courseRef}
+                    levelRef={levelRef}
                 />
             ),
             key: '1',

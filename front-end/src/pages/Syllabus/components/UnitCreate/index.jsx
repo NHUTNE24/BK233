@@ -5,16 +5,29 @@ import { MdOutlineWarningAmber } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './style.module.scss';
 import UnitChapterCreate from '../UnitChapterCreate';
-import { addChapter, changeUnitName, deleteUnit } from '../../../../store/syllabus/updateSyllabusSlice';
+import {
+    addChapter,
+    changeUnitName,
+    deleteUnit,
+} from '../../../../store/syllabus/updateSyllabusSlice';
 
 UnitCreate.propTypes = {
     indexDay: PropTypes.number.isRequired,
     indexUnit: PropTypes.number.isRequired,
 };
 
-function UnitCreate({ indexDay, indexUnit, unitInfo, dataSource, deliveryTypeList, outputStandardList }) {
+function UnitCreate({
+    indexDay,
+    indexUnit,
+    unitInfo,
+    dataSource,
+    deliveryTypeList,
+    outputStandardList,
+}) {
     const dispatch = useDispatch();
-    const syllabusDays = useSelector((state) => state.updateSyllabus.syllabusDay);
+    const syllabusDays = useSelector(
+        (state) => state.updateSyllabus.syllabusDay
+    );
     return (
         <div className={styles.container}>
             <Collapse
@@ -25,13 +38,16 @@ function UnitCreate({ indexDay, indexUnit, unitInfo, dataSource, deliveryTypeLis
                         key: '1',
                         label: (
                             <div className={styles['unit-header']}>
-                                <p className={styles['unit-no']}>{`Unit ${indexUnit + 1}`}</p>
+                                <p
+                                    className={styles['unit-no']}
+                                >{`Unit ${indexUnit + 1}`}</p>
                                 <div className={styles['delete-unit-btn']}>
                                     <Popconfirm
                                         title=<div
                                             style={{
                                                 display: 'flex',
-                                                borderBottom: '1px solid #E2E8F0',
+                                                borderBottom:
+                                                    '1px solid #E2E8F0',
                                             }}
                                         >
                                             <MdOutlineWarningAmber
@@ -62,8 +78,15 @@ function UnitCreate({ indexDay, indexUnit, unitInfo, dataSource, deliveryTypeLis
                                         >
                                             Delete all content of the Unit?
                                         </p>
-                                        onConfirm={() => dispatch(deleteUnit({ indexDay, indexUnit }))}
-                                        onCancel={(e) => console.log(e)}
+                                        onConfirm={() =>
+                                            dispatch(
+                                                deleteUnit({
+                                                    indexDay,
+                                                    indexUnit,
+                                                })
+                                            )
+                                        }
+                                        // onCancel={(e) => console.log(e)}
                                         okText="Delete"
                                         icon={null}
                                         cancelButtonProps={{
@@ -89,7 +112,9 @@ function UnitCreate({ indexDay, indexUnit, unitInfo, dataSource, deliveryTypeLis
                                             Cancel
                                         </p>
                                     >
-                                        <IoMdRemoveCircleOutline style={{ cursor: 'pointer' }} />
+                                        <IoMdRemoveCircleOutline
+                                            style={{ cursor: 'pointer' }}
+                                        />
                                     </Popconfirm>
                                 </div>
                             </div>
@@ -107,40 +132,69 @@ function UnitCreate({ indexDay, indexUnit, unitInfo, dataSource, deliveryTypeLis
                                         <Input
                                             id="unitName"
                                             onChange={(e) =>
-                                                dispatch(changeUnitName({ indexDay, indexUnit, name: e.target.value }))
+                                                dispatch(
+                                                    changeUnitName({
+                                                        indexDay,
+                                                        indexUnit,
+                                                        name: e.target.value,
+                                                    })
+                                                )
                                             }
-                                            value={syllabusDays[indexDay].syllabusUnits[indexUnit].unitName}
+                                            value={
+                                                syllabusDays[indexDay]
+                                                    .syllabusUnits[indexUnit]
+                                                    .unitName
+                                            }
                                             name="unitName"
                                             placeholder="Unit name"
                                             className={
-                                                !syllabusDays[indexDay].syllabusUnits[indexUnit].unitName
+                                                !syllabusDays[indexDay]
+                                                    .syllabusUnits[indexUnit]
+                                                    .unitName
                                                     ? styles['input-error']
                                                     : styles['input-normal']
                                             }
                                         />
-                                        {!syllabusDays[indexDay].syllabusUnits[indexUnit].unitName && (
-                                            <div style={{ color: 'red', fontSize: '12px', padding: '4px' }}>
+                                        {!syllabusDays[indexDay].syllabusUnits[
+                                            indexUnit
+                                        ].unitName && (
+                                            <div
+                                                style={{
+                                                    color: 'red',
+                                                    fontSize: '12px',
+                                                    padding: '4px',
+                                                }}
+                                            >
                                                 Unit name is required!
                                             </div>
                                         )}
                                     </div>
                                 </div>
 
-                                {syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters &&
-                                    syllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters.map((chapter, idx) => (
+                                {syllabusDays[indexDay].syllabusUnits[indexUnit]
+                                    .unitChapters &&
+                                    syllabusDays[indexDay].syllabusUnits[
+                                        indexUnit
+                                    ].unitChapters.map((chapter, idx) => (
                                         <UnitChapterCreate
                                             key={idx}
                                             indexDay={indexDay}
                                             indexUnit={indexUnit}
                                             indexChapter={idx}
                                             dataSource={dataSource}
-                                            outputStandardList={outputStandardList}
+                                            outputStandardList={
+                                                outputStandardList
+                                            }
                                             deliveryTypeList={deliveryTypeList}
                                         />
                                     ))}
 
                                 <div
-                                    onClick={() => dispatch(addChapter({ indexDay, indexUnit }))}
+                                    onClick={() =>
+                                        dispatch(
+                                            addChapter({ indexDay, indexUnit })
+                                        )
+                                    }
                                     className={styles['add-chapter-btn']}
                                 >
                                     <Tooltip
