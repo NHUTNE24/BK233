@@ -1,0 +1,615 @@
+import { Button } from 'antd';
+import { IoAddCircleOutline } from 'react-icons/io5';
+import { useSelector, useDispatch } from 'react-redux';
+import styles from './style.module.scss';
+import { addDay } from '../../store/slices/createSyllabusSlice';
+import SyllabusDayCreate from '../SyllabusDayCreate';
+
+function OutlineTabCreate() {
+    const dispatch = useDispatch();
+
+    const syllabusDays = useSelector((state) => state.createSyllabus);
+    // const [syllabusDays, setSyllabusDays] = useState([]);
+
+    // const [form] = useForm();
+
+    // const cancel = (e) => {
+    //     console.log(e);
+    // };
+
+    // const handleConfirm = async () => {
+    //     console.log('THANH CONG');
+    // };
+
+    // const handleChangeUnitName = (indexDay, indexUnit, e) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit],
+    //         [e.target.name]: e.target.value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleChangeChapterName = (indexDay, indexUnit, indexChapter, e) => {
+    //     const newSyllabusDays = [...syllabusDays];
+
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter],
+    //         [e.target.name]: e.target.value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleAddChapter = (indexDay, indexUnit) => {
+    //     const newSyllabusDays = [...syllabusDays];
+
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters = [
+    //         ...(newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters || []),
+    //         {
+    //             chapterName: '',
+    //             outputStandardName: '',
+    //             duration: 0,
+    //             deliveryType: '',
+    //             isOnline: false,
+    //         },
+    //     ];
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleDeleteChapter = (indexDay, indexUnit, indexChapter) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters = newSyllabusDays[indexDay].syllabusUnits[
+    //         indexUnit
+    //     ].unitChapters.filter((item, index) => index !== indexChapter);
+    //     form.resetFields([
+    //         `chapterName${indexChapter}`,
+    //         `deliveryType${indexChapter}`,
+    //         `duration${indexChapter}`,
+    //         `outputStandardName${indexChapter}`,
+    //         `isOnline${indexChapter}`,
+    //     ]);
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleAddDay = () => {
+    //     const newSyllabusDays = [...syllabusDays, {}];
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleAddUnit = (indexDay) => {
+    //     const newSyllabusDays = [...syllabusDays];
+
+    //     newSyllabusDays[indexDay].syllabusUnits = [...(newSyllabusDays[indexDay].syllabusUnits || []), {}];
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleDeleteUnit = (indexDay, indexUnit) => {
+    //     const newSyllabusDays = [...syllabusDays];
+
+    //     newSyllabusDays[indexDay].syllabusUnits = newSyllabusDays[indexDay].syllabusUnits.reduce((acc, cur, index) => {
+    //         if (index !== indexUnit) {
+    //             acc.push(cur);
+    //         }
+    //         return acc;
+    //     }, []);
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleDeleteDay = (indexDay) => {
+    //     const newSyllabusDays = [...syllabusDays].reduce((acc, cur, index) => {
+    //         if (index !== indexDay) {
+    //             acc.push(cur);
+    //         }
+    //         return acc;
+    //     }, []);
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleChangeOutputStandard = (indexDay, indexUnit, indexChapter, value) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter],
+    //         outputStandardName: value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleChangeDuration = (indexDay, indexUnit, indexChapter, value) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter],
+    //         duration: value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleChangeDeliveryType = (indexDay, indexUnit, indexChapter, value) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter],
+    //         deliveryType: value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // const handleChangeMethod = (indexDay, indexUnit, indexChapter, value) => {
+    //     const newSyllabusDays = [...syllabusDays];
+    //     newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter] = {
+    //         ...newSyllabusDays[indexDay].syllabusUnits[indexUnit].unitChapters[indexChapter],
+    //         isOnline: value,
+    //     };
+
+    //     setSyllabusDays(newSyllabusDays);
+    // };
+
+    // useEffect(() => {
+    //     console.log(syllabusDays);
+    // }, [syllabusDays]);
+
+    return (
+        <>
+            {syllabusDays.map((day, idx) => (
+                <div
+                    className={styles['day-container']}
+                    key={idx}
+                >
+                    <SyllabusDayCreate indexDay={idx} />
+                    {/* <Collapse
+                        expandIcon={<BiCollapseAlt className={styles['collapse-icon']} />}
+                        defaultActiveKey={['1']}
+                        ghost
+                        items={[
+                            {
+                                key: '1',
+                                label: (
+                                    <div className={styles['day-header']}>
+                                        <p className={styles['day-no']}>{`Day ${indexDay + 1}`}</p>
+                                        <div className={styles['delete-day-btn']}>
+                                            <Popconfirm
+                                                title=<div
+                                                    style={{ display: 'flex', borderBottom: '1px solid #E2E8F0' }}
+                                                >
+                                                    <MdOutlineWarningAmber
+                                                        size={20}
+                                                        style={{ color: 'red', marginRight: '12px' }}
+                                                    />
+                                                    <p
+                                                        style={{
+                                                            color: '#2A4365',
+                                                            fontSize: '16px',
+                                                            fontWeight: 600,
+                                                        }}
+                                                    >
+                                                        Delete day
+                                                    </p>
+                                                </div>
+                                                description=<p
+                                                    style={{
+                                                        fontSize: '14px',
+                                                        fontWeight: 500,
+                                                        color: '#000',
+                                                        marginBottom: '24px',
+                                                        marginTop: '12px',
+                                                    }}
+                                                >
+                                                    Delete all content of the Day?
+                                                </p>
+                                                onConfirm={() => handleDeleteDay(indexDay)}
+                                                onCancel={cancel}
+                                                okText="Delete"
+                                                icon={null}
+                                                cancelButtonProps={{
+                                                    style: { border: 'none', backgroundColor: 'transparent' },
+                                                }}
+                                                okButtonProps={{
+                                                    style: {
+                                                        backgroundColor: '#2D3748',
+                                                        fontSize: '14px',
+                                                        fontWeight: 700,
+                                                        padding: '15px 25px',
+                                                    },
+                                                }}
+                                                cancelText=<p style={{ color: 'red', textDecoration: 'underline' }}>
+                                                    Cancel
+                                                </p>
+                                            >
+                                                <IoMdRemoveCircleOutline style={{ cursor: 'pointer' }} />
+                                            </Popconfirm>
+                                        </div>
+                                    </div>
+                                ),
+                                children: (
+                                    <div className={styles['day-body']}>
+                                        {day.syllabusUnits &&
+                                            day.syllabusUnits.map((unit, indexUnit) => (
+                                                <div
+                                                    className={styles['unit-container']}
+                                                    key={indexUnit}
+                                                >
+                                                    <Collapse
+                                                        defaultActiveKey={['1']}
+                                                        ghost
+                                                        items={[
+                                                            {
+                                                                key: '1',
+                                                                label: (
+                                                                    <div className={styles['unit-header']}>
+                                                                        <p
+                                                                            className={styles['unit-no']}
+                                                                        >{`Unit ${indexUnit + 1}`}</p>
+                                                                        <div className={styles['delete-unit-btn']}>
+                                                                            <Popconfirm
+                                                                                title=<div
+                                                                                    style={{
+                                                                                        display: 'flex',
+                                                                                        borderBottom:
+                                                                                            '1px solid #E2E8F0',
+                                                                                    }}
+                                                                                >
+                                                                                    <MdOutlineWarningAmber
+                                                                                        size={20}
+                                                                                        style={{
+                                                                                            color: 'red',
+                                                                                            marginRight: '12px',
+                                                                                        }}
+                                                                                    />
+                                                                                    <p
+                                                                                        style={{
+                                                                                            color: '#2A4365',
+                                                                                            fontSize: '16px',
+                                                                                            fontWeight: 600,
+                                                                                        }}
+                                                                                    >
+                                                                                        Delete unit
+                                                                                    </p>
+                                                                                </div>
+                                                                                description=<p
+                                                                                    style={{
+                                                                                        fontSize: '14px',
+                                                                                        fontWeight: 500,
+                                                                                        color: '#000',
+                                                                                        marginBottom: '24px',
+                                                                                        marginTop: '12px',
+                                                                                    }}
+                                                                                >
+                                                                                    Delete all content of the Unit?
+                                                                                </p>
+                                                                                onConfirm={() =>
+                                                                                    handleDeleteUnit(
+                                                                                        indexDay,
+                                                                                        indexUnit,
+                                                                                    )
+                                                                                }
+                                                                                onCancel={cancel}
+                                                                                okText="Delete"
+                                                                                icon={null}
+                                                                                cancelButtonProps={{
+                                                                                    style: {
+                                                                                        border: 'none',
+                                                                                        backgroundColor: 'transparent',
+                                                                                    },
+                                                                                }}
+                                                                                okButtonProps={{
+                                                                                    style: {
+                                                                                        backgroundColor: '#2D3748',
+                                                                                        fontSize: '14px',
+                                                                                        fontWeight: 700,
+                                                                                        padding: '15px 25px',
+                                                                                    },
+                                                                                }}
+                                                                                cancelText=<p
+                                                                                    style={{
+                                                                                        color: 'red',
+                                                                                        textDecoration: 'underline',
+                                                                                    }}
+                                                                                >
+                                                                                    Cancel
+                                                                                </p>
+                                                                            >
+                                                                                <IoMdRemoveCircleOutline
+                                                                                    style={{ cursor: 'pointer' }}
+                                                                                />
+                                                                            </Popconfirm>
+                                                                        </div>
+                                                                    </div>
+                                                                ),
+                                                                children: (
+                                                                    <div className={styles['unit-body']}>
+                                                                        <Input
+                                                                            onChange={(e) =>
+                                                                                handleChangeUnitName(
+                                                                                    indexDay,
+                                                                                    indexUnit,
+                                                                                    e,
+                                                                                )
+                                                                            }
+                                                                            value={
+                                                                                syllabusDays[indexDay].syllabusUnits[
+                                                                                    indexUnit
+                                                                                ].unitName
+                                                                            }
+                                                                            name="unitName"
+                                                                            placeholder="Unit name"
+                                                                        />
+
+                                                                        {unit.unitChapters &&
+                                                                            unit.unitChapters.map(
+                                                                                (chapter, indexChapter) => (
+                                                                                    <Row
+                                                                                        key={indexChapter}
+                                                                                        gutter={16}
+                                                                                    >
+                                                                                        <Col span={6}>
+                                                                                            <Input
+                                                                                                onChange={(e) =>
+                                                                                                    handleChangeChapterName(
+                                                                                                        indexDay,
+                                                                                                        indexUnit,
+                                                                                                        indexChapter,
+                                                                                                        e,
+                                                                                                    )
+                                                                                                }
+                                                                                                value={
+                                                                                                    syllabusDays[
+                                                                                                        indexDay
+                                                                                                    ].syllabusUnits[
+                                                                                                        indexUnit
+                                                                                                    ].unitChapters[
+                                                                                                        indexChapter
+                                                                                                    ].chapterName
+                                                                                                }
+                                                                                                name="chapterName"
+                                                                                                placeholder="Chapter name"
+                                                                                            />
+                                                                                        </Col>
+                                                                                        <Col span={6}>
+                                                                                            <Select
+                                                                                                name="outputStandardName"
+                                                                                                onChange={(value) =>
+                                                                                                    handleChangeOutputStandard(
+                                                                                                        indexDay,
+                                                                                                        indexUnit,
+                                                                                                        indexChapter,
+                                                                                                        value,
+                                                                                                    )
+                                                                                                }
+                                                                                                placeholder="Output standard"
+                                                                                            >
+                                                                                                <Select.Option value="Fundamental Knowledge">
+                                                                                                    Fundamental
+                                                                                                    Knowledge
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Advance Knowledge">
+                                                                                                    Advance Knowledge
+                                                                                                </Select.Option>
+                                                                                            </Select>
+                                                                                        </Col>
+                                                                                        <Col span={2}>
+                                                                                            <InputNumber
+                                                                                                name="duration"
+                                                                                                onChange={(value) =>
+                                                                                                    handleChangeDuration(
+                                                                                                        indexDay,
+                                                                                                        indexUnit,
+                                                                                                        indexChapter,
+                                                                                                        value,
+                                                                                                    )
+                                                                                                }
+                                                                                                placeholder="Duration"
+                                                                                            />
+                                                                                        </Col>
+                                                                                        <Col span={4}>
+                                                                                            <Select
+                                                                                                onChange={(value) =>
+                                                                                                    handleChangeDeliveryType(
+                                                                                                        indexDay,
+                                                                                                        indexUnit,
+                                                                                                        indexChapter,
+                                                                                                        value,
+                                                                                                    )
+                                                                                                }
+                                                                                                name="deliveryType"
+                                                                                                placeholder="Delivery type"
+                                                                                            >
+                                                                                                <Select.Option value="Assignment/Lab">
+                                                                                                    Assignment/Lab
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Concept/Lecture">
+                                                                                                    Concept/Lecture
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Guide/Review">
+                                                                                                    Guide/Review
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Test/Quiz">
+                                                                                                    Test/Quiz
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Exam">
+                                                                                                    Exam
+                                                                                                </Select.Option>
+                                                                                                <Select.Option value="Seminar/Workshop">
+                                                                                                    Seminar/Workshop
+                                                                                                </Select.Option>
+                                                                                            </Select>
+                                                                                        </Col>
+                                                                                        <Col span={2}>
+                                                                                            <Switch
+                                                                                                name="isOnline"
+                                                                                                onChange={(value) =>
+                                                                                                    handleChangeMethod(
+                                                                                                        indexDay,
+                                                                                                        indexUnit,
+                                                                                                        indexChapter,
+                                                                                                        value,
+                                                                                                    )
+                                                                                                }
+                                                                                                className="switch-custom"
+                                                                                                defaultChecked={false}
+                                                                                                checkedChildren="Online"
+                                                                                                unCheckedChildren="Offline"
+                                                                                            />
+                                                                                        </Col>
+                                                                                        <Col span={1}>
+                                                                                            <div
+                                                                                                className={
+                                                                                                    styles[
+                                                                                                        'delete-unit-btn'
+                                                                                                    ]
+                                                                                                }
+                                                                                            >
+                                                                                                <Popconfirm
+                                                                                                    title=<div
+                                                                                                        style={{
+                                                                                                            display:
+                                                                                                                'flex',
+                                                                                                            borderBottom:
+                                                                                                                '1px solid #E2E8F0',
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        <MdOutlineWarningAmber
+                                                                                                            size={20}
+                                                                                                            style={{
+                                                                                                                color: 'red',
+                                                                                                                marginRight:
+                                                                                                                    '12px',
+                                                                                                            }}
+                                                                                                        />
+                                                                                                        <p
+                                                                                                            style={{
+                                                                                                                color: '#2A4365',
+                                                                                                                fontSize:
+                                                                                                                    '16px',
+                                                                                                                fontWeight: 600,
+                                                                                                            }}
+                                                                                                        >
+                                                                                                            Delete
+                                                                                                            chapter
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    description=<p
+                                                                                                        style={{
+                                                                                                            fontSize:
+                                                                                                                '14px',
+                                                                                                            fontWeight: 500,
+                                                                                                            color: '#000',
+                                                                                                            marginBottom:
+                                                                                                                '24px',
+                                                                                                            marginTop:
+                                                                                                                '12px',
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        Delete all
+                                                                                                        content of the
+                                                                                                        Chapter?
+                                                                                                    </p>
+                                                                                                    onConfirm={() =>
+                                                                                                        handleDeleteChapter(
+                                                                                                            indexDay,
+                                                                                                            indexUnit,
+                                                                                                            indexChapter,
+                                                                                                        )
+                                                                                                    }
+                                                                                                    onCancel={cancel}
+                                                                                                    okText="Delete"
+                                                                                                    icon={null}
+                                                                                                    cancelButtonProps={{
+                                                                                                        style: {
+                                                                                                            border: 'none',
+                                                                                                            backgroundColor:
+                                                                                                                'transparent',
+                                                                                                        },
+                                                                                                    }}
+                                                                                                    okButtonProps={{
+                                                                                                        style: {
+                                                                                                            backgroundColor:
+                                                                                                                '#2D3748',
+                                                                                                            fontSize:
+                                                                                                                '14px',
+                                                                                                            fontWeight: 700,
+                                                                                                            padding:
+                                                                                                                '15px 25px',
+                                                                                                        },
+                                                                                                    }}
+                                                                                                    cancelText=<p
+                                                                                                        style={{
+                                                                                                            color: 'red',
+                                                                                                            textDecoration:
+                                                                                                                'underline',
+                                                                                                        }}
+                                                                                                    >
+                                                                                                        Cancel
+                                                                                                    </p>
+                                                                                                >
+                                                                                                    <IoMdRemoveCircleOutline
+                                                                                                        style={{
+                                                                                                            cursor: 'pointer',
+                                                                                                        }}
+                                                                                                    />
+                                                                                                </Popconfirm>
+                                                                                            </div>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                ),
+                                                                            )}
+                                                                        <div
+                                                                            onClick={() =>
+                                                                                handleAddChapter(indexDay, indexUnit)
+                                                                            }
+                                                                            className={styles['add-chapter-btn']}
+                                                                        >
+                                                                            <IoIosAddCircleOutline size={20} />
+                                                                        </div>
+                                                                    </div>
+                                                                ),
+                                                            },
+                                                        ]}
+                                                        collapsible="icon"
+                                                    >
+                                                        <Collapse.Panel></Collapse.Panel>
+                                                    </Collapse>
+                                                </div>
+                                            ))}
+
+                                        <div className={styles['add-unit-btn']}>
+                                            <Button
+                                                style={{
+                                                    backgroundColor: '#474747',
+                                                    color: 'white',
+                                                    fontWeight: 700,
+                                                }}
+                                                icon={<IoAddCircleOutline size={20} />}
+                                                onClick={() => handleAddUnit(indexDay)}
+                                            >
+                                                Add unit
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ),
+                            },
+                        ]}
+                        collapsible="icon"
+                    /> */}
+                </div>
+            ))}
+            <div className={styles['add-day-btn']}>
+                <Button
+                    style={{ backgroundColor: '#2D3748', color: '#fff', fontWeight: 700 }}
+                    icon=<IoAddCircleOutline size={20} />
+                    onClick={dispatch(addDay)}
+                >
+                    Add day
+                </Button>
+            </div>
+        </>
+    );
+}
+
+export default OutlineTabCreate;
