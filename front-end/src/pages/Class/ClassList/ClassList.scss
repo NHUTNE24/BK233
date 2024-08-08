@@ -14,7 +14,7 @@
   &__search {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 
     .input__placeholder--black input::placeholder {
       color: black;
@@ -35,18 +35,18 @@
   }
 
   .filter-button {
-    background-color: #2b3445;
+    background-color: #2D3748;
     border: none;
-    border-radius: 8px 0px 0px 0px;
+    border-radius: 8px;
     color: white;
     font-size: 16px;
-    width: 85px;
-    height: 32px;
-    padding: 7px 10px;
+    // width: 85px;
+    height: 36px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 8px;
     opacity: 1;
     /* Adjust this if needed */
   }

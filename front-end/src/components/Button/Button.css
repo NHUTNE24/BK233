@@ -1,20 +1,26 @@
-/* .ant-btn-default {
-  @apply !h-9 !py-0 !text-sm !font-bold bg-main text-primary !px-6 !border-none;
-}
-
-.ant-btn-default:hover {
-  @apply !bg-[#5B6372] !text-primary transition-all !duration-[75ms];
-}
-
-.ant-btn-icon-only {
+.class-btn-isIconOnly {
   @apply !px-6;
 }
 
-.ant-btn-text {
-  @apply !px-6 !h-9 !text-sm !font-bold !text-alert;
+.class-btn-isButtonWithIcon {
+  @apply h-9 text-sm font-bold bg-main text-primary border-none rounded-lg;
+}
+.class-btn-isButtonWithIcon:hover {
+  @apply !bg-[#5B6372] !text-primary transition-all !duration-[75ms];
 }
 
-.ant-btn:disabled {
-  color: white;
-  background-color: #474747 !important;
-} */
+.class-btn-isGhost {
+  @apply border rounded-full h-9 text-main text-sm font-bold rounded-lg;
+}
+
+.class-btn-isGhost:hover {
+  @apply !bg-[#5B6372] border !text-primary transition-all !duration-[75ms];
+}
+
+.class-btn-default {
+  @apply bg-main border-none h-9 text-sm font-bold text-primary rounded-lg;
+}
+
+.class-btn-default:hover {
+  @apply !bg-[#5B6372] border-none !text-primary transition-all !duration-[75ms];
+}

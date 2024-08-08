@@ -34,8 +34,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import StarsIcon from '@mui/icons-material/Stars';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { MdArrowBack } from "react-icons/md";
 import ButtonComponent from '../../../components/Button/Button';
 import { basicAuth } from '../../../constants/user';
 import URL from '../../../constants/url';
@@ -803,32 +802,34 @@ function CreateClassStep2() {
                     <NewTabs />
                 </section>
                 <section className="flex flex-row justify-between">
-                    <Button
+                    {/* <Button
                         className="border border-main text-main rounded-xl"
                         icon={<ArrowBackIcon />}
+                        onClick={handleNavigate}
                     >
                         Back
-                    </Button>
+                    </Button> */}
+                    <ButtonComponent
+                        isButtonWithIcon
+                        icon={<MdArrowBack className='text-xl' />}
+                        iconPosition="start"
+                        text="Back"
+                        onClick={handleNavigate}
+                    />
                     <div className="flex flex-row gap-10">
                         <div className="flex flex-row gap-2">
                             <ButtonComponent
-                                className="bg-alert text-primary rounded-xl"
+                                isGhost
+                                isDanger
                                 text="Cancel"
                                 onClick={handleNavigate}
                             />
                             <ButtonComponent
                                 htmlType="submit"
                                 className="bg-box text-main rounded-xl"
-                                text={'Save as draft'}
+                                text={'Save'}
                             />
                         </div>
-                        <ButtonComponent
-                            isDisabled={true}
-                            text={'Next'}
-                            className="border border-main text-main rounded-xl"
-                            iconPosition="end"
-                            icon={<ArrowForwardIcon />}
-                        />
                     </div>
                 </section>
             </div>
