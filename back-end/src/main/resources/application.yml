@@ -12,13 +12,13 @@ spring:
         registration:
           google:
             clientId: 860713489001-sorblkaslpt2l79hf3ghn31ukcp38l71.apps.googleusercontent.com
-            clientSecret: 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
+#            clientSecret: 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
             scope: profile, email
             redirect-uri: "{baseUrl}/login/oauth2/code/google"
             client-name: Google
           facebook:
             clientId: 1023601369226468
-            clientSecret: 763e3d4d2916c22bcf1fc4e2263b848c
+#            clientSecret: 763e3d4d2916c22bcf1fc4e2263b848c
             scope:
               - email
               - public_profile
