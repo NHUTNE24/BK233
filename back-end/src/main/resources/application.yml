@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://huy-nguyenngo13:Xw0h6ww3OjWCsUbS@fams.lglvdkk.mongodb.net/?retryWrites=true&w=majority&appName=fams
+      uri: mongodb://localhost:27017/
       database: fams
   security:
     oauth2:
